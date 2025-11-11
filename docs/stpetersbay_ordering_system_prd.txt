@@ -1,0 +1,238 @@
+🏝️ St. Peter’s Bay Ordering System – Product Requirements Document (PRD)
+
+Client: St. Peter’s Bay Resort, Barbados
+Prepared by: Thomas Knight
+Date: [Insert Date]
+Version: 1.2
+
+🧭 Executive Summary
+
+St. Peter’s Bay Resort aims to elevate its guest experience by introducing a digital Beach and Room Service Ordering System. Guests will be able to order drinks and food directly from their mobile devices by scanning a QR code or visiting a short resort URL.
+
+The system will display two clear options — Beach Drinks and Room Service Food — allowing guests to browse menus, customize items, and submit orders seamlessly. Orders will appear instantly on a Kitchen Dashboard, where staff can confirm receipt, manage preparation, and mark items complete.
+
+The backend menu and pricing data will be easily editable by non-technical resort staff, ensuring full operational control without developer involvement. Orders remain visible on the kitchen screen until marked completed to eliminate missed requests.
+
+This project will enhance efficiency, reduce wait times, and create a modern, frictionless ordering experience that aligns with St. Peter’s Bay’s reputation for luxury hospitality.
+
+1. 🎯 Project Overview
+
+Guests can order beach drinks or room service meals from their phones via QR or URL.
+Orders are sent to a real-time kitchen dashboard.
+Menus and pricing are editable by authorized staff through a simple web interface.
+
+2. 🧭 Goals & Objectives
+Goal	Description
+Simplify guest ordering	Guests can place food or drink orders from any device
+Centralize kitchen operations	Live dashboard shows all incoming orders
+Ensure nothing is missed	Orders remain visible until manually closed
+Empower staff	Menus editable without developer help
+Personalize orders	Guests can choose modifiers and leave item-specific notes
+3. 👥 User Roles
+1. Guest (Frontend)
+
+Access via QR or URL
+
+Choose Beach Drinks or Room Service
+
+Select items, modifiers, and custom notes
+
+Enter name and room/location
+
+Submit order → receive confirmation
+
+2. Kitchen / Bar Staff
+
+View all active orders
+
+Press “✅ Confirm Received” to acknowledge
+
+Press “🗑️ Mark Completed” to remove fulfilled orders
+
+Orders persist on screen until completed
+
+3. Admin / Manager
+
+Secure login to edit menus and pricing
+
+Add or edit modifiers and availability
+
+Review daily order summaries
+
+4. 🔄 User Flows
+Beach Drinks
+
+Guest scans QR labeled “Order Drinks from the Beach.”
+
+Landing screen with resort branding:
+
+🍹 Beach Drinks
+
+🍽️ Room Service
+
+Guest selects Beach Drinks → menu opens.
+
+Each item supports:
+
+Up to 10 modifiers (e.g., “No Ice,” “Extra Lime”)
+
+One custom note field (max 200 chars)
+
+Checkout asks for:
+
+Name
+
+Beach location (dropdown or text)
+
+Guest submits order → confirmation displayed.
+
+Room Service
+
+Guest scans QR or selects Room Service.
+
+Menu categorized (Breakfast, Lunch, Dinner).
+
+Each item allows modifiers + notes.
+
+Checkout asks for:
+
+Name
+
+Room number
+
+Optional general comment
+
+Confirmation displayed → order sent to kitchen.
+
+5. 🧩 Core Features
+Feature	Description
+Dual Menus	“Beach Drinks” and “Room Service”
+Item Modifiers (up to 10)	Additions/subtractions per item
+Custom Notes (200 chars)	Optional free-text field for each item
+Editable Menus	Managed via Firestore or Google Sheet
+Live Dashboard	Real-time feed for kitchen/bar
+Persistent Orders	Remain visible until completed
+Confirmation Buttons	“Confirm Received” / “Mark Completed”
+Order History	Archived completed orders
+Mobile-Optimized	Responsive interface
+Admin CMS	Easy non-technical editing
+Secure Access	HTTPS + password for staff view
+6. ⚙️ Technical Requirements
+Layer	Technology / Approach
+Frontend	HTML5 / JavaScript / Tailwind CSS
+Hosting	Firebase Hosting / Vercel / Netlify
+Database	Firestore (real-time)
+Backend	Firebase Functions for notifications and logging
+Auth	Password or Clerk login for staff/admin
+Menu Management	Firestore collections or connected Google Sheet
+Retention	Orders stored ≥30 days
+7. 🧱 Data Model
+Menus
+{
+  "type": "roomservice",
+  "category": "Burgers",
+  "itemName": "Cheeseburger",
+  "price": 25,
+  "image": "images/cheeseburger.png",
+  "available": true,
+  "modifiers": [
+    "No Ketchup",
+    "No Mustard",
+    "No Pickles",
+    "No Lettuce",
+    "No Tomato",
+    "Add Bacon",
+    "Add Avocado",
+    "Extra Cheese",
+    "Gluten-Free Bun",
+    "Well Done"
+  ]
+}
+
+Orders
+{
+  "id": "auto",
+  "menuType": "roomservice",
+  "name": "Jane Smith",
+  "roomNumber": 207,
+  "items": [
+    {
+      "itemName": "Cheeseburger",
+      "quantity": 1,
+      "modifiers": ["No Lettuce", "Add Bacon", "Extra Cheese"],
+      "customNote": "Please cut in half and sauce on side"
+    },
+    {
+      "itemName": "Iced Tea",
+      "quantity": 2,
+      "customNote": "Extra ice please"
+    }
+  ],
+  "status": "new",
+  "timestamp": "2025-11-09T11:05:00Z"
+}
+
+8. 💻 Admin Menu Editor Requirements
+
+Add/Edit/Delete menu items
+
+Edit up to 10 modifiers per item
+
+Optional item-specific note template
+
+Category, price, and image fields
+
+Toggle availability (e.g., sold out)
+
+Save changes → instant update in database
+
+9. 🧾 Kitchen Dashboard Layout
+
+| Order # | Name | Room/Location | Items | Notes | Time | Status | Actions |
+|----------|------|----------------|--------|--------|--------|----------|
+| 1042 | Jane Smith | Room 207 | Cheeseburger (No Lettuce, Add Bacon) | “Sauce on side” | 11:05 AM | New | ✅ Confirm / 🗑️ Complete |
+
+Visual conventions:
+
+Additions → green text
+
+Subtractions → red italics
+
+Notes → gray or italic text
+
+Orders flash briefly on arrival
+
+10. 🚀 Implementation Phases
+Phase	Deliverable	Description
+1. MVP	Ordering flow + live dashboard	Includes modifiers & notes
+2. Admin CMS	Menu editor interface	
+3. Notifications	Audio/push for new orders	
+4. Analytics & Reporting	Order summaries & CSV export	
+11. 🔐 Security & Privacy
+
+HTTPS required
+
+No payment data stored (room charge handled separately)
+
+Minimal guest info (name + room/location only)
+
+Admin & kitchen views password-protected
+
+12. 💡 Future Enhancements
+
+PMS integration (Opera, Cloudbeds)
+
+Live order status for guests (“Being prepared”)
+
+Multilingual interface (English/French)
+
+Staff assignment by service zone
+
+Optional SMS or WhatsApp confirmations
+
+13. 📋 Success Metrics
+Metric	Target
+100% of orders visible until completed	✅
+Average order submission < 2 min	✅
+Menu editable by staff with no training	✅
+Zero missed orders in pilot phase	✅

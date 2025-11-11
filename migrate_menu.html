@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Migration Tool - St. Peter's Bay</title>
+    <link rel="stylesheet" href="./css/output.css">
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Menu Migration Tool</h1>
+            <p class="text-gray-600 mb-6">
+                This tool uploads menu items from sample_menu.json to Firestore.
+                <br>
+                <strong class="text-red-600">Note:</strong> For Phase 2, menus are still loaded from sample_menu.json locally.
+                This migration is optional and prepares for future Phase 3 (Admin CMS).
+            </p>
+
+            <div class="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+                <h3 class="font-bold text-yellow-800 mb-2">Instructions:</h3>
+                <ol class="list-decimal ml-5 text-sm text-gray-700 space-y-1">
+                    <li>Click "Load Menu from JSON" to preview the menu data</li>
+                    <li>Review the items that will be uploaded</li>
+                    <li>Click "Upload to Firestore" to migrate the data</li>
+                    <li>This is a ONE-TIME operation. Don't run it multiple times.</li>
+                </ol>
+            </div>
+
+            <div class="flex space-x-4 mb-6">
+                <button id="load-btn" onclick="loadMenuFromFile()"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-all">
+                    Load Menu from JSON
+                </button>
+                <button id="upload-btn" onclick="uploadToFirestore()" disabled
+                        class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                    Upload to Firestore
+                </button>
+            </div>
+
+            <div id="status" class="mb-4"></div>
+            <div id="preview" class="bg-gray-50 rounded-lg p-4 max-h-96 overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db } from './scripts/firebase-config.js';
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+
+        let menuData = null;
+
+        window.loadMenuFromFile = async function() {
+            const statusDiv = document.getElementById('status');
+            const previewDiv = document.getElementById('preview');
+
+            try {
+                statusDiv.innerHTML = '<p class="text-blue-600">Loading menu data...</p>';
+
+                const response = await fetch('./data/sample_menu.json');
+                menuData = await response.json();
+
+                // Display preview
+                let html = '<h3 class="font-bold text-gray-800 mb-3">Menu Preview:</h3>';
+
+                // Beach Drinks
+                if (menuData.beachDrinks) {
+                    html += `<div class="mb-4">
+                        <h4 class="font-semibold text-lg text-blue-600">Beach Drinks (${menuData.beachDrinks.length} items)</h4>
+                        <ul class="ml-4 mt-2 space-y-1 text-sm">`;
+                    menuData.beachDrinks.slice(0, 5).forEach(item => {
+                        html += `<li>${item.itemName} - $${item.price} (${item.category})</li>`;
+                    });
+                    if (menuData.beachDrinks.length > 5) {
+                        html += `<li class="text-gray-500 italic">... and ${menuData.beachDrinks.length - 5} more</li>`;
+                    }
+                    html += '</ul></div>';
+                }
+
+                // Room Service
+                if (menuData.roomService) {
+                    html += `<div class="mb-4">
+                        <h4 class="font-semibold text-lg text-green-600">Room Service (${menuData.roomService.length} items)</h4>
+                        <ul class="ml-4 mt-2 space-y-1 text-sm">`;
+                    menuData.roomService.slice(0, 5).forEach(item => {
+                        html += `<li>${item.itemName} - $${item.price} (${item.category})</li>`;
+                    });
+                    if (menuData.roomService.length > 5) {
+                        html += `<li class="text-gray-500 italic">... and ${menuData.roomService.length - 5} more</li>`;
+                    }
+                    html += '</ul></div>';
+                }
+
+                previewDiv.innerHTML = html;
+                statusDiv.innerHTML = '<p class="text-green-600 font-semibold">✓ Menu loaded successfully!</p>';
+                document.getElementById('upload-btn').disabled = false;
+
+            } catch (error) {
+                console.error('Error loading menu:', error);
+                statusDiv.innerHTML = '<p class="text-red-600">Error loading menu: ' + error.message + '</p>';
+            }
+        };
+
+        window.uploadToFirestore = async function() {
+            if (!menuData) {
+                alert('Please load menu data first');
+                return;
+            }
+
+            if (!confirm('Are you sure you want to upload the menu to Firestore? This should only be done once.')) {
+                return;
+            }
+
+            const statusDiv = document.getElementById('status');
+            const uploadBtn = document.getElementById('upload-btn');
+            uploadBtn.disabled = true;
+
+            try {
+                statusDiv.innerHTML = '<p class="text-blue-600">Uploading to Firestore...</p>';
+
+                const menusCollection = collection(db, 'menus');
+                let uploadCount = 0;
+
+                // Upload beach drinks
+                for (const item of menuData.beachDrinks) {
+                    await addDoc(menusCollection, {
+                        type: 'beachDrinks',
+                        ...item,
+                        uploadedAt: new Date()
+                    });
+                    uploadCount++;
+                    statusDiv.innerHTML = `<p class="text-blue-600">Uploading... (${uploadCount} items)</p>`;
+                }
+
+                // Upload room service items
+                for (const item of menuData.roomService) {
+                    await addDoc(menusCollection, {
+                        type: 'roomService',
+                        ...item,
+                        uploadedAt: new Date()
+                    });
+                    uploadCount++;
+                    statusDiv.innerHTML = `<p class="text-blue-600">Uploading... (${uploadCount} items)</p>`;
+                }
+
+                statusDiv.innerHTML = `
+                    <div class="bg-green-50 border-l-4 border-green-400 p-4 rounded">
+                        <p class="text-green-800 font-bold">✓ Success!</p>
+                        <p class="text-green-700 text-sm mt-1">Uploaded ${uploadCount} menu items to Firestore.</p>
+                        <p class="text-green-600 text-sm mt-2">You can now close this page. Do not run this migration again.</p>
+                    </div>
+                `;
+
+                console.log(`Menu migration complete: ${uploadCount} items uploaded`);
+
+            } catch (error) {
+                console.error('Error uploading to Firestore:', error);
+                statusDiv.innerHTML = `
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded">
+                        <p class="text-red-800 font-bold">Error uploading menu</p>
+                        <p class="text-red-700 text-sm mt-1">${error.message}</p>
+                    </div>
+                `;
+                uploadBtn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>

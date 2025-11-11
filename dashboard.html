@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Dashboard - St. Peter's Bay</title>
+    <link rel="stylesheet" href="./css/output.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-slate-800 to-slate-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold">Kitchen Dashboard</h1>
+                    <p class="text-xs sm:text-sm text-slate-200">St. Peter's Bay Resort</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="text-right">
+                        <div class="text-xs sm:text-sm text-slate-300">Active Orders</div>
+                        <div id="order-count" class="text-2xl sm:text-3xl font-bold">0</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs sm:text-sm text-slate-300">Auto-refresh</div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-green-400 rounded-full pulse"></div>
+                            <span class="text-xs">5s</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+
+        <!-- Past Orders Button -->
+        <div class="mb-4 flex justify-end">
+            <a href="kitchen-past-orders.html"
+               class="bg-slate-600 hover:bg-slate-700 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition-all">
+                📋 Past Orders
+            </a>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="mb-6 flex flex-wrap gap-2 bg-white rounded-lg p-2 shadow-md">
+            <button onclick="filterOrders('all')" id="filter-all"
+                    class="flex-1 min-w-[120px] px-4 py-2 rounded-md font-semibold transition-all bg-blue-600 text-white">
+                All Orders
+            </button>
+            <button onclick="filterOrders('new')" id="filter-new"
+                    class="flex-1 min-w-[120px] px-4 py-2 rounded-md font-semibold transition-all hover:bg-gray-100">
+                New
+            </button>
+            <button onclick="filterOrders('confirmed')" id="filter-confirmed"
+                    class="flex-1 min-w-[120px] px-4 py-2 rounded-md font-semibold transition-all hover:bg-gray-100">
+                Confirmed
+            </button>
+            <button onclick="filterOrders('beachDrinks')" id="filter-beachDrinks"
+                    class="flex-1 min-w-[120px] px-4 py-2 rounded-md font-semibold transition-all hover:bg-gray-100">
+                🍹 Beach
+            </button>
+            <button onclick="filterOrders('roomService')" id="filter-roomService"
+                    class="flex-1 min-w-[120px] px-4 py-2 rounded-md font-semibold transition-all hover:bg-gray-100">
+                🍽️ Room
+            </button>
+        </div>
+
+        <!-- Orders Container -->
+        <div id="orders-container">
+            <!-- Orders will be dynamically loaded here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden text-center py-20">
+            <div class="text-6xl mb-4">✨</div>
+            <h3 class="text-2xl font-bold text-gray-700 mb-2">No Orders Yet</h3>
+            <p class="text-gray-500">New orders will appear here automatically</p>
+        </div>
+
+        <!-- Clear All Button (for testing) -->
+        <div class="mt-8 text-center">
+            <button onclick="clearAllOrders()"
+                    class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-semibold transition-all">
+                🗑️ Clear All Orders (Testing Only)
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Order Detail Modal -->
+    <div id="order-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800">Order Details</h3>
+                    <button onclick="closeOrderModal()" class="text-gray-500 hover:text-gray-700 text-3xl leading-none">×</button>
+                </div>
+                <div id="modal-order-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load dashboard logic as module -->
+    <script type="module" src="./scripts/dashboard_logic.js"></script>
+
+</body>
+</html>

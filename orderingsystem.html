@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St. Peter's Bay - Order</title>
+    <link rel="stylesheet" href="./css/output.css">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-cyan-50 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-wrap justify-between items-center gap-3">
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold">St. Peter's Bay</h1>
+                    <p class="text-xs sm:text-sm text-blue-100" id="header-subtitle">Welcome</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div id="auth-button"></div>
+                    <button id="cart-button" class="relative bg-white text-blue-600 px-3 sm:px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all hidden text-sm">
+                        🛒 <span class="hidden sm:inline">Cart</span>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center cart-badge">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+
+        <!-- Landing Screen: Choose Service Type -->
+        <div id="landing-screen" class="fade-in">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-3">Welcome to Paradise</h2>
+                <p class="text-gray-600 text-base sm:text-lg">Choose your service below</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Beach Drinks -->
+                <button onclick="selectMenuType('beachDrinks')"
+                        class="group bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all p-6 sm:p-8 text-center border-4 border-transparent hover:border-cyan-400 transform hover:-translate-y-1">
+                    <div class="mb-4 flex justify-center">
+                        <img src="./menus/turtle_beach_service_opt.png" alt="Beach Drinks" class="h-24 sm:h-32 w-auto object-contain">
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Beach Drinks</h3>
+                    <p class="text-sm sm:text-base text-gray-600">Refreshing beverages delivered to your beach location</p>
+                </button>
+
+                <!-- Room Service -->
+                <button onclick="selectMenuType('roomService')"
+                        class="group bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all p-6 sm:p-8 text-center border-4 border-transparent hover:border-blue-400 transform hover:-translate-y-1">
+                    <div class="mb-4 flex justify-center">
+                        <img src="./menus/room_service_opt.png" alt="Room Service" class="h-24 sm:h-32 w-auto object-contain">
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Room Service</h3>
+                    <p class="text-sm sm:text-base text-gray-600">Delicious meals delivered to your room</p>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menu Display Screen -->
+        <div id="menu-screen" class="hidden">
+            <!-- Back Button -->
+            <button onclick="backToLanding()" class="mb-6 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-semibold transition-all">
+                � Back
+            </button>
+
+            <!-- Menu Items -->
+            <div id="menu-container"></div>
+        </div>
+
+        <!-- Cart/Checkout Screen -->
+        <div id="cart-screen" class="hidden">
+            <button onclick="backToMenu()" class="mb-6 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-semibold transition-all">
+                � Back to Menu
+            </button>
+
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Your Order</h2>
+
+            <div id="cart-items" class="mb-8"></div>
+
+            <!-- Checkout Form -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Delivery Details</h3>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Your Name *</label>
+                        <input type="text" id="guest-name" placeholder="Enter your name"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+
+                    <!-- Room Service Delivery Choice (only shown for room service with logged-in users) -->
+                    <div id="delivery-choice-field" class="hidden">
+                        <label class="block text-gray-700 font-semibold mb-2">Delivery Location *</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center space-x-3 cursor-pointer bg-gray-50 hover:bg-blue-50 p-3 rounded-lg transition-all border-2 border-transparent hover:border-blue-300">
+                                <input type="radio" name="delivery-location" value="room" id="deliver-to-room" checked
+                                       class="w-5 h-5 text-blue-600">
+                                <span class="text-gray-700" id="room-delivery-label">Deliver to my room</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer bg-gray-50 hover:bg-blue-50 p-3 rounded-lg transition-all border-2 border-transparent hover:border-blue-300">
+                                <input type="radio" name="delivery-location" value="beach" id="deliver-to-beach"
+                                       class="w-5 h-5 text-blue-600">
+                                <span class="text-gray-700">Deliver to the beach</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="room-field" class="hidden">
+                        <label class="block text-gray-700 font-semibold mb-2">Room Number *</label>
+                        <input type="text" id="room-number" placeholder="e.g., 207"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+
+                    <div id="location-field" class="hidden">
+                        <label class="block text-gray-700 font-semibold mb-2">Beach Location *</label>
+                        <select id="beach-location"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Select your location</option>
+                            <option value="Main Beach - Left Side">Main Beach - Left Side</option>
+                            <option value="Main Beach - Center">Main Beach - Center</option>
+                            <option value="Main Beach - Right Side">Main Beach - Right Side</option>
+                            <option value="Pool Area">Pool Area</option>
+                            <option value="Cabana 1">Cabana 1</option>
+                            <option value="Cabana 2">Cabana 2</option>
+                            <option value="Cabana 3">Cabana 3</option>
+                            <option value="Other">Other (specify in notes)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Additional Notes (Optional)</label>
+                        <textarea id="order-notes" placeholder="Any special requests?" rows="3"
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                    </div>
+                </div>
+
+                <button onclick="submitOrder()"
+                        class="w-full mt-6 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all text-lg">
+                    Submit Order
+                </button>
+            </div>
+        </div>
+
+        <!-- Confirmation Screen -->
+        <div id="confirmation-screen" class="hidden text-center fade-in">
+            <div class="bg-white rounded-2xl shadow-2xl p-12">
+                <div class="text-6xl mb-6"></div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Order Received!</h2>
+                <p class="text-gray-600 text-lg mb-8">Your order has been sent to our team. We'll prepare it right away!</p>
+                <div id="order-summary" class="mb-8 text-left bg-gray-50 rounded-lg p-6"></div>
+                <button onclick="location.reload()"
+                        class="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all">
+                    Place Another Order
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Item Detail Modal -->
+    <div id="item-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 id="modal-item-name" class="text-2xl font-bold text-gray-800"></h3>
+                        <p id="modal-item-price" class="text-xl text-blue-600 font-semibold mt-1"></p>
+                    </div>
+                    <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-3xl leading-none">�</button>
+                </div>
+
+                <!-- Quantity -->
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-semibold mb-2">Quantity</label>
+                    <div class="flex items-center space-x-4">
+                        <button onclick="decreaseQuantity()" class="bg-gray-200 hover:bg-gray-300 w-10 h-10 rounded-full font-bold text-xl">-</button>
+                        <span id="modal-quantity" class="text-2xl font-bold w-12 text-center">1</span>
+                        <button onclick="increaseQuantity()" class="bg-gray-200 hover:bg-gray-300 w-10 h-10 rounded-full font-bold text-xl">+</button>
+                    </div>
+                </div>
+
+                <!-- Modifiers -->
+                <div id="modifiers-section" class="mb-6">
+                    <label class="block text-gray-700 font-semibold mb-3">Customize Your Order</label>
+                    <div id="modifiers-list" class="space-y-2"></div>
+                </div>
+
+                <!-- Custom Note -->
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-semibold mb-2">Special Instructions (Optional)</label>
+                    <textarea id="modal-custom-note" placeholder="e.g., Extra ice, sauce on side..." maxlength="200" rows="3"
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                    <p class="text-sm text-gray-500 mt-1"><span id="note-count">0</span>/200 characters</p>
+                </div>
+
+                <button onclick="addToCart()"
+                        class="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all text-lg">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load authentication and ordering logic as modules -->
+    <script type="module" src="./scripts/auth.js"></script>
+    <script type="module" src="./scripts/ordering_logic.js"></script>
+
+</body>
+</html>

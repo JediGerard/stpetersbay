@@ -1,0 +1,136 @@
+# 🧾 ST. PETER’S BAY ORDERING SYSTEM
+# Developer Notes & Progress Log
+# Domain: https://stpetersbayvillas.com/orderingsystem.html
+
+----------------------------------------------------------------
+PROJECT OVERVIEW
+----------------------------------------------------------------
+A simple web-based ordering platform for St. Peter’s Bay Resort, 
+allowing guests to order beach drinks or room service from their phones.  
+Orders appear on a live dashboard for kitchen staff and can be marked 
+as confirmed or completed. Menus are editable via a simple admin screen.  
+
+All development and testing are done locally. Files are uploaded 
+manually to GoDaddy via cPanel.
+
+----------------------------------------------------------------
+STRUCTURE
+----------------------------------------------------------------
+/orderingsystem.html        → Main guest-facing page
+/dashboard.html             → Kitchen/bar order dashboard
+/admin.html                 → Staff menu editor
+/scripts/ordering_logic.js  → Frontend ordering logic
+/scripts/dashboard_logic.js → Dashboard functions
+/scripts/admin_logic.js     → Admin editing logic
+/data/sample_menu.json      → Test menu data
+/data/sample_orders.json    → Test orders for local preview
+/docs/stpetersbay_ordering_system_prd.txt → Reference PRD
+/docs/DEV_NOTES_template.txt              → This file
+
+----------------------------------------------------------------
+PHASE LOG
+----------------------------------------------------------------
+
+## Phase 1 – MVP: Guest Ordering + Dashboard
+**Start Date:**  
+**Goal:** Create the base guest ordering page and live dashboard using mock data.  
+**Files Worked On:**  
+- orderingsystem.html  
+- dashboard.html  
+- scripts/ordering_logic.js  
+- scripts/dashboard_logic.js  
+- data/sample_menu.json  
+
+**Local Tests Performed:**  
+(Example)
+- Loaded orderingsystem.html locally and verified menu renders.  
+- Added item with modifiers and notes.  
+- Checked dashboard.html for live order display simulation.  
+
+**Results:**  
+✅ Orders appear as expected  
+⚠ Minor issue with mobile layout  
+
+**Next Steps:**  
+- Connect Firestore  
+- Add admin page  
+
+**Files to Upload to GoDaddy:**  
+- orderingsystem.html  
+- dashboard.html  
+- scripts/  
+- data/
+
+---
+
+## Phase 2 – Admin CMS
+**Start Date:**  
+**Goal:** Build simple menu editor for non-technical staff.  
+**Files Worked On:**  
+- admin.html  
+- scripts/admin_logic.js  
+
+**Local Tests:**  
+- Verified item creation/deletion in local JSON.  
+- Checked price and modifier updates.  
+
+**Results:**  
+✅ Admin edits persist locally  
+⚠ Need save confirmation alert  
+
+**Next Steps:**  
+- Add login protection (simple password)  
+
+**Files to Upload to GoDaddy:**  
+- admin.html  
+- scripts/admin_logic.js  
+
+---
+
+## Phase 3 – Notifications & Reporting
+**Start Date:**  
+**Goal:** Add alert for new orders + summary report download.  
+
+**Tests:**  
+- Played alert sound when new order received.  
+- Generated CSV of completed orders.  
+
+**Results:**  
+✅ New order alert works  
+⚠ CSV export formatting tweak needed  
+
+**Next Steps:**  
+- Final polish + upload checklist  
+
+---
+
+## Phase 4 – Final Review & Upload
+**Goal:** Verify all pages work together locally.  
+**Checklist:**  
+- [ ] Beach menu works  
+- [ ] Room service works  
+- [ ] Dashboard updates live  
+- [ ] Admin edits menu successfully  
+- [ ] Notes & modifiers appear in orders  
+- [ ] Orders persist until completed  
+
+**Deployment Summary:**  
+Upload these to GoDaddy `/public_html/`:  
+- orderingsystem.html  
+- dashboard.html  
+- admin.html  
+- /scripts/  
+- /data/  
+- /images/ (if used)
+
+**Post-upload test URL:**  
+https://stpetersbayvillas.com/orderingsystem.html  
+
+----------------------------------------------------------------
+GENERAL NOTES
+----------------------------------------------------------------
+- Keep JavaScript simple and commented.  
+- Test everything locally before upload.  
+- Update this file after each successful phase.  
+- When uploading to cPanel, replace files one-by-one.  
+- Keep backups of /data/ and /scripts/ in a local folder.

@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Orders Collection
+    match /orders/{orderId} {
+      // Allow anyone to create new orders (guest ordering)
+      allow create: if true;
+
+      // Allow anyone to read orders (for dashboard)
+      allow read: if true;
+
+      // Allow anyone to update orders (for dashboard status changes)
+      // In production, you should add authentication to restrict this
+      allow update: if true;
+
+      // Don't allow deletion
+      allow delete: if false;
+    }
+
+    // Menu Collection (for future use)
+    match /menus/{menuId} {
+      // Allow anyone to read menus
+      allow read: if true;
+
+      // Only authenticated users can write menus
+      // For now, set to false - manage via Firebase Console
+      allow write: if false;
+    }
+
+    // Default: deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+// IMPORTANT: For production deployment, you should:
+// 1. Add Firebase Authentication
+// 2. Restrict dashboard access to authenticated staff only
+// 3. Implement proper security rules based on user roles
+//
+// Example production rules:
+//
+// match /orders/{orderId} {
+//   allow create: if true;  // Guests can create orders
+//   allow read: if request.auth != null;  // Only authenticated staff can read
+//   allow update: if request.auth != null && request.auth.token.role == 'staff';
+//   allow delete: if false;
+// }
