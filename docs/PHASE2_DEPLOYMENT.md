@@ -126,11 +126,15 @@ The current rules allow:
 
 ---
 
-## 🚀 GoDaddy Deployment
+## 🚀 Vercel Deployment
 
-### Files to Upload
+### Current Hosting
 
-Upload these files to your GoDaddy hosting via cPanel File Manager:
+The project is deployed on **Vercel** at https://spbgazebo.com with automatic Git deployments configured.
+
+### Files Deployed
+
+All project files are automatically deployed via Git push:
 
 ```
 /orderingsystem.html
@@ -139,6 +143,7 @@ Upload these files to your GoDaddy hosting via cPanel File Manager:
 /scripts/ordering_logic.js         ← MODIFIED
 /scripts/dashboard_logic.js        ← MODIFIED
 /data/sample_menu.json
+/vercel.json                       ← Deployment configuration
 ```
 
 ### Optional Files (Not Required for Phase 2):
@@ -150,19 +155,24 @@ Upload these files to your GoDaddy hosting via cPanel File Manager:
 
 ### Deployment Steps
 
-1. **Login to GoDaddy cPanel**
-2. **Navigate to File Manager**
-3. **Go to public_html directory** (or your domain's root folder)
-4. **Upload/Replace Files:**
-   - Replace `orderingsystem.html`
-   - Replace `dashboard.html`
-   - Create `/scripts/` folder if it doesn't exist
-   - Upload `firebase-config.js` to `/scripts/`
-   - Replace `ordering_logic.js` in `/scripts/`
-   - Replace `dashboard_logic.js` in `/scripts/`
+1. **Push to Git Repository**
+   - Vercel automatically deploys from the connected Git repository
+   - Every push to the main branch triggers a new deployment
 
-5. **Test Live Site:**
-   - Visit: https://stpetersbayvillas.com/orderingsystem.html
+2. **Manual Deployment (Optional):**
+   ```bash
+   npm install -g vercel
+   vercel login
+   vercel deploy --prod
+   ```
+
+3. **Vercel Configuration:**
+   - Deployment config is in `vercel.json`
+   - Root redirect: `/` → `/orderingsystem.html`
+   - Domain: spbgazebo.com
+
+4. **Test Live Site:**
+   - Visit: https://spbgazebo.com/orderingsystem.html
    - Follow the same testing checklist as local testing above
 
 ---
@@ -289,7 +299,7 @@ Phase 2 provides the foundation for Phase 3 features:
 - [x] Security rules deployed
 - [x] Documentation complete
 - [ ] Local testing passed
-- [ ] Deployed to GoDaddy
+- [ ] Deployed to Vercel
 - [ ] Live testing passed
 
 ---

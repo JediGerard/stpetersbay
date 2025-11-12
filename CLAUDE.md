@@ -166,7 +166,19 @@ Edit the status flow in `scripts/dashboard_logic.js`. Status buttons are generat
 
 ## Deployment Notes
 
-**Recommended**: Firebase Hosting
+**Current Hosting**: Vercel (https://spbgazebo.com)
+
+The project is deployed on Vercel with configuration in `vercel.json`. Vercel automatically deploys from the connected Git repository.
+
+**Deployment**:
+```bash
+# Vercel CLI (optional - Git auto-deploy is configured)
+npm install -g vercel
+vercel login
+vercel deploy
+```
+
+**Alternative**: Firebase Hosting (not currently used)
 ```bash
 npm install -g firebase-tools
 firebase login

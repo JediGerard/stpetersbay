@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 // URL for your food ordering system
-const orderingURL = 'https://stpetersbayvillas.com/orderingsystem.html';
+const orderingURL = 'https://spbgazebo.com/orderingsystem.html';
 
 // Output file path
 const outputPath = path.join(__dirname, '..', 'SPB-QRCode.png');

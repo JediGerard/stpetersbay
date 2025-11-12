@@ -89,7 +89,7 @@ OAuth credentials allow your admin users to sign in via Google.
 - **User support email**: Your email address
 - **App logo**: (Optional - skip for now)
 - **Application home page**: Leave blank for now (or use your website)
-- **Authorized domains**: Enter your domain (e.g., `stpetersbayvillas.com`)
+- **Authorized domains**: Enter your domain (e.g., `spbgazebo.com`)
 - **Developer contact email**: Your email address
 
 4. Click "Save and Continue"

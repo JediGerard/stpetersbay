@@ -24,7 +24,7 @@
 
 ---
 
-## 📁 FILES READY FOR GODADDY DEPLOYMENT
+## 📁 FILES DEPLOYED ON VERCEL
 
 ### Upload These Files:
 ```
@@ -72,12 +72,16 @@
 
 ---
 
-## 🚀 NEXT STEPS - DEPLOY TO GODADDY
+## 🚀 DEPLOYMENT STATUS - VERCEL
 
-1. Login to GoDaddy cPanel
-2. Navigate to File Manager → public_html
-3. Upload the files listed above
-4. Test at: https://stpetersbayvillas.com/orderingsystem.html
+**Current Hosting:** Vercel (https://spbgazebo.com)
+
+**Deployment Method:** Automatic Git push deployment
+
+1. Push changes to Git repository
+2. Vercel automatically builds and deploys
+3. Configuration in `vercel.json`
+4. Test at: https://spbgazebo.com/orderingsystem.html
 5. Verify real-time sync works on production
 
 **After Deployment Testing:**
@@ -106,7 +110,7 @@
 
 When you're ready to continue, start with:
 
-**"Continue Phase 2 deployment to GoDaddy. All files tested locally and working. Ready to upload to production."**
+**"Continue Phase 2 deployment to Vercel. All files tested locally and working. Ready to push to production."**
 
 Or if you want to start Phase 3:
 

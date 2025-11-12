@@ -1,6 +1,6 @@
-# 🧾 ST. PETER’S BAY ORDERING SYSTEM
+# 🧾 ST. PETER'S BAY ORDERING SYSTEM
 # Developer Notes & Progress Log
-# Domain: https://stpetersbayvillas.com/orderingsystem.html
+# Domain: https://spbgazebo.com/orderingsystem.html
 
 ----------------------------------------------------------------
 PROJECT OVERVIEW
@@ -10,8 +10,8 @@ allowing guests to order beach drinks or room service from their phones.
 Orders appear on a live dashboard for kitchen staff and can be marked 
 as confirmed or completed. Menus are editable via a simple admin screen.  
 
-All development and testing are done locally. Files are uploaded 
-manually to GoDaddy via cPanel.
+All development and testing are done locally. Files are deployed
+automatically to Vercel via Git push.
 
 ----------------------------------------------------------------
 STRUCTURE
@@ -55,10 +55,10 @@ PHASE LOG
 - Connect Firestore  
 - Add admin page  
 
-**Files to Upload to GoDaddy:**  
-- orderingsystem.html  
-- dashboard.html  
-- scripts/  
+**Files Deployed to Vercel:**
+- orderingsystem.html
+- dashboard.html
+- scripts/
 - data/
 
 ---
@@ -81,8 +81,8 @@ PHASE LOG
 **Next Steps:**  
 - Add login protection (simple password)  
 
-**Files to Upload to GoDaddy:**  
-- admin.html  
+**Files Deployed to Vercel:**
+- admin.html
 - scripts/admin_logic.js  
 
 ---
@@ -114,23 +114,23 @@ PHASE LOG
 - [ ] Notes & modifiers appear in orders  
 - [ ] Orders persist until completed  
 
-**Deployment Summary:**  
-Upload these to GoDaddy `/public_html/`:  
-- orderingsystem.html  
-- dashboard.html  
-- admin.html  
-- /scripts/  
-- /data/  
+**Deployment Summary:**
+Files automatically deployed to Vercel via Git:
+- orderingsystem.html
+- dashboard.html
+- admin.html
+- /scripts/
+- /data/
 - /images/ (if used)
 
-**Post-upload test URL:**  
-https://stpetersbayvillas.com/orderingsystem.html  
+**Production URL:**
+https://spbgazebo.com/orderingsystem.html  
 
 ----------------------------------------------------------------
 GENERAL NOTES
 ----------------------------------------------------------------
-- Keep JavaScript simple and commented.  
-- Test everything locally before upload.  
-- Update this file after each successful phase.  
-- When uploading to cPanel, replace files one-by-one.  
+- Keep JavaScript simple and commented.
+- Test everything locally before pushing to Git.
+- Update this file after each successful phase.
+- Vercel auto-deploys on Git push to main branch.
 - Keep backups of /data/ and /scripts/ in a local folder.
