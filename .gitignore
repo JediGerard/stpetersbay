@@ -25,5 +25,10 @@ npm-debug.log*
 
 # Testing
 coverage/
+
+# Google Sheets Integration
 service-account-key.json
-service-account-key.json
+data/backups/
+data/menu_editor.xlsx
+data/sample_menu.preview.json
+data/.sync-cache.json

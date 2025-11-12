@@ -140,6 +140,27 @@ Edit the status flow in `scripts/dashboard_logic.js`. Status buttons are generat
 **Services**: Firestore Database, Authentication (Email/Password)
 **Config**: Stored in `scripts/firebase-config.js` (API keys are safe to expose for web apps)
 
+## Google Sheets Integration (In Progress)
+
+**Status**: Phase 1 - Google Cloud setup partially complete. Migrating from Excel to Google Sheets for menu management.
+
+**Google Cloud Project**: st-peters-bay-menu-system
+**Google Sheet ID**: 1GNMaBxwdfh-swkwHb7hKqgxEFpsdx8cJ
+**Service Account Email**: menu-sync-service@st-peters-bay-menu-system.iam.gserviceaccount.com
+**Service Account Key**: `service-account-key.json` (in project root, gitignored)
+**OAuth Credentials**: `data/client_secret_61610908293-qne996f7iqqo4121jp626mqov2s3cj1s.apps.googleusercontent.com.json`
+
+**Implementation Tracking**: See `IMPLEMENTATION_NOTES.md` for detailed phase-by-phase progress
+**Setup Guide**: See `GOOGLE_SHEETS_SETUP.md` for complete Google Cloud setup instructions
+
+**Future Workflow** (once complete):
+1. Staff edit menu in Google Sheets (master copy)
+2. Auto-sync worker polls Sheet every 5 minutes for changes
+3. Changes synced to `data/sample_menu.preview.json` (staging)
+4. Admin reviews changes in admin panel
+5. Admin publishes to `data/sample_menu.json` (production)
+6. Admin deploys to live site
+
 ## IMPORTANT RESTRICTIONS
 
 **File Deletion**:

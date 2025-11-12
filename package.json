@@ -9,10 +9,12 @@
   "scripts": {
     "build:css": "tailwindcss -i ./css/input.css -o ./css/output.css",
     "watch:css": "tailwindcss -i ./css/input.css -o ./css/output.css --watch",
-    "export-menu": "node scripts/jsonToExcel.js",
-    "import-menu": "node scripts/excelToJson.js",
+    "auto-sync": "node scripts/autoSync.js",
+    "publish-menu": "node scripts/publishMenu.js",
     "view-menu": "node scripts/viewMenu.js",
     "generate-qr": "node scripts/generateQRCode.js",
+    "start-server": "node server.js",
+    "dev-server": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -25,7 +27,12 @@
     "tailwindcss": "^3.4.17"
   },
   "dependencies": {
-    "qrcode": "^1.5.4",
-    "xlsx": "^0.18.5"
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "google-auth-library": "^10.5.0",
+    "googleapis": "^166.0.0",
+    "node-cron": "^4.2.1",
+    "qrcode": "^1.5.4"
   }
 }
