@@ -312,7 +312,12 @@ async function confirmOrder(orderId) {
 }
 
 async function completeOrder(orderId) {
-    if (!confirm('Mark this order as completed? It will be removed from the dashboard.')) {
+    const confirmed = await showConfirmationModal(
+        'Complete Order',
+        'Mark this order as completed? It will be removed from the dashboard.'
+    );
+
+    if (!confirmed) {
         return;
     }
 
@@ -445,6 +450,60 @@ async function clearAllOrders() {
         console.error('Error clearing orders:', error);
         alert('Error clearing orders. Please try again.');
     }
+}
+
+// ====================================
+// CONFIRMATION MODAL
+// ====================================
+
+function showConfirmationModal(title, message) {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('confirmation-modal');
+        const titleEl = document.getElementById('confirmation-title');
+        const messageEl = document.getElementById('confirmation-message');
+        const confirmBtn = document.getElementById('confirmation-confirm');
+        const cancelBtn = document.getElementById('confirmation-cancel');
+
+        // Set content
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+
+        // Show modal
+        modal.classList.remove('hidden');
+
+        // Handle confirm
+        const handleConfirm = () => {
+            modal.classList.add('hidden');
+            cleanup();
+            resolve(true);
+        };
+
+        // Handle cancel
+        const handleCancel = () => {
+            modal.classList.add('hidden');
+            cleanup();
+            resolve(false);
+        };
+
+        // Cleanup listeners
+        const cleanup = () => {
+            confirmBtn.removeEventListener('click', handleConfirm);
+            cancelBtn.removeEventListener('click', handleCancel);
+        };
+
+        // Add event listeners
+        confirmBtn.addEventListener('click', handleConfirm);
+        cancelBtn.addEventListener('click', handleCancel);
+
+        // Close on escape key
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') {
+                handleCancel();
+                document.removeEventListener('keydown', handleEscape);
+            }
+        };
+        document.addEventListener('keydown', handleEscape);
+    });
 }
 
 // ====================================
