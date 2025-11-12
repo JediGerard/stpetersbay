@@ -1,6 +1,6 @@
 {
   "redirects": [
     { "source": "/", "destination": "/orderingsystem.html", "permanent": true },
-    { "source": "/(.*)", "has": [{ "type": "host", "value": "www.spbgazebo.com" }], "destination": "https://spbgazebo.com/:1", "permanent": true }
+    { "source": "/(.*)", "has": [{ "type": "host", "value": "www.spbgazebo.com" }], "destination": "https://spbgazebo.com", "permanent": true }
   ]
 }
