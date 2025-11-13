@@ -2,5 +2,25 @@
   "redirects": [
     { "source": "/", "destination": "/orderingsystem.html", "permanent": true },
     { "source": "/(.*)", "has": [{ "type": "host", "value": "www.spbgazebo.com" }], "destination": "https://spbgazebo.com", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/admin.html",
+      "headers": [
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin-allow-popups"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin-allow-popups"
+        }
+      ]
+    }
   ]
 }
