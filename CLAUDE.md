@@ -16,13 +16,15 @@ St. Peter's Bay Food Ordering System - A complete cloud-based food ordering syst
 npm run build:css          # Compile Tailwind CSS (run after CSS changes)
 npm run watch:css          # Watch mode for CSS development
 
-# Menu Management
-npm run export-menu        # Export menu JSON to Excel for editing
-npm run import-menu        # Import edited Excel back to JSON (auto-creates backup)
+# Menu Management (Google Sheets - Phase 3 Complete)
+npm run auto-sync          # Start background worker (polls Google Sheets every 5 min)
+npm run publish-menu       # Publish staging menu to production (creates backup)
 npm run view-menu          # View current menu in terminal
 
 # Utilities
 npm run generate-qr        # Generate QR code for ordering system
+npm run start-server       # Start Express API server for admin panel (Phase 4)
+npm run dev-server         # Start server with nodemon for development
 ```
 
 ## Architecture Overview
