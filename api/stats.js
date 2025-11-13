@@ -13,7 +13,9 @@ module.exports = async (req, res) => {
   }
 
   try {
+    console.log('Stats API: Attempting to get Firestore instance...');
     const db = getFirestore();
+    console.log('Stats API: Successfully got Firestore instance');
 
     // Get production menu
     const productionDoc = await db.collection('menus').doc('production').get();

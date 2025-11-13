@@ -1,7 +1,9 @@
 const { OAuth2Client } = require('google-auth-library');
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-const ADMIN_EMAILS = process.env.ADMIN_EMAILS.split(',').map(e => e.trim().toLowerCase());
+const ADMIN_EMAILS = process.env.ADMIN_EMAILS ?
+  process.env.ADMIN_EMAILS.split(',').map(e => e.trim().toLowerCase()) :
+  [];
 
 async function verifyToken(token) {
   try {
@@ -34,6 +36,17 @@ module.exports = async (req, res) => {
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // Check for required environment variables
+  if (!process.env.GOOGLE_CLIENT_ID) {
+    console.error('Missing GOOGLE_CLIENT_ID environment variable');
+    return res.status(500).json({ authorized: false, error: 'Server configuration error: Missing Google Client ID' });
+  }
+
+  if (!process.env.ADMIN_EMAILS) {
+    console.error('Missing ADMIN_EMAILS environment variable');
+    return res.status(500).json({ authorized: false, error: 'Server configuration error: Missing admin emails' });
   }
 
   try {
