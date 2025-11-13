@@ -26,8 +26,9 @@ npm-debug.log*
 # Testing
 coverage/
 
-# Google Sheets Integration
+# Google Sheets Integration & Firebase Admin
 service-account-key.json
+firebase-admin-key.json
 data/backups/
 data/menu_editor.xlsx
 data/sample_menu.preview.json

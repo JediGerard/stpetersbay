@@ -6,10 +6,11 @@ const fs = require('fs');
 const path = require('path');
 
 // Initialize Firebase Admin (for server-side operations)
-const serviceAccount = require('../service-account-key.json');
+const serviceAccount = require('../firebase-admin-key.json');
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
+  projectId: 'st-peters-bay-food-ordering'
 });
 
 const db = admin.firestore();

@@ -153,11 +153,15 @@ Edit the status flow in `scripts/dashboard_logic.js`. Status buttons are generat
 
 **Status**: Phase 4 Complete ✅ - Admin Web Interface fully operational.
 
-**Google Cloud Project**: st-peters-bay-menu-system
+**Google Cloud Project**: st-peters-bay-menu-system (for Google Sheets API)
 **Google Sheet ID**: `1mXk0Wab86mlnptJ8yTebDNvdttTs_DOLfPqVZExx4m0`
 **Sheet Tab Name**: "Menu Items"
 **Service Account Email**: menu-sync-service@st-peters-bay-menu-system.iam.gserviceaccount.com
-**Service Account Key**: `service-account-key.json` (in project root, gitignored)
+**Service Account Key**: `service-account-key.json` (for Google Sheets API access, gitignored)
+
+**Firebase Project**: st-peters-bay-food-ordering (for Firestore database)
+**Firebase Admin Key**: `firebase-admin-key.json` (for Firestore access, gitignored)
+
 **OAuth Credentials**: `data/client_secret_61610908293-qne996f7iqqo4121jp626mqov2s3cj1s.apps.googleusercontent.com.json`
 **Admin Whitelist**: John.vujicic68@gmail.com, timnye2020@gmail.com, Jimmymarshall432@gmail.com
 
