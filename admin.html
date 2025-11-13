@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Admin - St. Peter's Bay</title>
+    <link rel="stylesheet" href="css/output.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Menu Management Admin</h1>
+                    <p class="text-sm text-gray-600">St. Peter's Bay Food Ordering System</p>
+                </div>
+                <div id="auth-status" class="text-right">
+                    <div id="user-info" class="hidden">
+                        <div class="flex items-center space-x-3">
+                            <img id="user-picture" src="" alt="" class="w-10 h-10 rounded-full">
+                            <div>
+                                <p id="user-name" class="text-sm font-medium text-gray-900"></p>
+                                <p id="user-email" class="text-xs text-gray-600"></p>
+                            </div>
+                            <button id="signout-btn" class="text-sm text-red-600 hover:text-red-800 ml-4">
+                                Sign Out
+                            </button>
+                        </div>
+                    </div>
+                    <div id="not-logged-in" class="text-sm text-gray-600">
+                        Not logged in
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Section (shown if not authenticated) -->
+    <div id="login-section" class="max-w-md mx-auto mt-20">
+        <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+            <div class="mb-6">
+                <svg class="w-16 h-16 mx-auto text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Admin Access Required</h2>
+            <p class="text-gray-600 mb-6">Sign in with your authorized Google account to access the menu management dashboard.</p>
+
+            <!-- Google Sign-In Button -->
+            <div class="flex justify-center">
+                <div id="g_id_onload"
+                     data-client_id="61610908293-qne996f7iqqo4121jp626mqov2s3cj1s.apps.googleusercontent.com"
+                     data-callback="handleCredentialResponse"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-size="large"
+                     data-theme="outline"
+                     data-text="sign_in_with"
+                     data-shape="rectangular"
+                     data-logo_alignment="left">
+                </div>
+            </div>
+
+            <div id="login-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
+                <p class="font-medium">Access Denied</p>
+                <p id="login-error-message"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard (shown if authenticated) -->
+    <div id="admin-dashboard" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Menu Stats -->
+        <section class="mb-8">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Current Menu Status</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Production Items</h3>
+                    <p id="total-items" class="text-3xl font-bold text-gray-900">--</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Preview Items</h3>
+                    <p id="preview-items" class="text-3xl font-bold text-gray-900">--</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Last Sync</h3>
+                    <p id="last-sync" class="text-sm text-gray-900">--</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Last Publish</h3>
+                    <p id="last-publish" class="text-sm text-gray-900">--</p>
+                </div>
+            </div>
+            <div id="changes-indicator" class="hidden mt-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700">
+                <p class="font-medium">⚠️ Unpublished Changes Detected</p>
+                <p class="text-sm">The preview menu has changes that haven't been published to production yet.</p>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <section class="mb-8">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Actions</h2>
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-medium text-gray-900">Step 1: Publish Menu</h3>
+                            <p class="text-sm text-gray-600">Copy preview menu to production JSON file (creates backup)</p>
+                        </div>
+                        <button id="publish-btn" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">
+                            Publish Menu
+                        </button>
+                    </div>
+                    <div class="border-t pt-4 flex items-center justify-between">
+                        <div>
+                            <h3 class="font-medium text-gray-900">Step 2: Deploy to Live Site</h3>
+                            <p class="text-sm text-gray-600">Push changes to git and trigger Vercel deployment</p>
+                        </div>
+                        <button id="deploy-btn" class="px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition" disabled>
+                            Deploy to Live
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Status Messages -->
+                <div id="status-message" class="hidden mt-4 p-3 rounded-lg text-sm"></div>
+
+                <!-- Deployment Log -->
+                <div id="deployment-log-container" class="hidden mt-4">
+                    <h4 class="font-medium text-gray-900 mb-2">Deployment Log:</h4>
+                    <pre id="deployment-log" class="bg-gray-900 text-green-400 p-4 rounded-lg text-xs overflow-x-auto max-h-96 overflow-y-auto font-mono"></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Preview vs Production Comparison -->
+        <section class="mb-8">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Menu Comparison</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow">
+                    <div class="bg-yellow-50 px-6 py-3 border-b border-yellow-200">
+                        <h3 class="font-bold text-gray-900">Preview (Staging)</h3>
+                        <p class="text-xs text-gray-600">From Google Sheets sync</p>
+                    </div>
+                    <div class="p-6">
+                        <div id="preview-summary" class="mb-4"></div>
+                        <button id="view-preview-btn" class="text-sm text-blue-600 hover:text-blue-800 underline">
+                            View Full JSON
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow">
+                    <div class="bg-green-50 px-6 py-3 border-b border-green-200">
+                        <h3 class="font-bold text-gray-900">Production (Live)</h3>
+                        <p class="text-xs text-gray-600">Currently on website</p>
+                    </div>
+                    <div class="p-6">
+                        <div id="production-summary" class="mb-4"></div>
+                        <button id="view-production-btn" class="text-sm text-blue-600 hover:text-blue-800 underline">
+                            View Full JSON
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sync History Log -->
+        <section class="mb-8">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Recent Activity</h2>
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <div id="activity-log" class="divide-y divide-gray-200">
+                    <p class="p-6 text-gray-600 text-sm">Loading activity history...</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JSON Viewer Modal -->
+    <div id="json-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center p-6 border-b">
+                <h3 id="json-modal-title" class="text-xl font-bold text-gray-900"></h3>
+                <button id="close-modal-btn" class="text-gray-600 hover:text-gray-900">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6 overflow-auto flex-1">
+                <pre id="json-modal-content" class="bg-gray-900 text-green-400 p-4 rounded-lg text-xs font-mono overflow-x-auto"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="scripts/admin_logic.js"></script>
+</body>
+</html>

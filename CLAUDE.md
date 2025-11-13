@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 St. Peter's Bay Food Ordering System - A complete cloud-based food ordering system for resort guests and staff. The system allows guests to order Beach Drinks and Room Service from their phones, staff to manage orders in real-time, and managers to edit menus using Excel without coding.
 
-**Status**: Production Ready (Version 4.0)
-**Tech Stack**: Vanilla JavaScript (ES6 modules), Firebase (Firestore + Auth), Tailwind CSS, XLSX for menu management
+**Status**: Production Ready (Version 5.0) - Admin Web Interface complete (Phase 4)
+**Tech Stack**: Vanilla JavaScript (ES6 modules), Firebase (Firestore + Auth), Tailwind CSS, Google Sheets API for menu management
 
 ## Essential Commands
 
@@ -44,11 +44,13 @@ npm run dev-server         # Start server with nodemon for development
 3. Real-time display of orders filtered by menu type and status
 4. Status updates written directly to Firestore
 
-**Menu Management Flow**:
-1. `jsonToExcel.js` reads `sample_menu.json` → creates `menu_editor.xlsx`
-2. Staff edits Excel file (prices, availability, items)
-3. `excelToJson.js` validates and writes back to `sample_menu.json`
-4. Automatic backup created as `sample_menu.backup.json`
+**Menu Management Flow** (Google Sheets - Phase 3 Complete):
+1. Staff edits menu in Google Sheets (master copy)
+2. `autoSync.js` polls Sheet every 5 minutes for changes via Drive API
+3. `googleSheetsSync.js` syncs changes to `data/sample_menu.preview.json` (staging)
+4. Admin reviews changes and runs `publishMenu.js`
+5. Automatic timestamped backup created in `data/backups/`
+6. Menu published to `data/sample_menu.json` (production)
 
 ### Firebase Architecture
 
@@ -90,7 +92,12 @@ All JavaScript files use ES6 modules:
 - `scripts/auth.js`: Manages authentication state, exports auth functions
 - `scripts/ordering_logic.js`: Guest ordering logic (cart, checkout)
 - `scripts/dashboard_logic.js`: Staff dashboard (order viewing/updating)
-- Node scripts (`jsonToExcel.js`, `excelToJson.js`, `viewMenu.js`): CommonJS for CLI tools
+- Node scripts (CommonJS for CLI/server):
+  - `googleSheetsSync.js`: Core sync logic (Google Sheets → JSON)
+  - `autoSync.js`: Background worker (5-min polling with Drive API)
+  - `publishMenu.js`: Publish staging to production with backup
+  - `viewMenu.js`: View current menu in terminal
+  - `generateQRCode.js`: Generate QR code for ordering system
 
 ## Key Implementation Details
 
@@ -142,26 +149,47 @@ Edit the status flow in `scripts/dashboard_logic.js`. Status buttons are generat
 **Services**: Firestore Database, Authentication (Email/Password)
 **Config**: Stored in `scripts/firebase-config.js` (API keys are safe to expose for web apps)
 
-## Google Sheets Integration (In Progress)
+## Google Sheets Integration
 
-**Status**: Phase 1 - Google Cloud setup partially complete. Migrating from Excel to Google Sheets for menu management.
+**Status**: Phase 4 Complete ✅ - Admin Web Interface fully operational.
 
 **Google Cloud Project**: st-peters-bay-menu-system
-**Google Sheet ID**: 1GNMaBxwdfh-swkwHb7hKqgxEFpsdx8cJ
+**Google Sheet ID**: `1mXk0Wab86mlnptJ8yTebDNvdttTs_DOLfPqVZExx4m0`
+**Sheet Tab Name**: "Menu Items"
 **Service Account Email**: menu-sync-service@st-peters-bay-menu-system.iam.gserviceaccount.com
 **Service Account Key**: `service-account-key.json` (in project root, gitignored)
 **OAuth Credentials**: `data/client_secret_61610908293-qne996f7iqqo4121jp626mqov2s3cj1s.apps.googleusercontent.com.json`
+**Admin Whitelist**: John.vujicic68@gmail.com, timnye2020@gmail.com, Jimmymarshall432@gmail.com
 
 **Implementation Tracking**: See `IMPLEMENTATION_NOTES.md` for detailed phase-by-phase progress
 **Setup Guide**: See `GOOGLE_SHEETS_SETUP.md` for complete Google Cloud setup instructions
 
-**Future Workflow** (once complete):
+**Current Workflow** (Phase 4 - Admin Web Interface):
 1. Staff edit menu in Google Sheets (master copy)
-2. Auto-sync worker polls Sheet every 5 minutes for changes
+2. Auto-sync worker automatically syncs changes to `data/sample_menu.preview.json` (staging) every 5 minutes
+3. Admin opens admin panel at http://localhost:3000/admin.html
+4. Admin signs in with Google (whitelisted email required)
+5. Admin reviews preview vs production comparison
+6. Admin clicks "Publish Menu" button
+7. Automatic timestamped backup created in `data/backups/`
+8. Menu published to `data/sample_menu.json` (production)
+9. Admin clicks "Deploy to Live Site" button
+10. Changes committed to git and pushed to remote
+11. Vercel auto-deploys from git push
+
+**Auto-Sync Worker** (Optional - runs in background):
+- Start: `npm run auto-sync`
+- Polls Google Sheet every 5 minutes for changes (using Drive API)
+- Only syncs when Sheet's lastModifiedTime changes (efficient)
+- Requires Google Drive API enabled in Cloud Console
+
+**CLI Workflow** (Alternative - for manual operations):
+1. Staff edit menu in Google Sheets (master copy)
+2. Run `node scripts/googleSheetsSync.js` to manually sync changes to staging
 3. Changes synced to `data/sample_menu.preview.json` (staging)
-4. Admin reviews changes in admin panel
-5. Admin publishes to `data/sample_menu.json` (production)
-6. Admin deploys to live site
+4. Run `npm run publish-menu` to publish to production
+5. Automatic timestamped backup created in `data/backups/`
+6. Menu published to `data/sample_menu.json` (production)
 
 ## IMPORTANT RESTRICTIONS
 
