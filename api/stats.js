@@ -1,5 +1,13 @@
-const fs = require('fs');
-const path = require('path');
+const admin = require('firebase-admin');
+
+// Initialize Firebase Admin
+const serviceAccount = require('../service-account-key.json');
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
+const db = admin.firestore();
 
 module.exports = async (req, res) => {
   // Enable CORS
@@ -14,65 +22,44 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const previewPath = path.join(process.cwd(), 'data', 'sample_menu.preview.json');
-    const productionPath = path.join(process.cwd(), 'data', 'sample_menu.json');
+    // Get production menu
+    const productionDoc = await db.collection('menus').doc('production').get();
+    const stagingDoc = await db.collection('menus').doc('staging').get();
 
-    let previewStats = null;
-    let productionStats = null;
     let totalItems = 0;
     let previewItems = 0;
+    let lastPublish = 'Never';
+    let lastSync = 'Never';
     let hasChanges = false;
 
-    // Get production stats
-    if (fs.existsSync(productionPath)) {
-      productionStats = fs.statSync(productionPath);
-      const productionData = JSON.parse(fs.readFileSync(productionPath, 'utf8'));
-
-      let beachCount = 0;
-      let roomCount = 0;
-
-      if (productionData.beachDrinks) {
-        productionData.beachDrinks.forEach(category => {
-          beachCount += category.items ? category.items.length : 0;
-        });
-      }
-
-      if (productionData.roomService) {
-        productionData.roomService.forEach(category => {
-          roomCount += category.items ? category.items.length : 0;
-        });
-      }
-
+    if (productionDoc.exists) {
+      const productionData = productionDoc.data();
+      // Count items - they're stored as flat arrays
+      const beachCount = Array.isArray(productionData.beachDrinks) ? productionData.beachDrinks.length : 0;
+      const roomCount = Array.isArray(productionData.roomService) ? productionData.roomService.length : 0;
       totalItems = beachCount + roomCount;
+
+      if (productionData.lastUpdated) {
+        lastPublish = productionData.lastUpdated.toDate().toISOString();
+      }
     }
 
-    // Get preview stats
-    if (fs.existsSync(previewPath)) {
-      previewStats = fs.statSync(previewPath);
-      const previewData = JSON.parse(fs.readFileSync(previewPath, 'utf8'));
-
-      let beachCount = 0;
-      let roomCount = 0;
-
-      if (previewData.beachDrinks) {
-        previewData.beachDrinks.forEach(category => {
-          beachCount += category.items ? category.items.length : 0;
-        });
-      }
-
-      if (previewData.roomService) {
-        previewData.roomService.forEach(category => {
-          roomCount += category.items ? category.items.length : 0;
-        });
-      }
-
+    if (stagingDoc.exists) {
+      const stagingData = stagingDoc.data();
+      // Count items - they're stored as flat arrays
+      const beachCount = Array.isArray(stagingData.beachDrinks) ? stagingData.beachDrinks.length : 0;
+      const roomCount = Array.isArray(stagingData.roomService) ? stagingData.roomService.length : 0;
       previewItems = beachCount + roomCount;
 
-      // Check if files are different
-      if (productionStats) {
-        const previewContent = fs.readFileSync(previewPath, 'utf8');
-        const productionContent = fs.readFileSync(productionPath, 'utf8');
-        hasChanges = previewContent !== productionContent;
+      if (stagingData.lastUpdated) {
+        lastSync = stagingData.lastUpdated.toDate().toISOString();
+      }
+
+      // Check if staging is different from production
+      if (productionDoc.exists) {
+        const productionData = productionDoc.data();
+        hasChanges = JSON.stringify(stagingData.beachDrinks) !== JSON.stringify(productionData.beachDrinks) ||
+                     JSON.stringify(stagingData.roomService) !== JSON.stringify(productionData.roomService);
       }
     }
 
@@ -80,8 +67,8 @@ module.exports = async (req, res) => {
       totalItems,
       previewItems,
       hasChanges,
-      lastSync: previewStats ? previewStats.mtime.toISOString() : 'Never',
-      lastPublish: productionStats ? productionStats.mtime.toISOString() : 'Never'
+      lastSync,
+      lastPublish
     });
   } catch (error) {
     console.error('Stats error:', error);

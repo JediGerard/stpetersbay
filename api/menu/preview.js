@@ -1,5 +1,13 @@
-const fs = require('fs');
-const path = require('path');
+const admin = require('firebase-admin');
+
+// Initialize Firebase Admin
+const serviceAccount = require('../../service-account-key.json');
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
+const db = admin.firestore();
 
 module.exports = async (req, res) => {
   // Enable CORS
@@ -14,14 +22,17 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const previewPath = path.join(process.cwd(), 'data', 'sample_menu.preview.json');
+    const stagingDoc = await db.collection('menus').doc('staging').get();
 
-    if (!fs.existsSync(previewPath)) {
+    if (!stagingDoc.exists) {
       return res.status(404).json({ error: 'Preview menu not found. Run sync first.' });
     }
 
-    const previewData = JSON.parse(fs.readFileSync(previewPath, 'utf8'));
-    res.status(200).json(previewData);
+    const data = stagingDoc.data();
+    res.status(200).json({
+      beachDrinks: data.beachDrinks || [],
+      roomService: data.roomService || []
+    });
   } catch (error) {
     console.error('Preview menu error:', error);
     res.status(500).json({ error: error.message });

@@ -6,6 +6,16 @@ const { exec } = require('child_process');
 const { publishMenu } = require('./scripts/publishMenu');
 const fs = require('fs');
 const path = require('path');
+const admin = require('firebase-admin');
+
+// Initialize Firebase Admin
+const serviceAccount = require('./service-account-key.json');
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
+const db = admin.firestore();
 
 const app = express();
 const PORT = process.env.PORT || 3000;

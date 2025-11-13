@@ -22,9 +22,21 @@ let currentQuantity = 1;
 // Load menu data when page loads
 window.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('./data/sample_menu.json');
-        menuData = await response.json();
-        console.log('Menu loaded successfully:', menuData);
+        // Try to fetch from API first (works when deployed or with server running)
+        // Falls back to JSON file if API not available
+        let response;
+        try {
+            response = await fetch('/api/menu/production');
+            if (!response.ok) throw new Error('API not available');
+            menuData = await response.json();
+            console.log('Menu loaded from Firestore:', menuData);
+        } catch (apiError) {
+            // Fallback to JSON file for local development without server
+            console.log('API not available, falling back to JSON file');
+            response = await fetch('./data/sample_menu.json');
+            menuData = await response.json();
+            console.log('Menu loaded from JSON file:', menuData);
+        }
     } catch (error) {
         console.error('Error loading menu:', error);
         alert('Unable to load menu. Please refresh the page.');

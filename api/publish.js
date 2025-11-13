@@ -1,8 +1,19 @@
 const { OAuth2Client } = require('google-auth-library');
-const { publishMenu } = require('../scripts/publishMenu');
+const admin = require('firebase-admin');
+const fs = require('fs');
+const path = require('path');
+
+// Initialize Firebase Admin
+const serviceAccount = require('../service-account-key.json');
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
+const db = admin.firestore();
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-const ADMIN_EMAILS = process.env.ADMIN_EMAILS.split(',').map(e => e.trim().toLowerCase());
+const ADMIN_EMAILS = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || [];
 
 async function verifyToken(token) {
   try {
@@ -50,8 +61,23 @@ module.exports = async (req, res) => {
       return res.status(403).json({ success: false, error: 'Not authorized' });
     }
 
-    // Run publish script
-    publishMenu(payload.email);
+    // Get staging menu from Firestore
+    const stagingDoc = await db.collection('menus').doc('staging').get();
+
+    if (!stagingDoc.exists) {
+      return res.status(404).json({ success: false, error: 'Staging menu not found' });
+    }
+
+    const stagingData = stagingDoc.data();
+
+    // Copy staging to production in Firestore
+    await db.collection('menus').doc('production').set({
+      beachDrinks: stagingData.beachDrinks,
+      roomService: stagingData.roomService,
+      lastUpdated: admin.firestore.FieldValue.serverTimestamp(),
+      updatedBy: payload.email,
+      itemCount: (stagingData.beachDrinks?.length || 0) + (stagingData.roomService?.length || 0)
+    });
 
     res.status(200).json({
       success: true,

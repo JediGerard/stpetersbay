@@ -1,5 +1,13 @@
-const fs = require('fs');
-const path = require('path');
+const admin = require('firebase-admin');
+
+// Initialize Firebase Admin
+const serviceAccount = require('../../service-account-key.json');
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
+const db = admin.firestore();
 
 module.exports = async (req, res) => {
   // Enable CORS
@@ -14,14 +22,17 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const productionPath = path.join(process.cwd(), 'data', 'sample_menu.json');
+    const productionDoc = await db.collection('menus').doc('production').get();
 
-    if (!fs.existsSync(productionPath)) {
+    if (!productionDoc.exists) {
       return res.status(404).json({ error: 'Production menu not found.' });
     }
 
-    const productionData = JSON.parse(fs.readFileSync(productionPath, 'utf8'));
-    res.status(200).json(productionData);
+    const data = productionDoc.data();
+    res.status(200).json({
+      beachDrinks: data.beachDrinks || [],
+      roomService: data.roomService || []
+    });
   } catch (error) {
     console.error('Production menu error:', error);
     res.status(500).json({ error: error.message });

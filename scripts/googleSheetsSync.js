@@ -2,6 +2,16 @@ require('dotenv').config();
 const { google } = require('googleapis');
 const fs = require('fs');
 const path = require('path');
+const admin = require('firebase-admin');
+
+// Initialize Firebase Admin
+const serviceAccount = require('../service-account-key.json');
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
+const db = admin.firestore();
 
 // Configuration
 const SHEET_ID = process.env.GOOGLE_SHEET_ID;
@@ -165,7 +175,18 @@ async function syncGoogleSheetToJSON() {
       roomService: roomServiceItems
     };
 
-    // 6. Write to preview file
+    // 6. Write to Firestore and preview file
+    console.log('Writing to Firestore: /menus/staging');
+    await db.collection('menus').doc('staging').set({
+      beachDrinks: menuData.beachDrinks,
+      roomService: menuData.roomService,
+      lastUpdated: admin.firestore.FieldValue.serverTimestamp(),
+      updatedBy: 'google-sheets-sync',
+      itemCount: successCount
+    });
+    console.log('✅ Firestore updated');
+
+    // Also write to preview file as backup
     console.log(`Writing to preview file: ${PREVIEW_FILE}`);
     fs.writeFileSync(PREVIEW_FILE, JSON.stringify(menuData, null, 2), 'utf8');
 
