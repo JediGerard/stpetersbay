@@ -29,6 +29,7 @@ coverage/
 # Google Sheets Integration & Firebase Admin
 service-account-key.json
 firebase-admin-key.json
+firebase-key-for-vercel.txt
 data/backups/
 data/menu_editor.xlsx
 data/sample_menu.preview.json
