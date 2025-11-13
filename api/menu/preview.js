@@ -1,14 +1,4 @@
-const admin = require('firebase-admin');
-
-// Initialize Firebase Admin
-const firebaseServiceAccount = require('../../firebase-admin-key.json');
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(firebaseServiceAccount),
-    projectId: 'st-peters-bay-food-ordering'
-  });
-}
-const db = admin.firestore();
+const { getFirestore } = require('../_firebase');
 
 module.exports = async (req, res) => {
   // Enable CORS
@@ -23,6 +13,7 @@ module.exports = async (req, res) => {
   }
 
   try {
+    const db = getFirestore();
     const stagingDoc = await db.collection('menus').doc('staging').get();
 
     if (!stagingDoc.exists) {

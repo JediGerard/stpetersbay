@@ -1,17 +1,5 @@
 const { OAuth2Client } = require('google-auth-library');
-const admin = require('firebase-admin');
-const fs = require('fs');
-const path = require('path');
-
-// Initialize Firebase Admin
-const firebaseServiceAccount = require('../firebase-admin-key.json');
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(firebaseServiceAccount),
-    projectId: 'st-peters-bay-food-ordering'
-  });
-}
-const db = admin.firestore();
+const { getFirestore, admin } = require('./_firebase');
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const ADMIN_EMAILS = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || [];
@@ -61,6 +49,8 @@ module.exports = async (req, res) => {
     if (!isAdmin(payload.email)) {
       return res.status(403).json({ success: false, error: 'Not authorized' });
     }
+
+    const db = getFirestore();
 
     // Get staging menu from Firestore
     const stagingDoc = await db.collection('menus').doc('staging').get();
