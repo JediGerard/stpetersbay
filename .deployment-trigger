@@ -1,0 +1,3 @@
+# Deployment Trigger File
+# This file can be updated to trigger Vercel redeployments when needed
+# Last updated: 2025-11-13 - Added environment variables
