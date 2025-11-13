@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Operations Manual - St. Peter's Bay Food Ordering</title>
+    <link href="css/output.css" rel="stylesheet">
+    <style>
+        /* Print-friendly styles */
+        @media print {
+            .no-print { display: none; }
+            .page-break { page-break-before: always; }
+        }
+
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+
+        /* Screenshot placeholder styling */
+        .screenshot-placeholder {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: 2px dashed #e91e63;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-orange-600 to-red-600 text-white shadow-lg no-print sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-3xl font-bold">Staff Operations Manual</h1>
+            <p class="text-orange-100 mt-2">St. Peter's Bay Food Ordering System</p>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Sticky Table of Contents -->
+            <aside class="lg:col-span-1">
+                <nav class="bg-white rounded-lg shadow-md p-6 sticky top-24 no-print">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Contents</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#quick-start" class="text-orange-600 hover:text-orange-800 hover:underline">Quick Start Guide</a></li>
+                        <li><a href="#setup" class="text-orange-600 hover:text-orange-800 hover:underline">Initial Setup</a></li>
+                        <li><a href="#dashboard" class="text-orange-600 hover:text-orange-800 hover:underline">Using the Dashboard</a></li>
+                        <li><a href="#orders" class="text-orange-600 hover:text-orange-800 hover:underline">Managing Orders</a></li>
+                        <li><a href="#menu-sheets" class="text-orange-600 hover:text-orange-800 hover:underline">Editing Menu (Google Sheets)</a></li>
+                        <li><a href="#menu-excel" class="text-orange-600 hover:text-orange-800 hover:underline">Editing Menu (Excel)</a></li>
+                        <li><a href="#daily" class="text-orange-600 hover:text-orange-800 hover:underline">Daily Operations</a></li>
+                        <li><a href="#troubleshooting" class="text-orange-600 hover:text-orange-800 hover:underline">Troubleshooting</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="lg:col-span-3">
+                <!-- Quick Start Section -->
+                <section id="quick-start" class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-lg shadow-lg p-8 mb-8">
+                    <h2 class="text-3xl font-bold mb-4">Quick Start Guide</h2>
+                    <p class="text-lg mb-6">Get up and running in 15 minutes!</p>
+
+                    <div class="space-y-6">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">1. Access the Dashboard (2 minutes)</h3>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Open <strong>spbgazebo.com/dashboard.html</strong> on any computer or tablet</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Bookmark this page for quick access</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>The dashboard displays in real-time - no login needed</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">2. Process Your First Order (3 minutes)</h3>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>When a new order arrives, it appears with a yellow "New" badge</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Review the order details: items, location, customer name</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Click "Confirm Received" to acknowledge the order</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>After delivery, click "Mark Completed"</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">3. Make a Simple Menu Change (10 minutes)</h3>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Open the Google Sheet menu (link provided during setup)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Find the item you want to change</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Update price, availability, or other details</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Save changes (auto-saves in Google Sheets)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Wait for admin to publish (changes go live after approval)</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-yellow-300 bg-opacity-90 text-gray-800 rounded-lg p-4 mt-6">
+                            <p class="font-bold">💡 Pro Tip:</p>
+                            <p>Keep the dashboard open on a tablet in the kitchen or bar area so you can see orders as they come in!</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Initial Setup -->
+                <section id="setup" class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-orange-600 pb-2">Implementing the System at Your Restaurant</h2>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                        <p class="text-gray-800"><strong>📝 Note:</strong> This section is for new restaurants implementing the system. If your system is already set up, skip to the "Using the Dashboard" section.</p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">What You Need</h3>
+
+                    <div class="space-y-4 mb-8">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">🖥️ Hardware & Internet</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>One computer or tablet for viewing the dashboard (staff area)</li>
+                                <li>Reliable Wi-Fi throughout your facility (for guests to access ordering)</li>
+                                <li>Printer for QR codes (optional but recommended)</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">📱 Technical Setup (Done by IT/Owner)</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Firebase account for database</li>
+                                <li>Google Cloud account for menu management</li>
+                                <li>Domain name or hosting setup</li>
+                                <li>Google Sheet for menu editing</li>
+                                <li>Service account credentials</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2 italic">Your IT administrator or owner will handle these technical details.</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">👥 Staff Training</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Plan 30-60 minutes for initial staff training</li>
+                                <li>All staff who will process orders need dashboard training</li>
+                                <li>Staff who will edit menus need Google Sheets training</li>
+                                <li>Print this manual for reference</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Implementation Checklist</h3>
+
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                            <label class="text-gray-700"><strong>Step 1:</strong> Complete technical setup (IT/Owner) - See Owner Manual</label>
+                        </div>
+
+                        <div class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                            <label class="text-gray-700"><strong>Step 2:</strong> Populate Google Sheet with initial menu items</label>
+                        </div>
+
+                        <div class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                            <label class="text-gray-700"><strong>Step 3:</strong> Publish initial menu through admin panel</label>
+                        </div>
+
+                        <div class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                            <label class="text-gray-700"><strong>Step 4:</strong> Test ordering system from guest perspective</label>
+                        </div>
+
+                        <div class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                            <label class="text-gray-700"><strong>Step 5:</strong> Test dashboard order reception and management</label>
+                        </div>
+
+                        <div class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                            <label class="text-gray-700"><strong>Step 6:</strong> Train staff on dashboard usage</label>
+                        </div>
+
+                        <div class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                            <label class="text-gray-700"><strong>Step 7:</strong> Train staff on menu editing</label>
+                        </div>
+
+                        <div class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                            <label class="text-gray-700"><strong>Step 8:</strong> Generate and print QR codes for tables/rooms</label>
+                        </div>
+
+                        <div class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                            <label class="text-gray-700"><strong>Step 9:</strong> Place QR codes throughout facility</label>
+                        </div>
+
+                        <div class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                            <label class="text-gray-700"><strong>Step 10:</strong> Soft launch with test customers</label>
+                        </div>
+
+                        <div class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                            <label class="text-gray-700"><strong>Step 11:</strong> Full launch and guest communications</label>
+                        </div>
+                    </div>
+
+                    <div class="bg-green-50 border-l-4 border-green-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">✅ Setup Complete!</p>
+                        <p class="text-gray-700">Once all steps are completed, you're ready for daily operations. Continue to the next sections to learn how to use the system.</p>
+                    </div>
+                </section>
+
+                <!-- Using the Dashboard -->
+                <section id="dashboard" class="bg-white rounded-lg shadow-md p-8 mb-8 page-break">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-orange-600 pb-2">Using the Dashboard</h2>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Accessing the Dashboard</h3>
+
+                    <div class="space-y-4 mb-6">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">Dashboard URL</p>
+                            <p class="text-gray-700 mb-2">Open this page in your browser:</p>
+                            <div class="bg-white rounded-lg p-3 text-center">
+                                <p class="text-xl font-mono text-blue-600">spbgazebo.com/dashboard.html</p>
+                            </div>
+                            <p class="text-gray-600 mt-2 text-sm">Replace "spbgazebo.com" with your actual website address</p>
+                        </div>
+
+                        <div class="bg-yellow-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">💡 Best Practices</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Bookmark the dashboard for quick access</li>
+                                <li>Keep it open on a dedicated device (tablet or computer)</li>
+                                <li>Place the device where staff can easily see new orders</li>
+                                <li>The page auto-refreshes every 5 seconds</li>
+                                <li>No login required - anyone can view the dashboard</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-placeholder">
+                        [SCREENSHOT: Dashboard main page showing active orders]<br>
+                        Description: The dashboard displaying several order cards with different statuses
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Dashboard Layout</h3>
+
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Header Section</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><strong>Title:</strong> "Staff Dashboard" with logo</li>
+                                <li><strong>Order Count:</strong> Badge showing total active orders</li>
+                                <li><strong>Filter Buttons:</strong> All Orders, New Orders, Confirmed Orders, Beach Drinks, Room Service</li>
+                                <li><strong>Clear All Button:</strong> Testing utility (use with caution)</li>
+                            </ul>
+                        </div>
+
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Order Cards</h4>
+                            <p class="text-gray-700 mb-2">Each order is displayed as a card showing:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><strong>Customer Name:</strong> Who placed the order</li>
+                                <li><strong>Service Type:</strong> 🍹 Beach Drinks or 🍽️ Room Service</li>
+                                <li><strong>Location:</strong> Room number or beach area</li>
+                                <li><strong>Order Time:</strong> When the order was placed</li>
+                                <li><strong>Items List:</strong> All ordered items with quantities</li>
+                                <li><strong>Modifiers:</strong> Special options (color-coded)</li>
+                                <li><strong>Custom Notes:</strong> Per-item instructions</li>
+                                <li><strong>Order Notes:</strong> General instructions</li>
+                                <li><strong>Total Amount:</strong> Order total</li>
+                                <li><strong>Status Badge:</strong> Current order status</li>
+                                <li><strong>Action Buttons:</strong> Confirm or complete order</li>
+                            </ul>
+                        </div>
+
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Color Coding</h4>
+                            <div class="space-y-2">
+                                <p class="text-gray-700"><span class="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold mr-2">New</span> Yellow badge and border - Order just received</p>
+                                <p class="text-gray-700"><span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold mr-2">Confirmed</span> Green badge and border - Order confirmed and being prepared</p>
+                                <p class="text-gray-700"><span class="text-green-600 font-semibold mr-2">Green modifier</span> Addition to item (e.g., "With Ice", "Extra Rum")</p>
+                                <p class="text-gray-700"><span class="text-red-600 font-semibold mr-2">Red modifier</span> Removal from item (e.g., "No Ice", "No Onions")</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-placeholder mt-6">
+                        [SCREENSHOT: Single order card with all details labeled]<br>
+                        Description: Close-up of one order card with arrows pointing to each element
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Filter Options</h3>
+
+                    <div class="space-y-3">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">All Orders (Default)</p>
+                            <p class="text-gray-700">Shows all active orders (New and Confirmed). Completed orders are hidden.</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">New Orders Only</p>
+                            <p class="text-gray-700">Shows only orders that haven't been confirmed yet. Use this to focus on incoming orders.</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">Confirmed Orders Only</p>
+                            <p class="text-gray-700">Shows only orders you've confirmed and are currently preparing.</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">Beach Drinks Only</p>
+                            <p class="text-gray-700">Shows only beverage orders. Useful if different staff handle drinks vs. food.</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">Room Service Only</p>
+                            <p class="text-gray-700">Shows only food orders. Useful for kitchen staff to focus on meals.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Managing Orders -->
+                <section id="orders" class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-orange-600 pb-2">Managing Orders</h2>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Order Workflow</h3>
+
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-yellow-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 1: New Order Arrives</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-2 text-gray-700">
+                                <li>When a guest submits an order, it appears on the dashboard automatically</li>
+                                <li>The order has a yellow "New" badge</li>
+                                <li>The order count in the header increases</li>
+                                <li>Review all order details carefully</li>
+                            </ul>
+
+                            <div class="bg-yellow-50 rounded-lg p-4 mt-4">
+                                <p class="font-bold text-gray-800 mb-2">What to Check:</p>
+                                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                    <li>All items and quantities</li>
+                                    <li>Modifiers and special instructions</li>
+                                    <li>Delivery location (room number or beach area)</li>
+                                    <li>Any order-level notes</li>
+                                    <li>If anything is unclear, contact the guest</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-green-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 2: Confirm the Order</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Click the <strong>"Confirm Received"</strong> button on the order card</li>
+                                <li>The badge changes from yellow "New" to green "Confirmed"</li>
+                                <li>The border color changes from yellow to green</li>
+                                <li>A confirmation timestamp is recorded</li>
+                                <li>Now begin preparing the order</li>
+                            </ol>
+
+                            <div class="bg-green-50 rounded-lg p-4 mt-4">
+                                <p class="font-bold text-gray-800 mb-2">💡 Why Confirm Orders?</p>
+                                <p class="text-gray-700">Confirming lets you track which orders are being worked on vs. which just arrived. It helps prevent duplicate preparation if multiple staff are working.</p>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-blue-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 3: Prepare the Order</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Gather all items listed in the order</li>
+                                <li>Apply all modifiers (e.g., "With Ice", "Extra Rum")</li>
+                                <li>Follow all custom notes for each item</li>
+                                <li>Follow any general order notes</li>
+                                <li>Prepare items according to your restaurant's standards</li>
+                                <li>Double-check you have everything before delivery</li>
+                            </ul>
+
+                            <div class="bg-blue-50 rounded-lg p-4 mt-4">
+                                <p class="font-bold text-gray-800 mb-2">Reading Modifiers:</p>
+                                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                    <li><span class="text-green-600 font-semibold">Green text:</span> Add this to the item</li>
+                                    <li><span class="text-red-600 font-semibold">Red text:</span> Remove or don't include this</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-purple-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 4: Deliver the Order</h4>
+                            <p class="text-gray-700 mb-3"><strong>Check the delivery location carefully:</strong></p>
+
+                            <div class="bg-purple-50 rounded-lg p-4 mb-3">
+                                <p class="font-bold text-gray-800 mb-2">For Room Service:</p>
+                                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                    <li>Check the room number on the order</li>
+                                    <li>Some orders may request beach delivery instead</li>
+                                    <li>Knock and hand-deliver to guest</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-purple-50 rounded-lg p-4">
+                                <p class="font-bold text-gray-800 mb-2">For Beach Drinks:</p>
+                                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                    <li>Note the beach location (Main Beach Left/Center/Right, Pool Area, Cabanas)</li>
+                                    <li>Bring to the specified area</li>
+                                    <li>Confirm guest's name if needed</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-red-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 5: Mark as Completed</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Return to the dashboard</li>
+                                <li>Find the delivered order</li>
+                                <li>Click <strong>"Mark Completed"</strong></li>
+                                <li>The order disappears from the dashboard</li>
+                                <li>A completion timestamp is recorded</li>
+                            </ol>
+
+                            <div class="bg-red-50 rounded-lg p-4 mt-4">
+                                <p class="font-bold text-gray-800 mb-2">⚠️ Important:</p>
+                                <p class="text-gray-700">Only mark orders as completed after successful delivery. If there's an issue (guest not in room, wrong order, etc.), leave it active and communicate with management.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-placeholder mt-8">
+                        [SCREENSHOT: Order workflow diagram showing New → Confirmed → Completed]<br>
+                        Description: Visual flowchart of the order lifecycle with actions at each step
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Handling Special Situations</h3>
+
+                    <div class="space-y-4">
+                        <div class="bg-yellow-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">🔄 Guest Wants to Modify Order</p>
+                            <p class="text-gray-700 mb-2">If a guest contacts you to change their order:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>If you haven't started preparing: note the changes manually and proceed</li>
+                                <li>If already prepared: discuss options with guest (prepare new items, issue refund, etc.)</li>
+                                <li>The dashboard doesn't support editing orders - handle changes manually</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">❌ Guest Wants to Cancel</p>
+                            <p class="text-gray-700 mb-2">If a guest asks to cancel:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>If not yet prepared: mark as completed to remove from dashboard</li>
+                                <li>If already prepared: discuss with management about policy</li>
+                                <li>Note the cancellation for billing purposes</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-red-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">🚫 Out of Stock Items</p>
+                            <p class="text-gray-700 mb-2">If an ordered item is unavailable:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Contact the guest immediately (call room or find them)</li>
+                                <li>Offer an alternative or remove item</li>
+                                <li>Update the menu to mark item unavailable (see Menu Editing section)</li>
+                                <li>Adjust total amount for billing if needed</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">⏰ High Order Volume</p>
+                            <p class="text-gray-700 mb-2">During busy times:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Prioritize orders by time received (oldest first)</li>
+                                <li>Confirm all new orders to show they're being worked on</li>
+                                <li>Communicate realistic wait times if guests inquire</li>
+                                <li>Consider calling in additional staff if needed</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Editing Menu (Google Sheets) -->
+                <section id="menu-sheets" class="bg-white rounded-lg shadow-md p-8 mb-8 page-break">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-orange-600 pb-2">Editing the Menu (Google Sheets Method)</h2>
+
+                    <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                        <p class="text-gray-800"><strong>✅ Recommended Method:</strong> This is the easiest way to edit your menu. Changes are automatically synced and published by an administrator.</p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">How It Works</h3>
+
+                    <div class="bg-blue-50 rounded-lg p-6 mb-6">
+                        <ol class="list-decimal list-inside space-y-3 text-gray-700">
+                            <li><strong>You edit</strong> the Google Sheet menu (your master menu)</li>
+                            <li><strong>Auto-sync</strong> detects changes every 5 minutes</li>
+                            <li><strong>Changes sync</strong> to a staging/preview version</li>
+                            <li><strong>Admin reviews</strong> and publishes to live site</li>
+                            <li><strong>Guests see</strong> updated menu</li>
+                        </ol>
+                    </div>
+
+                    <div class="screenshot-placeholder">
+                        [SCREENSHOT: Google Sheet menu with sample data]<br>
+                        Description: The menu spreadsheet showing columns and several menu items
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Accessing the Google Sheet</h3>
+
+                    <div class="space-y-3">
+                        <p class="text-gray-700">Your administrator will provide you with a link to the Google Sheet. Bookmark this link for easy access.</p>
+                        <p class="text-gray-700">You'll need a Google account with edit permission to make changes.</p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Understanding the Columns</h3>
+
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Type (Required)</h4>
+                            <p class="text-gray-700 mb-2">What kind of order this belongs to. Must be exactly one of:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">beachdrinks</code> - For beverages</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">roomservice</code> - For food</li>
+                            </ul>
+                            <p class="text-red-600 mt-2 text-sm">⚠️ Must be lowercase, no spaces, exactly as shown</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Category (Required)</h4>
+                            <p class="text-gray-700">How items are grouped on the menu. Examples:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Beach Drinks: Rum, Beer, Cocktails, Wine, Soft Drinks, etc.</li>
+                                <li>Room Service: Salads, Pasta, Gazebo Specialties, etc.</li>
+                            </ul>
+                            <p class="text-gray-600 mt-2 text-sm">You can create new categories by typing a new name</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Item Name (Required)</h4>
+                            <p class="text-gray-700">The display name guests will see. Examples:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>"Piña Colada"</li>
+                                <li>"Caesar Salad"</li>
+                                <li>"Gazebo Burger"</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Price (Required)</h4>
+                            <p class="text-gray-700 mb-2">The item price as a number only (no $ symbol).</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>✅ Correct: <code class="bg-gray-200 px-2 py-1 rounded">12.50</code></li>
+                                <li>❌ Wrong: <code class="bg-gray-200 px-2 py-1 rounded">$12.50</code></li>
+                                <li>✅ Correct: <code class="bg-gray-200 px-2 py-1 rounded">8</code> or <code class="bg-gray-200 px-2 py-1 rounded">8.00</code></li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Available (Required)</h4>
+                            <p class="text-gray-700 mb-2">Whether the item can currently be ordered. Must be exactly:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">TRUE</code> - Item is available</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">FALSE</code> - Item is unavailable</li>
+                            </ul>
+                            <p class="text-red-600 mt-2 text-sm">⚠️ Must be uppercase: TRUE or FALSE</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Modifiers (Optional)</h4>
+                            <p class="text-gray-700 mb-2">Customization options guests can choose. Separate with commas.</p>
+                            <p class="text-gray-700 mb-2">Examples:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">With Ice, Extra Rum, Frozen</code></li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">No Onions, Extra Cheese, Well Done</code></li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">Dressing on Side, No Croutons</code></li>
+                            </ul>
+                            <p class="text-gray-600 mt-2 text-sm">Leave blank if item has no modifiers</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Image Path (Optional)</h4>
+                            <p class="text-gray-700 mb-2">Path to item image. Usually managed by IT/admin.</p>
+                            <p class="text-gray-700">Example: <code class="bg-gray-200 px-2 py-1 rounded">images/placeholder.png</code></p>
+                            <p class="text-gray-600 mt-2 text-sm">Contact admin if you need to add item images</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Common Menu Editing Tasks</h3>
+
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-green-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Adding a New Item</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Scroll to the bottom of the sheet</li>
+                                <li>Add a new row</li>
+                                <li>Fill in all required columns: Type, Category, Item Name, Price, Available</li>
+                                <li>Add Modifiers if applicable</li>
+                                <li>Leave Image Path blank (or ask admin for image)</li>
+                                <li>Save (auto-saves in Google Sheets)</li>
+                            </ol>
+
+                            <div class="screenshot-placeholder mt-4">
+                                [SCREENSHOT: Adding a new row to Google Sheet]<br>
+                                Description: A new menu item being added with all fields filled in
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-blue-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Changing a Price</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Find the item you want to update</li>
+                                <li>Click on the Price cell</li>
+                                <li>Enter the new price (number only, no $)</li>
+                                <li>Press Enter</li>
+                                <li>Sheet auto-saves</li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-yellow-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Marking an Item Unavailable</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Find the item that's out of stock</li>
+                                <li>Click on the Available cell</li>
+                                <li>Change from TRUE to FALSE (or use dropdown)</li>
+                                <li>Press Enter</li>
+                                <li>Guests will no longer be able to order this item</li>
+                                <li>Remember to change back to TRUE when it's back in stock!</li>
+                            </ol>
+
+                            <div class="bg-yellow-50 rounded-lg p-4 mt-4">
+                                <p class="font-bold text-gray-800 mb-2">💡 Best Practice:</p>
+                                <p class="text-gray-700">At the start of each day, review the Available column and mark FALSE for any items you're out of. Update to TRUE as items become available.</p>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-red-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Deleting an Item</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Find the item to remove</li>
+                                <li>Right-click on the row number</li>
+                                <li>Select "Delete row"</li>
+                                <li>Confirm deletion</li>
+                            </ol>
+
+                            <div class="bg-red-50 rounded-lg p-4 mt-4">
+                                <p class="font-bold text-gray-800 mb-2">⚠️ Caution:</p>
+                                <p class="text-gray-700">Deleted items cannot be recovered. If you just want to temporarily remove an item, set Available to FALSE instead of deleting.</p>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-purple-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Updating Modifiers</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Find the item</li>
+                                <li>Click on the Modifiers cell</li>
+                                <li>Edit the comma-separated list</li>
+                                <li>Press Enter to save</li>
+                            </ol>
+
+                            <p class="text-gray-700 mt-3 mb-2">Examples:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Add an option: <code class="bg-gray-200 px-2 py-1 rounded">With Ice, Extra Rum, <strong>Frozen</strong></code></li>
+                                <li>Remove an option: Delete that word and its comma</li>
+                                <li>Rename an option: Change the text</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Important Rules & Tips</h3>
+
+                    <div class="space-y-3">
+                        <div class="bg-red-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">❌ Common Mistakes to Avoid:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Typing "beach drinks" instead of "beachdrinks" (no space!)</li>
+                                <li>Putting $ in the price field</li>
+                                <li>Typing "true" instead of "TRUE" (must be uppercase)</li>
+                                <li>Adding extra spaces before or after values</li>
+                                <li>Deleting the header row</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">✅ Best Practices:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Make small changes and test rather than many changes at once</li>
+                                <li>Keep item names clear and concise</li>
+                                <li>Use consistent category names (don't mix "Beer" and "Beers")</li>
+                                <li>Review your changes before asking admin to publish</li>
+                                <li>Communicate menu changes to staff before they go live</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">⏰ Publishing Timeline:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Changes save immediately in Google Sheets</li>
+                                <li>Auto-sync detects changes within 5 minutes</li>
+                                <li>Changes sync to staging/preview</li>
+                                <li>Admin must review and publish to make live</li>
+                                <li>Total time: 10-30 minutes from edit to live</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-purple-50 rounded-lg p-4">
+                            <p class="font-bold text-gray-800 mb-2">🔍 Checking Your Changes:</p>
+                            <p class="text-gray-700">After making changes, let admin know so they can review and publish. The admin panel shows what changed before publishing to ensure accuracy.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Editing Menu (Excel) -->
+                <section id="menu-excel" class="bg-white rounded-lg shadow-md p-8 mb-8 page-break">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-orange-600 pb-2">Editing the Menu (Excel Method - Alternative)</h2>
+
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                        <p class="text-gray-800"><strong>⚠️ Alternative Method:</strong> This method is less common and requires command-line access. Most restaurants use the Google Sheets method instead. Only use this if instructed by your administrator.</p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">When to Use This Method</h3>
+
+                    <ul class="list-disc list-inside ml-4 space-y-2 text-gray-700 mb-6">
+                        <li>Your restaurant doesn't use Google Sheets integration</li>
+                        <li>You prefer working in Microsoft Excel or similar software</li>
+                        <li>You have access to the server/computer running the system</li>
+                        <li>Your IT person sets this up for you</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Excel Method Workflow</h3>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-orange-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">1</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Export current menu to Excel</strong></p>
+                                <p class="text-gray-600 text-sm">Command: <code class="bg-gray-200 px-2 py-1 rounded">npm run export-menu</code></p>
+                                <p class="text-gray-600 text-sm">This creates a file: <code>data/menu_editor.xlsx</code></p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-orange-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">2</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Open and edit the Excel file</strong></p>
+                                <p class="text-gray-600 text-sm">Use Microsoft Excel, Google Sheets, or any spreadsheet software</p>
+                                <p class="text-gray-600 text-sm">Column structure is identical to Google Sheets method (see previous section)</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-orange-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">3</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Save the Excel file</strong></p>
+                                <p class="text-gray-600 text-sm">Save as <code>menu_editor.xlsx</code> in the <code>data/</code> folder</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-orange-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">4</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Import changes back to system</strong></p>
+                                <p class="text-gray-600 text-sm">Command: <code class="bg-gray-200 px-2 py-1 rounded">npm run import-menu</code></p>
+                                <p class="text-gray-600 text-sm">This validates and publishes changes immediately</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-orange-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">5</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Changes are live immediately</strong></p>
+                                <p class="text-gray-600 text-sm">No admin approval needed - goes straight to production</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">⚠️ Important Differences from Google Sheets Method:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li><strong>No staging/preview:</strong> Changes go live immediately</li>
+                            <li><strong>No automatic backups:</strong> Make your own backup copies</li>
+                            <li><strong>No admin review:</strong> You're responsible for accuracy</li>
+                            <li><strong>Requires server access:</strong> Can't do it remotely</li>
+                            <li><strong>Manual process:</strong> More steps than Google Sheets</li>
+                        </ul>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Viewing Current Menu (Command Line)</h3>
+
+                    <p class="text-gray-700 mb-3">You can view the current live menu in a formatted way:</p>
+
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-mono text-sm text-gray-800">npm run view-menu</p>
+                        <p class="text-gray-600 text-sm mt-2">This displays the menu in your terminal with all items, prices, and availability</p>
+                    </div>
+                </section>
+
+                <!-- Daily Operations -->
+                <section id="daily" class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-orange-600 pb-2">Daily Operations Checklist</h2>
+
+                    <div class="space-y-6">
+                        <div class="bg-blue-50 rounded-lg p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">🌅 Opening Procedures (Morning)</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Open dashboard on staff device</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Check internet connection is working</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Test place an order from guest perspective</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Verify test order appears on dashboard</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Mark test order as completed</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Review menu - mark unavailable items as FALSE in Google Sheet</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Update any prices that changed</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Brief staff on any menu changes or specials</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Ensure QR codes are visible and accessible</label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-green-50 rounded-lg p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">⏰ During Service Hours</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Monitor dashboard continuously for new orders</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Confirm new orders within 2-3 minutes</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Prepare and deliver orders promptly</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Mark orders completed after delivery</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Update menu if items run out (set Available to FALSE)</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Keep dashboard device charged and accessible</label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-orange-50 rounded-lg p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">🌙 Closing Procedures (Evening)</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Complete all pending orders</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Verify dashboard shows zero active orders</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Note which items ran out today for tomorrow's prep</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Report any technical issues to management</label>
+                                </li>
+                                <li class="flex items-start">
+                                    <input type="checkbox" class="mt-1 mr-3 w-5 h-5" />
+                                    <label class="text-gray-700">Leave dashboard open for any late orders (if applicable)</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">💡 Pro Tips for Smooth Operations:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li>Assign one person to monitor dashboard during busy times</li>
+                            <li>Use the filter buttons to separate Beach Drinks from Room Service</li>
+                            <li>Communicate with kitchen/bar staff about order volume</li>
+                            <li>Update menu availability in real-time to prevent disappointment</li>
+                            <li>Keep a notepad near dashboard for special notes/issues</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Troubleshooting -->
+                <section id="troubleshooting" class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-orange-600 pb-2">Troubleshooting Common Issues</h2>
+
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">🚫 Dashboard shows no orders but guest says they ordered</h3>
+                            <p class="text-gray-700 mb-2"><strong>Possible causes:</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700 mb-3">
+                                <li>Dashboard needs refreshing - press F5 or pull to refresh</li>
+                                <li>Internet connection issue - check Wi-Fi</li>
+                                <li>Guest's order didn't submit - ask them to check for confirmation</li>
+                                <li>Filter is hiding the order - click "All Orders"</li>
+                            </ul>
+                            <p class="text-gray-700"><strong>Solution:</strong> Refresh dashboard, check all filters, verify internet. If still not showing, take order manually.</p>
+                        </div>
+
+                        <div class="border-l-4 border-yellow-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">📱 Guest says ordering page won't load</h3>
+                            <p class="text-gray-700 mb-2"><strong>Troubleshooting steps:</strong></p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700 mb-3">
+                                <li>Check their Wi-Fi connection</li>
+                                <li>Try opening in a different browser</li>
+                                <li>Clear browser cache/cookies</li>
+                                <li>Try on a different device</li>
+                                <li>If all fails, take order manually and report to IT</li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">💰 Prices showing incorrectly on menu</h3>
+                            <p class="text-gray-700 mb-2"><strong>Solution:</strong></p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700 mb-3">
+                                <li>Check Google Sheet for correct prices</li>
+                                <li>Edit prices in sheet if needed</li>
+                                <li>Wait for auto-sync (5 minutes)</li>
+                                <li>Ask admin to publish changes</li>
+                                <li>Verify prices updated on live site</li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">❌ Item showing as available but it's out of stock</h3>
+                            <p class="text-gray-700 mb-2"><strong>Immediate fix:</strong></p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700 mb-3">
+                                <li>Open Google Sheet</li>
+                                <li>Find the item</li>
+                                <li>Change Available to FALSE</li>
+                                <li>Ask admin to publish immediately</li>
+                                <li>Meanwhile, contact any guests who ordered it</li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">🔄 Dashboard keeps refreshing or acting strange</h3>
+                            <p class="text-gray-700 mb-2"><strong>Try these fixes:</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700 mb-3">
+                                <li>Close and reopen the browser</li>
+                                <li>Clear browser cache</li>
+                                <li>Try a different browser (Chrome, Firefox, Safari)</li>
+                                <li>Restart the device</li>
+                                <li>Check for browser updates</li>
+                                <li>Contact IT if problem persists</li>
+                            </ul>
+                        </div>
+
+                        <div class="border-l-4 border-orange-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">📝 Order has confusing or contradictory instructions</h3>
+                            <p class="text-gray-700 mb-2"><strong>Best practice:</strong></p>
+                            <p class="text-gray-700">Call the guest (room number) or find them (beach location) to clarify. It's better to ask than to prepare it wrong!</p>
+                        </div>
+
+                        <div class="border-l-4 border-pink-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">🌐 Entire website is down</h3>
+                            <p class="text-gray-700 mb-2"><strong>Emergency procedure:</strong></p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700 mb-3">
+                                <li>Contact IT/management immediately</li>
+                                <li>Switch to manual order taking temporarily</li>
+                                <li>Put up signs notifying guests of the issue</li>
+                                <li>Provide alternative contact method (phone, in-person)</li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-teal-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">🔐 Can't access Google Sheet menu</h3>
+                            <p class="text-gray-700 mb-2"><strong>Solutions:</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700 mb-3">
+                                <li>Make sure you're signed into the correct Google account</li>
+                                <li>Check with admin that you have edit permission</li>
+                                <li>Request access if you see "Request Access" button</li>
+                                <li>Contact admin to add your email to the sheet</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mt-8">
+                        <p class="text-gray-800 font-bold mb-2">⚠️ When to Contact Management/IT:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li>Website completely down for more than 5 minutes</li>
+                            <li>Multiple guests reporting ordering issues</li>
+                            <li>Dashboard not updating or showing errors</li>
+                            <li>Can't edit menu after multiple attempts</li>
+                            <li>Any security concerns (unauthorized access, data issues)</li>
+                            <li>Payment or billing discrepancies</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Contact Section -->
+                <section class="bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-lg shadow-lg p-8 mb-8">
+                    <h2 class="text-2xl font-bold mb-4">Need Additional Support?</h2>
+                    <p class="text-lg mb-6">Contact your system administrator or management for:</p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">🛠️ Technical Issues</h3>
+                            <ul class="space-y-2">
+                                <li>Website problems</li>
+                                <li>Dashboard errors</li>
+                                <li>Menu sync issues</li>
+                                <li>Access permissions</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">📚 Training & Questions</h3>
+                            <ul class="space-y-2">
+                                <li>Additional staff training</li>
+                                <li>Process clarifications</li>
+                                <li>New feature requests</li>
+                                <li>Feedback and suggestions</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-xl font-bold">Thank you for providing excellent service!</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">© 2025 St. Peter's Bay Food Ordering System</p>
+            <p class="text-gray-400 text-sm">Version 5.0 - Staff Operations Manual</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner/Admin Manual - St. Peter's Bay Food Ordering</title>
+    <link href="css/output.css" rel="stylesheet">
+    <style>
+        /* Print-friendly styles */
+        @media print {
+            .no-print { display: none; }
+            .page-break { page-break-before: always; }
+        }
+
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+
+        /* Screenshot placeholder styling */
+        .screenshot-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 2px dashed #5b21b6;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg no-print sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-3xl font-bold">Owner/Admin Manual</h1>
+            <p class="text-purple-100 mt-2">St. Peter's Bay Food Ordering System</p>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Sticky Table of Contents -->
+            <aside class="lg:col-span-1">
+                <nav class="bg-white rounded-lg shadow-md p-6 sticky top-24 no-print">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Contents</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#quick-start" class="text-purple-600 hover:text-purple-800 hover:underline">Quick Start Guide</a></li>
+                        <li><a href="#admin-panel" class="text-purple-600 hover:text-purple-800 hover:underline">Admin Panel Access</a></li>
+                        <li><a href="#publishing" class="text-purple-600 hover:text-purple-800 hover:underline">Publishing Menus</a></li>
+                        <li><a href="#deployment" class="text-purple-600 hover:text-purple-800 hover:underline">Deploying to Live Site</a></li>
+                        <li><a href="#backups" class="text-purple-600 hover:text-purple-800 hover:underline">Backup Management</a></li>
+                        <li><a href="#users" class="text-purple-600 hover:text-purple-800 hover:underline">User Management</a></li>
+                        <li><a href="#auto-sync" class="text-purple-600 hover:text-purple-800 hover:underline">Auto-Sync Worker</a></li>
+                        <li><a href="#security" class="text-purple-600 hover:text-purple-800 hover:underline">Security & Access</a></li>
+                        <li><a href="#analytics" class="text-purple-600 hover:text-purple-800 hover:underline">Analytics & Monitoring</a></li>
+                        <li><a href="#troubleshooting" class="text-purple-600 hover:text-purple-800 hover:underline">Troubleshooting</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="lg:col-span-3">
+                <!-- Quick Start Section -->
+                <section id="quick-start" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg shadow-lg p-8 mb-8">
+                    <h2 class="text-3xl font-bold mb-4">Quick Start Guide</h2>
+                    <p class="text-lg mb-6">Essential admin tasks in 10 minutes!</p>
+
+                    <div class="space-y-6">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">1. Access Admin Panel (2 minutes)</h3>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Start admin server: <code class="bg-black bg-opacity-30 px-2 py-1 rounded">npm run start-server</code></span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Open: <strong>http://localhost:3000/admin.html</strong></span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Sign in with your whitelisted Google account</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">2. Review Menu Changes (3 minutes)</h3>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Check "Last Sync" time - should be recent</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Look for yellow warning if preview differs from production</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Compare Preview vs Production item counts</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Review what changed (prices, availability, new items)</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">3. Publish and Deploy (5 minutes)</h3>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Click <strong>"Publish Menu"</strong> (creates automatic backup)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Wait for success message</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Click <strong>"Deploy to Live Site"</strong></span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Watch deployment log (30-60 seconds)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Verify changes are live on website</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-yellow-300 bg-opacity-90 text-gray-800 rounded-lg p-4 mt-6">
+                            <p class="font-bold">💡 Pro Tip:</p>
+                            <p>Check the admin panel daily to ensure staff's Google Sheet edits are published promptly. The auto-sync worker handles the detection automatically!</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Admin Panel Access -->
+                <section id="admin-panel" class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-purple-600 pb-2">Accessing the Admin Panel</h2>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Prerequisites</h3>
+
+                    <div class="space-y-4 mb-6">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">✅ What You Need:</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Admin server must be running on your computer</li>
+                                <li>Whitelisted Google account (your email must be in the approved list)</li>
+                                <li>Access to the computer/server where the system is hosted</li>
+                                <li>Node.js installed (if running locally)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Starting the Admin Server</h3>
+
+                    <div class="bg-gray-50 rounded-lg p-6 mb-6">
+                        <p class="font-bold text-gray-800 mb-3">Step 1: Open Terminal/Command Prompt</p>
+                        <p class="text-gray-700 mb-3">Navigate to your project folder:</p>
+                        <div class="bg-black text-green-400 font-mono p-4 rounded-lg mb-3">
+                            <p>cd /path/to/SPB food ordering</p>
+                        </div>
+
+                        <p class="font-bold text-gray-800 mb-3 mt-6">Step 2: Start the Server</p>
+                        <div class="bg-black text-green-400 font-mono p-4 rounded-lg mb-3">
+                            <p>npm run start-server</p>
+                        </div>
+
+                        <p class="font-bold text-gray-800 mb-3 mt-6">Step 3: Wait for Confirmation</p>
+                        <p class="text-gray-700 mb-2">You should see:</p>
+                        <div class="bg-black text-green-400 font-mono p-4 rounded-lg">
+                            <p>Admin server running on http://localhost:3000</p>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-placeholder">
+                        [SCREENSHOT: Terminal showing successful server start]<br>
+                        Description: Terminal window with "npm run start-server" command and success message
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Logging Into Admin Panel</h3>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">1</div>
+                            <div>
+                                <p class="text-gray-700 mb-2"><strong>Open the Admin URL</strong></p>
+                                <div class="bg-gray-100 rounded-lg p-3">
+                                    <p class="text-xl font-mono text-purple-600 text-center">http://localhost:3000/admin.html</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">2</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Click "Sign in with Google"</strong> button</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">3</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Choose your whitelisted Google account</strong> from the Google sign-in popup</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">4</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Allow permissions</strong> if prompted</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">5</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Access granted!</strong> You'll see the admin dashboard</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-placeholder mt-6">
+                        [SCREENSHOT: Admin login page with "Sign in with Google" button]<br>
+                        Description: Clean login page with Google sign-in button and St. Peter's Bay branding
+                    </div>
+
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">🚫 Access Denied?</p>
+                        <p class="text-gray-700 mb-2">If you see "Access Denied," your email is not whitelisted. To add yourself:</p>
+                        <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                            <li>Open the <code class="bg-gray-200 px-2 py-1 rounded">.env</code> file in your project</li>
+                            <li>Find the <code class="bg-gray-200 px-2 py-1 rounded">ADMIN_EMAILS</code> line</li>
+                            <li>Add your email: <code class="bg-gray-200 px-2 py-1 rounded">ADMIN_EMAILS=existing@email.com,your@email.com</code></li>
+                            <li>Save the file and restart the server</li>
+                        </ol>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Admin Dashboard Overview</h3>
+
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">📊 Status Cards (Top Section)</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><strong>Production Items:</strong> Total items currently live on website</li>
+                                <li><strong>Preview Items:</strong> Total items in staging (from Google Sheets)</li>
+                                <li><strong>Last Sync:</strong> When Google Sheet was last synced to preview</li>
+                                <li><strong>Last Publish:</strong> When preview was last published to production</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">📋 Menu Comparison (Middle Section)</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Side-by-side view: Staging (left) vs Production (right)</li>
+                                <li>Item counts by service type</li>
+                                <li>Yellow warning if differences detected</li>
+                                <li>"View Full JSON" buttons for detailed inspection</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">🕒 Recent Activity (Bottom Section)</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Last 10 menu publications</li>
+                                <li>Backup file names with timestamps</li>
+                                <li>File sizes</li>
+                                <li>Publication history log</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">🔘 Action Buttons</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><strong>"Publish Menu":</strong> Move preview to production (always enabled)</li>
+                                <li><strong>"Deploy to Live Site":</strong> Push to website (enabled after publishing)</li>
+                                <li><strong>"Sign Out":</strong> Log out of admin panel</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-placeholder mt-6">
+                        [SCREENSHOT: Admin dashboard showing all sections]<br>
+                        Description: Full admin panel with status cards, menu comparison, and action buttons
+                    </div>
+                </section>
+
+                <!-- Publishing Menus -->
+                <section id="publishing" class="bg-white rounded-lg shadow-md p-8 mb-8 page-break">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-purple-600 pb-2">Publishing Menu Changes</h2>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Understanding the Publishing Workflow</h3>
+
+                    <div class="bg-blue-50 rounded-lg p-6 mb-6">
+                        <p class="font-bold text-gray-800 mb-3">The Three-Stage System:</p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                            <li><strong>Google Sheet (Master):</strong> Staff edit menu here - this is the source of truth</li>
+                            <li><strong>Preview/Staging (sample_menu.preview.json):</strong> Auto-synced from Google Sheet every 5 minutes</li>
+                            <li><strong>Production (sample_menu.json):</strong> Live menu on website - only you can publish to this</li>
+                        </ol>
+                    </div>
+
+                    <div class="screenshot-placeholder">
+                        [SCREENSHOT: Workflow diagram showing Google Sheet → Preview → Production]<br>
+                        Description: Visual flowchart of the three-stage menu system with arrows
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Step-by-Step Publishing Process</h3>
+
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-blue-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 1: Review Changes</h4>
+                            <p class="text-gray-700 mb-3">Before publishing, always check:</p>
+
+                            <div class="bg-blue-50 rounded-lg p-4 mb-3">
+                                <p class="font-semibold text-gray-800 mb-2">Last Sync Time</p>
+                                <p class="text-gray-700">Ensure it's recent (within the last 5-10 minutes). If it's old, the auto-sync worker might not be running.</p>
+                            </div>
+
+                            <div class="bg-green-50 rounded-lg p-4 mb-3">
+                                <p class="font-semibold text-gray-800 mb-2">Change Warning</p>
+                                <p class="text-gray-700">Look for the yellow warning banner that says "Preview menu differs from production." If you don't see this, there are no changes to publish.</p>
+                            </div>
+
+                            <div class="bg-purple-50 rounded-lg p-4">
+                                <p class="font-semibold text-gray-800 mb-2">Item Counts</p>
+                                <p class="text-gray-700">Compare the number of Beach Drinks and Room Service items between Preview and Production. This gives you a quick sense of what changed.</p>
+                            </div>
+
+                            <div class="screenshot-placeholder mt-4">
+                                [SCREENSHOT: Admin panel showing yellow warning about differences]<br>
+                                Description: Dashboard with change warning highlighted
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-purple-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 2: Inspect Changes (Optional but Recommended)</h4>
+                            <p class="text-gray-700 mb-3">For detailed review:</p>
+
+                            <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Click <strong>"View Full JSON"</strong> under Preview menu</li>
+                                <li>Click <strong>"View Full JSON"</strong> under Production menu</li>
+                                <li>Compare the two to see exactly what changed:
+                                    <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+                                        <li>New items added</li>
+                                        <li>Items removed</li>
+                                        <li>Price changes</li>
+                                        <li>Availability changes (TRUE/FALSE)</li>
+                                        <li>Modifier updates</li>
+                                    </ul>
+                                </li>
+                            </ol>
+
+                            <div class="bg-yellow-50 rounded-lg p-4 mt-4">
+                                <p class="font-bold text-gray-800 mb-2">💡 Why Review?</p>
+                                <p class="text-gray-700">Catch mistakes before they go live. For example, if you see a price of $100 instead of $10, you know there's a typo to fix in the Google Sheet.</p>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-green-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 3: Publish the Menu</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Click the <strong>"Publish Menu"</strong> button</li>
+                                <li>A confirmation popup appears asking "Are you sure you want to publish the menu changes?"</li>
+                                <li>Click <strong>"OK"</strong> to confirm or <strong>"Cancel"</strong> to abort</li>
+                                <li>Wait 1-2 seconds for processing</li>
+                            </ol>
+
+                            <div class="bg-green-50 rounded-lg p-4 mt-4">
+                                <p class="font-bold text-gray-800 mb-2">✅ What Happens When You Publish:</p>
+                                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                    <li>Current production menu is automatically backed up with timestamp</li>
+                                    <li>Backup saved to: <code class="bg-gray-200 px-2 py-1 rounded">data/backups/sample_menu_YYYY-MM-DDTHH-MM-SS.json</code></li>
+                                    <li>Preview menu copied to production: <code class="bg-gray-200 px-2 py-1 rounded">sample_menu.preview.json → sample_menu.json</code></li>
+                                    <li>Action logged with your email and timestamp</li>
+                                    <li>"Deploy to Live Site" button becomes enabled</li>
+                                </ul>
+                            </div>
+
+                            <div class="screenshot-placeholder mt-4">
+                                [SCREENSHOT: Success message after publishing]<br>
+                                Description: Green success banner saying "Menu published successfully! Ready to deploy to live site."
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-yellow-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 4: Verify Publication</h4>
+                            <p class="text-gray-700 mb-3">After publishing, check:</p>
+
+                            <ul class="list-disc list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Success message appears: "Menu published successfully!"</li>
+                                <li>Yellow warning disappears (Preview and Production now match)</li>
+                                <li>Production item counts updated to match Preview</li>
+                                <li>"Last Publish" timestamp shows current time</li>
+                                <li>New backup appears in Recent Activity log</li>
+                                <li>"Deploy to Live Site" button is now clickable (not grayed out)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mt-8">
+                        <p class="text-gray-800 font-bold mb-2">⚠️ Important Notes:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li><strong>Publishing doesn't update the live website yet!</strong> It only updates the local production file.</li>
+                            <li>You must complete the deployment step (next section) to make changes visible to guests.</li>
+                            <li>Backups are created automatically - you never lose previous menus.</li>
+                            <li>Publishing can be done as many times as needed - each publish creates a new backup.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Deploying to Live Site -->
+                <section id="deployment" class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-purple-600 pb-2">Deploying Menu to Live Website</h2>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                        <p class="text-gray-800"><strong>📝 Note:</strong> This step pushes your published menu changes to the live website (spbgazebo.com) where guests will see them. Only do this after you've published and reviewed the changes.</p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Prerequisites for Deployment</h3>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start">
+                            <span class="text-green-600 text-xl mr-3">✓</span>
+                            <p class="text-gray-700">You've already published the menu (previous section completed)</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-600 text-xl mr-3">✓</span>
+                            <p class="text-gray-700">"Deploy to Live Site" button is enabled (not grayed out)</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-600 text-xl mr-3">✓</span>
+                            <p class="text-gray-700">You have git access to the repository</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-600 text-xl mr-3">✓</span>
+                            <p class="text-gray-700">Vercel is connected to your git repository</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">How Deployment Works</h3>
+
+                    <div class="bg-purple-50 rounded-lg p-6 mb-6">
+                        <p class="font-bold text-gray-800 mb-3">The Deployment Process:</p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                            <li>You click "Deploy to Live Site" in admin panel</li>
+                            <li>System creates a git commit with your menu changes</li>
+                            <li>Commit message: "Update menu via admin panel"</li>
+                            <li>Changes are pushed to your remote git repository (GitHub/GitLab)</li>
+                            <li>Vercel detects the push automatically</li>
+                            <li>Vercel builds and deploys the new version</li>
+                            <li>Live website (spbgazebo.com) updates within 30-60 seconds</li>
+                        </ol>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Step-by-Step Deployment</h3>
+
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-blue-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 1: Initiate Deployment</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Locate the <strong>"Deploy to Live Site"</strong> button (should be enabled/clickable)</li>
+                                <li>Click the button</li>
+                                <li>A confirmation popup appears: "Are you sure you want to deploy to the live site?"</li>
+                                <li>Click <strong>"OK"</strong> to proceed</li>
+                            </ol>
+
+                            <div class="screenshot-placeholder mt-4">
+                                [SCREENSHOT: Deploy button and confirmation dialog]<br>
+                                Description: Blue "Deploy to Live Site" button with confirmation popup
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-green-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 2: Watch Deployment Log</h4>
+                            <p class="text-gray-700 mb-3">A deployment log window appears showing real-time progress:</p>
+
+                            <div class="bg-black text-green-400 font-mono p-4 rounded-lg space-y-1">
+                                <p>🚀 Starting deployment...</p>
+                                <p>📝 Creating git commit...</p>
+                                <p>✅ Commit created successfully</p>
+                                <p>📤 Pushing to remote repository...</p>
+                                <p>✅ Push successful</p>
+                                <p>🌐 Vercel will auto-deploy from this push</p>
+                                <p>✅ Deployment complete!</p>
+                            </div>
+
+                            <p class="text-gray-700 mt-4">This typically takes 30-60 seconds.</p>
+
+                            <div class="screenshot-placeholder mt-4">
+                                [SCREENSHOT: Deployment log showing successful completion]<br>
+                                Description: Terminal-style log with green checkmarks and deployment steps
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-purple-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 3: Verify Deployment Success</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Look for <strong>"✅ Deployment complete!"</strong> message</li>
+                                <li>Success banner appears: "Changes deployed to live site!"</li>
+                                <li>Log shows no errors</li>
+                            </ul>
+
+                            <div class="bg-green-50 rounded-lg p-4 mt-4">
+                                <p class="font-bold text-gray-800 mb-2">🎉 Success!</p>
+                                <p class="text-gray-700">Your menu changes are now live on spbgazebo.com. Guests will see the updated menu immediately when they access the ordering system.</p>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-yellow-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 4: Test the Live Site</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Open a new browser tab (or use your phone)</li>
+                                <li>Go to <strong>spbgazebo.com</strong></li>
+                                <li>Click on Beach Drinks or Room Service</li>
+                                <li>Verify your changes appear:
+                                    <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+                                        <li>New items are visible</li>
+                                        <li>Prices are correct</li>
+                                        <li>Unavailable items don't show</li>
+                                        <li>Modifiers are accurate</li>
+                                    </ul>
+                                </li>
+                                <li>If something looks wrong, you can make corrections and redeploy</li>
+                            </ol>
+
+                            <div class="bg-yellow-50 rounded-lg p-4 mt-4">
+                                <p class="font-bold text-gray-800 mb-2">💡 Troubleshooting Tip:</p>
+                                <p class="text-gray-700">If you don't see changes immediately, try hard-refreshing the page (Ctrl+Shift+R on Windows, Cmd+Shift+R on Mac) to clear your browser cache.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mt-8">
+                        <p class="text-gray-800 font-bold mb-2">⚠️ What If Deployment Fails?</p>
+                        <p class="text-gray-700 mb-3">If you see errors in the deployment log:</p>
+                        <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                            <li>Note the error message</li>
+                            <li>Common issues:
+                                <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+                                    <li><strong>Git not configured:</strong> Set up git credentials</li>
+                                    <li><strong>No push access:</strong> Verify git remote access</li>
+                                    <li><strong>Merge conflicts:</strong> Pull latest changes first</li>
+                                    <li><strong>Vercel connection issue:</strong> Check Vercel dashboard</li>
+                                </ul>
+                            </li>
+                            <li>Try deploying again after fixing the issue</li>
+                            <li>If problems persist, see Troubleshooting section</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">🔄 Manual Deployment Alternative</p>
+                        <p class="text-gray-700 mb-2">If the admin panel deployment fails, you can deploy manually:</p>
+                        <div class="bg-black text-green-400 font-mono p-4 rounded-lg mt-3">
+                            <p>git add data/sample_menu.json</p>
+                            <p>git commit -m "Update menu"</p>
+                            <p>git push</p>
+                        </div>
+                        <p class="text-gray-700 mt-3">Vercel will still auto-deploy from the push.</p>
+                    </div>
+                </section>
+
+                <!-- Backup Management -->
+                <section id="backups" class="bg-white rounded-lg shadow-md p-8 mb-8 page-break">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-purple-600 pb-2">Backup Management</h2>
+
+                    <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                        <p class="text-gray-800"><strong>✅ Automatic Backups:</strong> Every time you publish a menu, the system creates an automatic backup. You never lose previous menu versions!</p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">How Backups Work</h3>
+
+                    <div class="bg-blue-50 rounded-lg p-6 mb-6">
+                        <p class="font-bold text-gray-800 mb-3">Backup Trigger:</p>
+                        <p class="text-gray-700 mb-3">When you click "Publish Menu," the system automatically:</p>
+                        <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                            <li>Takes the current production menu (sample_menu.json)</li>
+                            <li>Creates a timestamp (e.g., 2025-01-13T14-30-00)</li>
+                            <li>Saves a copy: <code class="bg-gray-200 px-2 py-1 rounded">sample_menu_2025-01-13T14-30-00.json</code></li>
+                            <li>Stores in: <code class="bg-gray-200 px-2 py-1 rounded">data/backups/</code> folder</li>
+                            <li>Then replaces production with preview</li>
+                        </ol>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Backup File Naming</h3>
+
+                    <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                        <p class="font-semibold text-gray-800 mb-2">Format:</p>
+                        <p class="font-mono text-sm text-gray-700 mb-4">sample_menu_YYYY-MM-DDTHH-MM-SS.json</p>
+
+                        <p class="font-semibold text-gray-800 mb-2">Example:</p>
+                        <p class="font-mono text-sm text-gray-700 mb-4">sample_menu_2025-01-13T14-30-00.json</p>
+
+                        <p class="text-gray-700">This means: Menu backup from January 13, 2025 at 2:30 PM</p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Viewing Backup History</h3>
+
+                    <p class="text-gray-700 mb-4">The admin panel shows your 10 most recent backups in the "Recent Activity" section:</p>
+
+                    <div class="screenshot-placeholder">
+                        [SCREENSHOT: Recent Activity section showing backup list]<br>
+                        Description: List of timestamped backup files with file sizes
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Restoring from a Backup</h3>
+
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                        <p class="text-gray-800"><strong>⚠️ Advanced Task:</strong> Restoring backups requires accessing the server files. Proceed carefully!</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">1</div>
+                            <div>
+                                <p class="text-gray-700 mb-2"><strong>Identify Which Backup to Restore</strong></p>
+                                <p class="text-gray-600 text-sm">Look at the timestamps in Recent Activity or browse the <code class="bg-gray-200 px-2 py-1 rounded">data/backups/</code> folder</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">2</div>
+                            <div>
+                                <p class="text-gray-700 mb-2"><strong>Navigate to Backups Folder</strong></p>
+                                <div class="bg-black text-green-400 font-mono p-3 rounded-lg text-sm mt-2">
+                                    <p>cd data/backups/</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">3</div>
+                            <div>
+                                <p class="text-gray-700 mb-2"><strong>Copy Backup to Production</strong></p>
+                                <div class="bg-black text-green-400 font-mono p-3 rounded-lg text-sm mt-2">
+                                    <p>cp sample_menu_2025-01-13T14-30-00.json ../sample_menu.json</p>
+                                </div>
+                                <p class="text-gray-600 text-sm mt-2">Replace the timestamp with your desired backup</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">4</div>
+                            <div>
+                                <p class="text-gray-700 mb-2"><strong>Publish and Deploy</strong></p>
+                                <p class="text-gray-600 text-sm">Return to admin panel, publish, and deploy to make the restored menu live</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">🚨 Important Restore Notes:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li>Restoring a backup overwrites the current production menu</li>
+                            <li>A new backup of the current menu is created when you publish after restore</li>
+                            <li>Test the restored menu before deploying to live site</li>
+                            <li>If unsure, contact IT support</li>
+                        </ul>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Backup Cleanup</h3>
+
+                    <p class="text-gray-700 mb-4">Backups accumulate over time. Periodically clean up old backups to save disk space:</p>
+
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800 mb-2">Recommended Retention:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li><strong>Keep last 30 days:</strong> For recent changes</li>
+                            <li><strong>Keep monthly snapshots:</strong> For long-term history</li>
+                            <li><strong>Delete older daily backups:</strong> To save space</li>
+                        </ul>
+
+                        <p class="text-gray-700 mt-4 mb-2">To delete old backups:</p>
+                        <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                            <li>Navigate to <code class="bg-gray-200 px-2 py-1 rounded">data/backups/</code></li>
+                            <li>Review file timestamps</li>
+                            <li>Delete files older than your retention policy</li>
+                            <li>Keep at least a few recent backups for safety</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- User Management -->
+                <section id="users" class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-purple-600 pb-2">Managing Users (Firebase Console)</h2>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                        <p class="text-gray-800"><strong>📝 Note:</strong> User management is done through the Firebase Console, not the admin panel. This includes guest accounts and order data.</p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Accessing Firebase Console</h3>
+
+                    <div class="space-y-3 mb-6">
+                        <p class="text-gray-700"><strong>Step 1:</strong> Go to <a href="https://console.firebase.google.com/" class="text-blue-600 hover:underline">https://console.firebase.google.com/</a></p>
+                        <p class="text-gray-700"><strong>Step 2:</strong> Sign in with your Google account</p>
+                        <p class="text-gray-700"><strong>Step 3:</strong> Select your project: <strong>st-peters-bay-food-ordering</strong></p>
+                    </div>
+
+                    <div class="screenshot-placeholder">
+                        [SCREENSHOT: Firebase Console project selection page]<br>
+                        Description: Firebase console showing project list with st-peters-bay-food-ordering
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Managing Guest Accounts</h3>
+
+                    <div class="space-y-4">
+                        <p class="text-gray-700"><strong>Navigate to:</strong> Authentication → Users tab</p>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">What You'll See:</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><strong>User Identifier (UID):</strong> Unique ID for each user</li>
+                                <li><strong>Email:</strong> Guest's email address</li>
+                                <li><strong>Created:</strong> Account creation date</li>
+                                <li><strong>Last Sign-In:</strong> When they last logged in</li>
+                                <li><strong>User UID:</strong> Internal Firebase ID</li>
+                            </ul>
+                        </div>
+
+                        <div class="screenshot-placeholder mt-4">
+                            [SCREENSHOT: Firebase Authentication Users tab showing user list]<br>
+                            Description: List of users with emails, creation dates, and UIDs
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Common User Management Tasks</h3>
+
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold text-lg text-gray-800 mb-2">Viewing User Details</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Click on any user in the list</li>
+                                <li>View full profile: email, UID, creation date, sign-in methods</li>
+                                <li>See metadata: last sign-in, token issued times</li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-yellow-500 pl-4">
+                            <h4 class="font-bold text-lg text-gray-800 mb-2">Disabling a User Account</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Click on the user</li>
+                                <li>Click "Disable account" button</li>
+                                <li>User cannot log in until re-enabled</li>
+                                <li>Their data and orders remain intact</li>
+                            </ol>
+
+                            <div class="bg-yellow-50 rounded-lg p-3 mt-3">
+                                <p class="text-gray-700 text-sm"><strong>Use case:</strong> Temporarily prevent access for suspicious accounts without deleting data</p>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h4 class="font-bold text-lg text-gray-800 mb-2">Deleting a User Account</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Click on the user</li>
+                                <li>Click "Delete account" button</li>
+                                <li>Confirm deletion</li>
+                                <li>User is permanently removed from authentication</li>
+                            </ol>
+
+                            <div class="bg-red-50 rounded-lg p-3 mt-3">
+                                <p class="text-gray-700 text-sm"><strong>⚠️ Warning:</strong> This only deletes the authentication account. User's orders and profile data in Firestore remain. See next section to delete all data.</p>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-bold text-lg text-gray-800 mb-2">Resetting User Password</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Click on the user</li>
+                                <li>Click "Send password reset email"</li>
+                                <li>User receives reset link at their email</li>
+                                <li>They can create a new password</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Managing User Data (Firestore)</h3>
+
+                    <p class="text-gray-700 mb-4"><strong>Navigate to:</strong> Firestore Database</p>
+
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">📂 /users Collection</h4>
+                            <p class="text-gray-700 mb-2">Stores guest profile information:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">email</code> - User's email</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">displayName</code> - Full name</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">roomNumber</code> - Resort room number</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">createdAt</code> - Account creation timestamp</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">📂 /orders Collection</h4>
+                            <p class="text-gray-700 mb-2">Stores all orders (guest and non-guest):</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">userId</code> - Links to user (null for guest orders)</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">userEmail</code> - User's email if logged in</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">menuType</code> - "beachDrinks" or "roomService"</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">items</code> - Array of ordered items</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">status</code> - "new", "preparing", "ready", "delivered"</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">timestamp</code> - When order was placed</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-placeholder mt-6">
+                        [SCREENSHOT: Firestore Database showing collections]<br>
+                        Description: Firestore console with users and orders collections visible
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Viewing User's Orders</h3>
+
+                    <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                        <li>Go to Firestore Database → orders collection</li>
+                        <li>Click "Filter" button</li>
+                        <li>Add filter: <code class="bg-gray-200 px-2 py-1 rounded">userId == [user's UID]</code></li>
+                        <li>Apply filter</li>
+                        <li>See all orders from that user</li>
+                    </ol>
+
+                    <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">💡 Privacy & Data Protection:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li>Only access user data when necessary for support/troubleshooting</li>
+                            <li>Never share user information with third parties</li>
+                            <li>Delete user data upon request (GDPR compliance)</li>
+                            <li>Regularly review and clean up old data</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Auto-Sync Worker -->
+                <section id="auto-sync" class="bg-white rounded-lg shadow-md p-8 mb-8 page-break">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-purple-600 pb-2">Managing the Auto-Sync Worker</h2>
+
+                    <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                        <p class="text-gray-800"><strong>✅ What It Does:</strong> The auto-sync worker automatically checks Google Sheets every 5 minutes for changes and syncs them to the preview menu. This means staff can edit the menu anytime, and changes are ready for you to publish!</p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">How Auto-Sync Works</h3>
+
+                    <div class="bg-blue-50 rounded-lg p-6 mb-6">
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                            <li><strong>Worker runs in background</strong> (continuously)</li>
+                            <li><strong>Every 5 minutes,</strong> checks Google Sheet's modification time using Drive API</li>
+                            <li><strong>If Sheet changed,</strong> downloads new data from Google Sheets API</li>
+                            <li><strong>Updates preview:</strong> Writes to <code class="bg-gray-200 px-2 py-1 rounded">sample_menu.preview.json</code></li>
+                            <li><strong>Logs activity</strong> to console</li>
+                            <li><strong>If Sheet unchanged,</strong> skips sync (efficient!)</li>
+                            <li><strong>Repeat</strong> every 5 minutes</li>
+                        </ol>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Starting the Auto-Sync Worker</h3>
+
+                    <div class="space-y-4">
+                        <p class="text-gray-700"><strong>Open terminal</strong> and navigate to your project:</p>
+
+                        <div class="bg-black text-green-400 font-mono p-4 rounded-lg mb-4">
+                            <p>cd /path/to/SPB food ordering</p>
+                        </div>
+
+                        <p class="text-gray-700"><strong>Start the worker:</strong></p>
+
+                        <div class="bg-black text-green-400 font-mono p-4 rounded-lg mb-4">
+                            <p>npm run auto-sync</p>
+                        </div>
+
+                        <p class="text-gray-700">You'll see output like:</p>
+
+                        <div class="bg-black text-green-400 font-mono p-4 rounded-lg space-y-1">
+                            <p>🔄 Auto-sync worker started</p>
+                            <p>📡 Checking Google Sheets every 5 minutes...</p>
+                            <p>✓ First sync complete</p>
+                            <p>⏰ Next check in 5 minutes</p>
+                        </div>
+
+                        <div class="bg-yellow-50 rounded-lg p-4 mt-4">
+                            <p class="font-bold text-gray-800 mb-2">💡 Keep Terminal Open:</p>
+                            <p class="text-gray-700">The worker runs as long as this terminal window stays open. Closing it stops the worker.</p>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-placeholder mt-6">
+                        [SCREENSHOT: Terminal running auto-sync worker]<br>
+                        Description: Terminal showing auto-sync worker running with periodic check messages
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Monitoring Auto-Sync Activity</h3>
+
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">In Terminal (Real-Time)</h4>
+                            <p class="text-gray-700 mb-2">Watch the terminal running the worker. You'll see:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><code class="text-green-600">✓ No changes detected</code> - Sheet unchanged</li>
+                                <li><code class="text-blue-600">🔄 Changes detected, syncing...</code> - Sheet was edited</li>
+                                <li><code class="text-green-600">✅ Sync complete</code> - Preview updated</li>
+                                <li><code class="text-red-600">❌ Error</code> - Something went wrong</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">In Admin Panel</h4>
+                            <p class="text-gray-700 mb-2">Check the "Last Sync" timestamp:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Should update every 5 minutes (even if no changes)</li>
+                                <li>If timestamp is old (>10 min), worker might be stopped</li>
+                                <li>Recent timestamp = worker is running normally</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Stopping the Auto-Sync Worker</h3>
+
+                    <div class="space-y-3">
+                        <p class="text-gray-700"><strong>Method 1:</strong> Press <code class="bg-gray-200 px-2 py-1 rounded">Ctrl+C</code> in the terminal running the worker</p>
+                        <p class="text-gray-700"><strong>Method 2:</strong> Close the terminal window</p>
+                        <p class="text-gray-700"><strong>Result:</strong> Worker stops immediately, no more automatic syncing</p>
+                    </div>
+
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">⚠️ When Worker is Stopped:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li>Staff can still edit Google Sheet</li>
+                            <li>Changes won't sync to preview automatically</li>
+                            <li>You'll need to manually sync or restart worker</li>
+                            <li>"Last Sync" timestamp won't update</li>
+                        </ul>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Manual Sync (Alternative)</h3>
+
+                    <p class="text-gray-700 mb-4">If the worker is stopped, you can manually sync one time:</p>
+
+                    <div class="bg-black text-green-400 font-mono p-4 rounded-lg mb-4">
+                        <p>node scripts/googleSheetsSync.js</p>
+                    </div>
+
+                    <p class="text-gray-700">This syncs Google Sheet to preview once, then exits. Use this for:</p>
+                    <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                        <li>Testing sync functionality</li>
+                        <li>Getting immediate changes without waiting 5 minutes</li>
+                        <li>Troubleshooting sync issues</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Running Worker as Background Service (Advanced)</h3>
+
+                    <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mb-4">
+                        <p class="text-gray-800 font-bold mb-2">💡 For Production Deployments:</p>
+                        <p class="text-gray-700">Use a process manager like PM2 to keep the worker running even after terminal closes or server restarts.</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <p class="text-gray-700"><strong>Install PM2 (one-time):</strong></p>
+                        <div class="bg-black text-green-400 font-mono p-3 rounded-lg">
+                            <p>npm install -g pm2</p>
+                        </div>
+
+                        <p class="text-gray-700 mt-4"><strong>Start worker with PM2:</strong></p>
+                        <div class="bg-black text-green-400 font-mono p-3 rounded-lg">
+                            <p>pm2 start npm --name "menu-auto-sync" -- run auto-sync</p>
+                        </div>
+
+                        <p class="text-gray-700 mt-4"><strong>Check status:</strong></p>
+                        <div class="bg-black text-green-400 font-mono p-3 rounded-lg">
+                            <p>pm2 status</p>
+                        </div>
+
+                        <p class="text-gray-700 mt-4"><strong>View logs:</strong></p>
+                        <div class="bg-black text-green-400 font-mono p-3 rounded-lg">
+                            <p>pm2 logs menu-auto-sync</p>
+                        </div>
+
+                        <p class="text-gray-700 mt-4"><strong>Stop worker:</strong></p>
+                        <div class="bg-black text-green-400 font-mono p-3 rounded-lg">
+                            <p>pm2 stop menu-auto-sync</p>
+                        </div>
+
+                        <p class="text-gray-700 mt-4"><strong>Restart worker:</strong></p>
+                        <div class="bg-black text-green-400 font-mono p-3 rounded-lg">
+                            <p>pm2 restart menu-auto-sync</p>
+                        </div>
+
+                        <p class="text-gray-700 mt-4"><strong>Auto-start on server reboot:</strong></p>
+                        <div class="bg-black text-green-400 font-mono p-3 rounded-lg">
+                            <p>pm2 startup</p>
+                            <p>pm2 save</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-green-50 border-l-4 border-green-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">✅ Benefits of PM2:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li>Worker keeps running after terminal closes</li>
+                            <li>Automatically restarts if it crashes</li>
+                            <li>Starts automatically on server reboot</li>
+                            <li>Easy log viewing and monitoring</li>
+                            <li>Professional production setup</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Security & Access Control -->
+                <section id="security" class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-purple-600 pb-2">Security & Access Control</h2>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Admin Email Whitelist</h3>
+
+                    <div class="bg-blue-50 rounded-lg p-6 mb-6">
+                        <p class="font-bold text-gray-800 mb-3">How Admin Access Works:</p>
+                        <p class="text-gray-700 mb-3">Only email addresses listed in the <code class="bg-gray-200 px-2 py-1 rounded">ADMIN_EMAILS</code> environment variable can access the admin panel. This prevents unauthorized users from publishing menus or deploying changes.</p>
+                    </div>
+
+                    <h4 class="font-semibold text-gray-800 mb-3">Adding Admin Users</h4>
+
+                    <div class="space-y-3">
+                        <p class="text-gray-700"><strong>Step 1:</strong> Open the <code class="bg-gray-200 px-2 py-1 rounded">.env</code> file in your project root</p>
+
+                        <p class="text-gray-700"><strong>Step 2:</strong> Find the ADMIN_EMAILS line:</p>
+                        <div class="bg-black text-green-400 font-mono p-3 rounded-lg text-sm">
+                            <p>ADMIN_EMAILS=John.vujicic68@gmail.com,timnye2020@gmail.com</p>
+                        </div>
+
+                        <p class="text-gray-700 mt-4"><strong>Step 3:</strong> Add new email with comma separator:</p>
+                        <div class="bg-black text-green-400 font-mono p-3 rounded-lg text-sm">
+                            <p>ADMIN_EMAILS=John.vujicic68@gmail.com,timnye2020@gmail.com,<span class="text-yellow-300">newadmin@example.com</span></p>
+                        </div>
+
+                        <p class="text-gray-700 mt-4"><strong>Step 4:</strong> Save the file</p>
+
+                        <p class="text-gray-700"><strong>Step 5:</strong> Restart the admin server:</p>
+                        <div class="bg-black text-green-400 font-mono p-3 rounded-lg text-sm">
+                            <p>npm run start-server</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">⚠️ Important Security Notes:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li>Email matching is case-insensitive</li>
+                            <li>No spaces around emails or commas</li>
+                            <li>Only add trusted individuals</li>
+                            <li>Never commit <code class="bg-gray-200 px-2 py-1 rounded">.env</code> file to git</li>
+                        </ul>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Credential Security</h3>
+
+                    <div class="space-y-4">
+                        <div class="bg-red-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">🔐 Files to NEVER Share or Commit:</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">.env</code> - Environment variables including admin emails</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">service-account-key.json</code> - Google Sheets API credentials</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">firebase-admin-key.json</code> - Firebase Admin SDK credentials</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">client_secret_*.json</code> - Google OAuth credentials</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">✅ Best Practices:</h4>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Store credential files securely (password manager or encrypted storage)</li>
+                                <li>Create backups of credential files in secure location</li>
+                                <li>Rotate secrets quarterly or after team member departures</li>
+                                <li>Use environment variables instead of hardcoding credentials</li>
+                                <li>Limit access to production credentials to essential personnel only</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">🔄 Rotating Credentials:</h4>
+                            <p class="text-gray-700 mb-2">If credentials are compromised:</p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Generate new service account key in Google Cloud Console</li>
+                                <li>Generate new Firebase Admin key in Firebase Console</li>
+                                <li>Update <code class="bg-gray-200 px-2 py-1 rounded">.env</code> with new credentials</li>
+                                <li>Restart all services (admin server, auto-sync worker)</li>
+                                <li>Delete old credentials from Google/Firebase consoles</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Firebase Security Rules</h3>
+
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+                        <p class="text-gray-800"><strong>⚠️ Current Status:</strong> The system currently allows anyone to create orders and view the dashboard. This is intentional for guest ordering but should be reviewed for your security needs.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <p class="text-gray-700"><strong>Current Rules (file: firestore.rules):</strong></p>
+
+                        <div class="bg-black text-green-400 font-mono p-4 rounded-lg text-sm overflow-x-auto">
+                            <p>match /orders/{orderId} {</p>
+                            <p>  allow create: if true;  // Anyone can create orders</p>
+                            <p>  allow read, update: if true;  // Anyone can view/update orders</p>
+                            <p>  allow delete: if false;  // No deletions</p>
+                            <p>}</p>
+                        </div>
+
+                        <p class="text-gray-700 mt-4"><strong>Recommended Production Rules:</strong></p>
+
+                        <div class="bg-black text-green-400 font-mono p-4 rounded-lg text-sm overflow-x-auto">
+                            <p>match /orders/{orderId} {</p>
+                            <p>  allow create: if true;  // Guests can place orders</p>
+                            <p>  allow read: if request.auth != null;  // Only logged-in users</p>
+                            <p>  allow update: if request.auth != null;  // Only staff</p>
+                            <p>  allow delete: if false;  // No deletions</p>
+                            <p>}</p>
+                        </div>
+
+                        <div class="bg-red-50 rounded-lg p-4 mt-4">
+                            <p class="font-bold text-gray-800 mb-2">🚫 IMPORTANT:</p>
+                            <p class="text-gray-700 mb-2">Never deploy security rules without testing first! Modified rules must be manually deployed:</p>
+                            <div class="bg-black text-green-400 font-mono p-3 rounded-lg text-sm mt-3">
+                                <p>firebase deploy --only firestore:rules</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analytics & Monitoring -->
+                <section id="analytics" class="bg-white rounded-lg shadow-md p-8 mb-8 page-break">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-purple-600 pb-2">Analytics & Monitoring</h2>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Order Analytics (Firebase Console)</h3>
+
+                    <p class="text-gray-700 mb-4">Track order metrics through the Firebase Console:</p>
+
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Total Orders</h4>
+                            <p class="text-gray-700">Firestore Database → orders collection → Document count</p>
+                        </div>
+
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Orders by Menu Type</h4>
+                            <p class="text-gray-700 mb-2">Use Firestore queries to filter:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Filter: <code class="bg-gray-200 px-2 py-1 rounded">menuType == "beachDrinks"</code></li>
+                                <li>Filter: <code class="bg-gray-200 px-2 py-1 rounded">menuType == "roomService"</code></li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-purple-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Orders by Status</h4>
+                            <p class="text-gray-700 mb-2">Filter by order status:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">status == "new"</code> - Pending orders</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">status == "confirmed"</code> - In progress</li>
+                                <li><code class="bg-gray-200 px-2 py-1 rounded">status == "delivered"</code> - Completed</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-yellow-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Orders by Date Range</h4>
+                            <p class="text-gray-700 mb-2">Filter by timestamp:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Start date: <code class="bg-gray-200 px-2 py-1 rounded">timestamp >= [date]</code></li>
+                                <li>End date: <code class="bg-gray-200 px-2 py-1 rounded">timestamp <= [date]</code></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">System Health Monitoring</h3>
+
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">📊 Firebase Usage Limits</h4>
+                            <p class="text-gray-700 mb-2">Free Spark Plan limits:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><strong>Firestore Reads:</strong> 50,000 per day</li>
+                                <li><strong>Firestore Writes:</strong> 20,000 per day</li>
+                                <li><strong>Firestore Deletes:</strong> 20,000 per day</li>
+                                <li><strong>Storage:</strong> 1 GB total</li>
+                            </ul>
+                            <p class="text-gray-600 text-sm mt-2">Check usage: Firebase Console → Usage tab</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">🌐 Vercel Deployment Status</h4>
+                            <p class="text-gray-700 mb-2">Monitor at: Vercel Dashboard → Your Project</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Recent deployments list</li>
+                                <li>Build logs for each deployment</li>
+                                <li>Deployment duration</li>
+                                <li>Error notifications</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">📡 Google Sheets API Quota</h4>
+                            <p class="text-gray-700 mb-2">Limits (per project):</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><strong>Read requests:</strong> 100 per 100 seconds per user</li>
+                                <li><strong>Write requests:</strong> 100 per 100 seconds per user</li>
+                            </ul>
+                            <p class="text-gray-600 text-sm mt-2">Check: Google Cloud Console → APIs & Services → Quotas</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Error Monitoring</h3>
+
+                    <div class="space-y-3">
+                        <div class="bg-red-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Browser Console Errors</h4>
+                            <p class="text-gray-700 mb-2">To check for JavaScript errors on live site:</p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Open spbgazebo.com</li>
+                                <li>Press F12 (opens Developer Tools)</li>
+                                <li>Click "Console" tab</li>
+                                <li>Look for red error messages</li>
+                                <li>Screenshot and report to IT if found</li>
+                            </ol>
+                        </div>
+
+                        <div class="bg-yellow-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Server Logs</h4>
+                            <p class="text-gray-700 mb-2">Admin server logs (terminal running <code class="bg-gray-200 px-2 py-1 rounded">npm run start-server</code>):</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Shows all publish/deploy actions</li>
+                                <li>Records who performed each action</li>
+                                <li>Displays error messages</li>
+                                <li>Helpful for troubleshooting</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">💡 Recommended Monitoring Schedule:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li><strong>Daily:</strong> Check admin panel for pending changes to publish</li>
+                            <li><strong>Daily:</strong> Verify auto-sync worker is running (check Last Sync timestamp)</li>
+                            <li><strong>Weekly:</strong> Review Firebase usage to ensure within limits</li>
+                            <li><strong>Weekly:</strong> Test guest ordering flow end-to-end</li>
+                            <li><strong>Monthly:</strong> Review and clean up old backups</li>
+                            <li><strong>Monthly:</strong> Review and clean up old order data in Firestore</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Troubleshooting -->
+                <section id="troubleshooting" class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-purple-600 pb-2">Troubleshooting Common Issues</h2>
+
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">🚫 Cannot access admin panel (Access Denied)</h3>
+                            <p class="text-gray-700 mb-2"><strong>Possible causes:</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700 mb-3">
+                                <li>Your email is not in the ADMIN_EMAILS whitelist</li>
+                                <li>You're signed in with wrong Google account</li>
+                                <li>Server needs to be restarted after adding your email</li>
+                            </ul>
+                            <p class="text-gray-700 mb-2"><strong>Solutions:</strong></p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Check <code class="bg-gray-200 px-2 py-1 rounded">.env</code> file for ADMIN_EMAILS</li>
+                                <li>Add your email if missing</li>
+                                <li>Restart server: <code class="bg-gray-200 px-2 py-1 rounded">npm run start-server</code></li>
+                                <li>Sign out of admin panel and sign in again</li>
+                                <li>Try in incognito/private browser window</li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-yellow-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">⏰ "Last Sync" timestamp is old (not updating)</h3>
+                            <p class="text-gray-700 mb-2"><strong>Diagnosis:</strong> Auto-sync worker is not running</p>
+                            <p class="text-gray-700 mb-2"><strong>Solutions:</strong></p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Start the auto-sync worker: <code class="bg-gray-200 px-2 py-1 rounded">npm run auto-sync</code></li>
+                                <li>If using PM2, restart: <code class="bg-gray-200 px-2 py-1 rounded">pm2 restart menu-auto-sync</code></li>
+                                <li>Check terminal for error messages</li>
+                                <li>Verify Google Sheets credentials are valid</li>
+                                <li>Try manual sync: <code class="bg-gray-200 px-2 py-1 rounded">node scripts/googleSheetsSync.js</code></li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">📋 Preview menu not found (error message)</h3>
+                            <p class="text-gray-700 mb-2"><strong>Diagnosis:</strong> Preview file missing or corrupted</p>
+                            <p class="text-gray-700 mb-2"><strong>Solutions:</strong></p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Run manual sync to recreate: <code class="bg-gray-200 px-2 py-1 rounded">node scripts/googleSheetsSync.js</code></li>
+                                <li>Check that <code class="bg-gray-200 px-2 py-1 rounded">data/sample_menu.preview.json</code> exists</li>
+                                <li>Verify Google Sheet ID in <code class="bg-gray-200 px-2 py-1 rounded">.env</code> is correct</li>
+                                <li>Check service account has access to Google Sheet</li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">🚀 Deployment fails (git errors)</h3>
+                            <p class="text-gray-700 mb-2"><strong>Common error messages:</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700 mb-3">
+                                <li>"fatal: not a git repository"</li>
+                                <li>"Permission denied (publickey)"</li>
+                                <li>"rejected - non-fast-forward"</li>
+                            </ul>
+                            <p class="text-gray-700 mb-2"><strong>Solutions:</strong></p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Ensure you're in a git repository: <code class="bg-gray-200 px-2 py-1 rounded">git status</code></li>
+                                <li>Configure git credentials if needed</li>
+                                <li>Pull latest changes: <code class="bg-gray-200 px-2 py-1 rounded">git pull</code></li>
+                                <li>Try manual deployment (see Deployment section)</li>
+                                <li>Check git remote: <code class="bg-gray-200 px-2 py-1 rounded">git remote -v</code></li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">🌐 Changes deployed but not showing on live site</h3>
+                            <p class="text-gray-700 mb-2"><strong>Possible causes:</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700 mb-3">
+                                <li>Browser cache showing old version</li>
+                                <li>Vercel deployment still in progress</li>
+                                <li>Vercel deployment failed</li>
+                            </ul>
+                            <p class="text-gray-700 mb-2"><strong>Solutions:</strong></p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Hard refresh browser: Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)</li>
+                                <li>Try incognito/private browsing window</li>
+                                <li>Check Vercel dashboard for deployment status</li>
+                                <li>Wait 2-3 minutes and try again</li>
+                                <li>Check Vercel build logs for errors</li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-orange-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">❌ Menu items showing as "undefined" or missing prices</h3>
+                            <p class="text-gray-700 mb-2"><strong>Diagnosis:</strong> Data validation error in Google Sheet</p>
+                            <p class="text-gray-700 mb-2"><strong>Solutions:</strong></p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Open Google Sheet and check for:
+                                    <ul class="list-disc list-inside ml-6 mt-1 space-y-1">
+                                        <li>Empty cells in required columns</li>
+                                        <li>Incorrect Type values (must be "beachdrinks" or "roomservice")</li>
+                                        <li>Invalid Price values (must be numbers only)</li>
+                                        <li>Invalid Available values (must be TRUE or FALSE)</li>
+                                    </ul>
+                                </li>
+                                <li>Fix the errors in Google Sheet</li>
+                                <li>Wait for auto-sync or run manual sync</li>
+                                <li>Publish and deploy corrected menu</li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-pink-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">🔑 "Invalid credentials" or API errors</h3>
+                            <p class="text-gray-700 mb-2"><strong>Diagnosis:</strong> Service account keys expired or invalid</p>
+                            <p class="text-gray-700 mb-2"><strong>Solutions:</strong></p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Verify credential files exist:
+                                    <ul class="list-disc list-inside ml-6 mt-1">
+                                        <li><code class="bg-gray-200 px-2 py-1 rounded">service-account-key.json</code></li>
+                                        <li><code class="bg-gray-200 px-2 py-1 rounded">firebase-admin-key.json</code></li>
+                                    </ul>
+                                </li>
+                                <li>Check <code class="bg-gray-200 px-2 py-1 rounded">.env</code> paths point to correct files</li>
+                                <li>Generate new service account keys if needed</li>
+                                <li>Verify APIs are enabled in Google Cloud Console</li>
+                                <li>Check service account permissions</li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-teal-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">💻 Admin server won't start</h3>
+                            <p class="text-gray-700 mb-2"><strong>Common errors:</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700 mb-3">
+                                <li>"Port 3000 already in use"</li>
+                                <li>"Cannot find module"</li>
+                                <li>"Missing environment variables"</li>
+                            </ul>
+                            <p class="text-gray-700 mb-2"><strong>Solutions:</strong></p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Kill process on port 3000: <code class="bg-gray-200 px-2 py-1 rounded">lsof -ti:3000 | xargs kill</code></li>
+                                <li>Install dependencies: <code class="bg-gray-200 px-2 py-1 rounded">npm install</code></li>
+                                <li>Verify <code class="bg-gray-200 px-2 py-1 rounded">.env</code> file exists and is complete</li>
+                                <li>Check Node.js version (requires Node 14+)</li>
+                                <li>Review terminal error message for specific issue</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mt-8">
+                        <p class="text-gray-800 font-bold mb-2">🆘 When to Seek Technical Support:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li>Persistent errors after trying all solutions</li>
+                            <li>Data corruption or loss</li>
+                            <li>Security concerns or unauthorized access</li>
+                            <li>Firebase quota exceeded</li>
+                            <li>Need to rotate credentials after breach</li>
+                            <li>Major configuration changes required</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Support Section -->
+                <section class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white rounded-lg shadow-lg p-8 mb-8">
+                    <h2 class="text-2xl font-bold mb-4">Admin Support & Resources</h2>
+                    <p class="text-lg mb-6">For advanced assistance and documentation:</p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">📚 Technical Documentation</h3>
+                            <ul class="space-y-2">
+                                <li>ADMIN_PANEL_GUIDE.md</li>
+                                <li>GOOGLE_SHEETS_SETUP.md</li>
+                                <li>PROJECT_PROGRESS.md</li>
+                                <li>IMPLEMENTATION_NOTES.md</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">🔗 External Resources</h3>
+                            <ul class="space-y-2">
+                                <li>Firebase Console</li>
+                                <li>Google Cloud Console</li>
+                                <li>Vercel Dashboard</li>
+                                <li>GitHub Repository</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-xl font-bold">Thank you for managing the St. Peter's Bay ordering system!</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">© 2025 St. Peter's Bay Food Ordering System</p>
+            <p class="text-gray-400 text-sm">Version 5.0 - Owner/Admin Manual</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest User Manual - St. Peter's Bay Food Ordering</title>
+    <link href="css/output.css" rel="stylesheet">
+    <style>
+        /* Print-friendly styles */
+        @media print {
+            .no-print { display: none; }
+            .page-break { page-break-before: always; }
+        }
+
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+
+        /* Screenshot placeholder styling */
+        .screenshot-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 2px dashed #4c51bf;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg no-print sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-3xl font-bold">Guest User Manual</h1>
+            <p class="text-blue-100 mt-2">St. Peter's Bay Food Ordering System</p>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Sticky Table of Contents -->
+            <aside class="lg:col-span-1">
+                <nav class="bg-white rounded-lg shadow-md p-6 sticky top-24 no-print">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Contents</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#quick-start" class="text-blue-600 hover:text-blue-800 hover:underline">Quick Start Guide</a></li>
+                        <li><a href="#accessing" class="text-blue-600 hover:text-blue-800 hover:underline">Accessing the System</a></li>
+                        <li><a href="#browsing" class="text-blue-600 hover:text-blue-800 hover:underline">Browsing Menus</a></li>
+                        <li><a href="#ordering" class="text-blue-600 hover:text-blue-800 hover:underline">Placing an Order</a></li>
+                        <li><a href="#account" class="text-blue-600 hover:text-blue-800 hover:underline">Creating an Account</a></li>
+                        <li><a href="#history" class="text-blue-600 hover:text-blue-800 hover:underline">Order History</a></li>
+                        <li><a href="#reorder" class="text-blue-600 hover:text-blue-800 hover:underline">Reordering</a></li>
+                        <li><a href="#faq" class="text-blue-600 hover:text-blue-800 hover:underline">FAQs</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="lg:col-span-3">
+                <!-- Quick Start Section -->
+                <section id="quick-start" class="bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg shadow-lg p-8 mb-8">
+                    <h2 class="text-3xl font-bold mb-4">Quick Start Guide</h2>
+                    <p class="text-lg mb-6">Get started in under 5 minutes!</p>
+
+                    <div class="space-y-6">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">1. Access the Ordering System (1 minute)</h3>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Scan the QR code at your table or in your room</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Or visit: <strong>spbgazebo.com</strong> on your phone or tablet</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">2. Choose Your Service (30 seconds)</h3>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span><strong>Beach Drinks:</strong> Refreshments delivered to the beach or pool</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span><strong>Room Service:</strong> Meals delivered to your room or beach location</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">3. Place Your Order (3 minutes)</h3>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Browse the menu by category</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Tap any item to customize and add to your cart</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Review your cart and tap "Checkout"</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Enter your name and location (room number or beach area)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-yellow-300 mr-2">•</span>
+                                    <span>Submit your order and you're done!</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-yellow-300 bg-opacity-90 text-gray-800 rounded-lg p-4 mt-6">
+                            <p class="font-bold">💡 Pro Tip:</p>
+                            <p>Create a free account to save your info and view your order history. It makes future orders even faster!</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Accessing the System -->
+                <section id="accessing" class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-blue-600 pb-2">Accessing the Ordering System</h2>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Three Easy Ways to Access</h3>
+
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold text-lg text-gray-800 mb-2">Method 1: Scan the QR Code</h4>
+                            <p class="text-gray-700 mb-3">Look for the QR code displayed at:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Your table at the beach bar</li>
+                                <li>Your room (usually near the phone or on the nightstand)</li>
+                                <li>The pool area</li>
+                                <li>Common areas around the resort</li>
+                            </ul>
+                            <p class="text-gray-700 mt-3"><strong>How to scan:</strong></p>
+                            <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Open your phone's camera app</li>
+                                <li>Point it at the QR code</li>
+                                <li>Tap the notification that appears</li>
+                                <li>The ordering page will open in your browser</li>
+                            </ol>
+                        </div>
+
+                        <div class="screenshot-placeholder">
+                            [SCREENSHOT: QR code example with phone camera scanning it]<br>
+                            Description: A QR code with a smartphone camera viewfinder showing the scanning process
+                        </div>
+
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-bold text-lg text-gray-800 mb-2">Method 2: Visit the Website</h4>
+                            <p class="text-gray-700 mb-3">Simply type this address into any web browser:</p>
+                            <div class="bg-gray-100 rounded-lg p-4 mb-3">
+                                <p class="text-2xl font-bold text-center text-blue-600">spbgazebo.com</p>
+                            </div>
+                            <p class="text-gray-700">Works on any device: smartphone, tablet, laptop, or desktop computer.</p>
+                        </div>
+
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h4 class="font-bold text-lg text-gray-800 mb-2">Method 3: Save to Home Screen (Recommended)</h4>
+                            <p class="text-gray-700 mb-3">For the fastest access during your stay, add the ordering system to your phone's home screen:</p>
+
+                            <div class="bg-blue-50 rounded-lg p-4 mb-3">
+                                <p class="font-bold text-blue-800 mb-2">On iPhone:</p>
+                                <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                    <li>Open spbgazebo.com in Safari</li>
+                                    <li>Tap the Share button (square with arrow pointing up)</li>
+                                    <li>Scroll down and tap "Add to Home Screen"</li>
+                                    <li>Tap "Add" in the top right</li>
+                                    <li>The ordering icon will now appear on your home screen</li>
+                                </ol>
+                            </div>
+
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <p class="font-bold text-green-800 mb-2">On Android:</p>
+                                <ol class="list-decimal list-inside ml-4 space-y-1 text-gray-700">
+                                    <li>Open spbgazebo.com in Chrome</li>
+                                    <li>Tap the three dots menu (top right)</li>
+                                    <li>Tap "Add to Home screen"</li>
+                                    <li>Tap "Add"</li>
+                                    <li>The ordering icon will now appear on your home screen</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-6">
+                        <p class="text-gray-800"><strong>💡 Tip:</strong> The system works best on mobile devices. While you can use a laptop or desktop, the interface is optimized for phone and tablet screens.</p>
+                    </div>
+                </section>
+
+                <!-- Browsing Menus -->
+                <section id="browsing" class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-blue-600 pb-2">Browsing the Menus</h2>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Choosing Your Service Type</h3>
+                    <p class="text-gray-700 mb-4">When you first open the ordering system, you'll see two main options:</p>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="border-2 border-blue-400 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                            <h4 class="text-xl font-bold text-blue-600 mb-3">🍹 Beach Drinks</h4>
+                            <p class="text-gray-700 mb-3">Perfect for when you're relaxing by the beach or pool and want refreshments.</p>
+                            <p class="font-semibold text-gray-800 mb-2">Available items:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Rum-based drinks</li>
+                                <li>Beer (local and imported)</li>
+                                <li>Cocktails</li>
+                                <li>Wine</li>
+                                <li>Soft drinks and water</li>
+                                <li>And much more!</li>
+                            </ul>
+                            <p class="text-gray-600 mt-3 italic">Over 55 drink options available</p>
+                        </div>
+
+                        <div class="border-2 border-green-400 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                            <h4 class="text-xl font-bold text-green-600 mb-3">🍽️ Room Service</h4>
+                            <p class="text-gray-700 mb-3">For when you want a meal delivered to your room or beach location.</p>
+                            <p class="font-semibold text-gray-800 mb-2">Available items:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li>Light appetizers</li>
+                                <li>Fresh salads</li>
+                                <li>Gazebo specialties</li>
+                                <li>Pasta dishes</li>
+                                <li>And more!</li>
+                            </ul>
+                            <p class="text-gray-600 mt-3 italic">Over 25 food options available</p>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-placeholder">
+                        [SCREENSHOT: Landing page showing Beach Drinks and Room Service selection buttons]<br>
+                        Description: The main ordering page with two large, colorful buttons for Beach Drinks and Room Service
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Navigating the Menu</h3>
+
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Categories</h4>
+                            <p class="text-gray-700">Items are organized into categories for easy browsing. For example, Beach Drinks categories include Rum, Beer, Cocktails, Wine, etc. Scroll through the categories to find what you're looking for.</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Item Cards</h4>
+                            <p class="text-gray-700 mb-3">Each item is displayed as a card showing:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                <li><strong>Item name:</strong> What it's called</li>
+                                <li><strong>Price:</strong> Clearly displayed</li>
+                                <li><strong>Category:</strong> Which section it belongs to</li>
+                                <li><strong>Available/Unavailable:</strong> If an item is currently out of stock, it will be marked as unavailable</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">Switching Between Menus</h4>
+                            <p class="text-gray-700">Want to order both drinks and food? No problem! You can easily switch between Beach Drinks and Room Service menus. Your cart will remember all items from both menus.</p>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-placeholder mt-6">
+                        [SCREENSHOT: Menu page showing item cards organized by category]<br>
+                        Description: Multiple item cards displayed in a grid, showing item names, prices, and category labels
+                    </div>
+                </section>
+
+                <!-- Placing an Order -->
+                <section id="ordering" class="bg-white rounded-lg shadow-md p-8 mb-8 page-break">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-blue-600 pb-2">Placing Your Order</h2>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Step-by-Step Ordering Process</h3>
+
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-blue-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 1: Select an Item</h4>
+                            <p class="text-gray-700 mb-3">Tap or click on any item card to open the customization window.</p>
+                            <div class="screenshot-placeholder">
+                                [SCREENSHOT: Item card with cursor hovering over it]<br>
+                                Description: An item card highlighted, ready to be clicked
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-green-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 2: Customize Your Item</h4>
+                            <p class="text-gray-700 mb-3">A popup window will appear with customization options:</p>
+
+                            <div class="bg-blue-50 rounded-lg p-4 mb-3">
+                                <p class="font-semibold text-gray-800 mb-2">Quantity</p>
+                                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                    <li>Use the <strong>-</strong> and <strong>+</strong> buttons to adjust how many you want</li>
+                                    <li>Default is 1 item</li>
+                                    <li>Order as many as you like</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-green-50 rounded-lg p-4 mb-3">
+                                <p class="font-semibold text-gray-800 mb-2">Modifiers (Optional)</p>
+                                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                    <li>Check any boxes for special options (e.g., "With Ice", "Extra Rum")</li>
+                                    <li>Available modifiers depend on the item</li>
+                                    <li>Some items may not have modifiers</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-yellow-50 rounded-lg p-4">
+                                <p class="font-semibold text-gray-800 mb-2">Special Instructions (Optional)</p>
+                                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                    <li>Add any custom notes (up to 200 characters)</li>
+                                    <li>Examples: "Extra lime please", "No ice", "Well done"</li>
+                                    <li>A character counter shows how many characters you have left</li>
+                                </ul>
+                            </div>
+
+                            <div class="screenshot-placeholder mt-4">
+                                [SCREENSHOT: Item customization modal showing quantity buttons, modifier checkboxes, and notes field]<br>
+                                Description: The popup window with all customization options clearly visible
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-purple-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 3: Add to Cart</h4>
+                            <p class="text-gray-700 mb-3">Once you've customized your item:</p>
+                            <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Review your selections</li>
+                                <li>Click the <strong>"Add to Cart"</strong> button</li>
+                                <li>The popup will close</li>
+                                <li>A small cart badge will appear (or update) in the header showing your item count</li>
+                                <li>You'll see a brief confirmation message</li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-red-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 4: Continue Shopping or Checkout</h4>
+                            <p class="text-gray-700 mb-3">You have two options:</p>
+
+                            <div class="bg-gray-50 rounded-lg p-4 mb-3">
+                                <p class="font-bold text-gray-800 mb-2">Option A: Add More Items</p>
+                                <p class="text-gray-700">Keep browsing and adding items to your cart. Your cart will remember everything until you're ready to checkout.</p>
+                            </div>
+
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <p class="font-bold text-gray-800 mb-2">Option B: Proceed to Checkout</p>
+                                <p class="text-gray-700">Click the cart icon in the header to view your cart and proceed to checkout.</p>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-orange-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 5: Review Your Cart</h4>
+                            <p class="text-gray-700 mb-3">When you click the cart icon, you'll see:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-2 text-gray-700">
+                                <li>All items you've added</li>
+                                <li>Each item's quantity, modifiers, and custom notes</li>
+                                <li>Individual item prices</li>
+                                <li>Running total at the bottom</li>
+                                <li>Option to remove items (trash can icon)</li>
+                            </ul>
+
+                            <div class="screenshot-placeholder mt-4">
+                                [SCREENSHOT: Shopping cart view with multiple items, quantities, and total]<br>
+                                Description: The cart modal showing several items with remove buttons and a total price
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-pink-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 6: Enter Delivery Information</h4>
+                            <p class="text-gray-700 mb-3">Click the <strong>"Checkout"</strong> button to proceed. You'll need to provide:</p>
+
+                            <div class="space-y-4">
+                                <div class="bg-blue-50 rounded-lg p-4">
+                                    <p class="font-bold text-gray-800 mb-2">Your Name (Required)</p>
+                                    <p class="text-gray-700">Enter your first and last name so we know who the order is for.</p>
+                                </div>
+
+                                <div class="bg-green-50 rounded-lg p-4">
+                                    <p class="font-bold text-gray-800 mb-2">Delivery Location (Required)</p>
+
+                                    <p class="text-gray-700 mb-2"><strong>For Beach Drinks:</strong></p>
+                                    <p class="text-gray-700 mb-2">Select your beach location from the dropdown:</p>
+                                    <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                        <li>Main Beach - Left</li>
+                                        <li>Main Beach - Center</li>
+                                        <li>Main Beach - Right</li>
+                                        <li>Pool Area</li>
+                                        <li>Cabana 1, 2, or 3</li>
+                                        <li>Other (specify in notes)</li>
+                                    </ul>
+
+                                    <p class="text-gray-700 mt-3 mb-2"><strong>For Room Service:</strong></p>
+                                    <p class="text-gray-700">Enter your room number.</p>
+                                    <p class="text-gray-600 italic mt-1">Note: If you're logged in, you can choose between room delivery or beach delivery.</p>
+                                </div>
+
+                                <div class="bg-yellow-50 rounded-lg p-4">
+                                    <p class="font-bold text-gray-800 mb-2">Order Notes (Optional)</p>
+                                    <p class="text-gray-700">Add any special requests or instructions for your entire order.</p>
+                                </div>
+                            </div>
+
+                            <div class="screenshot-placeholder mt-4">
+                                [SCREENSHOT: Checkout form with name, location, and notes fields]<br>
+                                Description: The checkout page showing all required fields filled out
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-indigo-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 7: Submit Your Order</h4>
+                            <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                                <li>Review all information one final time</li>
+                                <li>Make sure your location is correct</li>
+                                <li>Click the <strong>"Submit Order"</strong> button</li>
+                                <li>Wait for the confirmation screen</li>
+                            </ol>
+                        </div>
+
+                        <div class="border-l-4 border-teal-500 pl-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Step 8: Confirmation</h4>
+                            <p class="text-gray-700 mb-3">You'll see a success message with:</p>
+                            <ul class="list-disc list-inside ml-4 space-y-2 text-gray-700">
+                                <li>✅ Confirmation that your order was received</li>
+                                <li>Your unique order ID (save this for reference)</li>
+                                <li>Summary of what you ordered</li>
+                                <li>Estimated preparation time</li>
+                                <li>Where your order will be delivered</li>
+                            </ul>
+
+                            <div class="screenshot-placeholder mt-4">
+                                [SCREENSHOT: Order confirmation screen with success message and order details]<br>
+                                Description: Green checkmark with "Order Submitted!" message and order summary
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-green-50 border-l-4 border-green-400 p-4 mt-8">
+                        <p class="text-gray-800 font-bold mb-2">🎉 That's it! Your order is now being prepared.</p>
+                        <p class="text-gray-700">Our staff will receive your order immediately and begin preparing it. Typical delivery times are 15-30 minutes depending on current order volume.</p>
+                    </div>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mt-4">
+                        <p class="text-gray-800 font-bold mb-2">💡 Want to make ordering even easier?</p>
+                        <p class="text-gray-700">Create a free account to save your information and view all your past orders. See the next section to learn how!</p>
+                    </div>
+                </section>
+
+                <!-- Creating an Account -->
+                <section id="account" class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-blue-600 pb-2">Creating an Account (Optional)</h2>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Why Create an Account?</h3>
+
+                    <div class="grid md:grid-cols-3 gap-4 mb-8">
+                        <div class="bg-blue-50 rounded-lg p-4 text-center">
+                            <div class="text-4xl mb-2">⚡</div>
+                            <h4 class="font-bold text-gray-800 mb-2">Faster Checkout</h4>
+                            <p class="text-gray-700 text-sm">Your name and room number are saved and auto-filled</p>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-4 text-center">
+                            <div class="text-4xl mb-2">📜</div>
+                            <h4 class="font-bold text-gray-800 mb-2">Order History</h4>
+                            <p class="text-gray-700 text-sm">View all your past orders during your stay</p>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-4 text-center">
+                            <div class="text-4xl mb-2">🔄</div>
+                            <h4 class="font-bold text-gray-800 mb-2">Easy Reordering</h4>
+                            <p class="text-gray-700 text-sm">Reorder your favorites with just one click</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">How to Sign Up</h3>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">1</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Click "Login / Sign Up"</strong> in the top right corner of any page</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">2</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Switch to the "Sign Up" tab</strong> on the login page</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">3</div>
+                            <div>
+                                <p class="text-gray-700 mb-2"><strong>Fill in your information:</strong></p>
+                                <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                                    <li><strong>Name:</strong> Your full name</li>
+                                    <li><strong>Room Number:</strong> Your resort room number</li>
+                                    <li><strong>Email:</strong> A valid email address</li>
+                                    <li><strong>Password:</strong> At least 6 characters (make it memorable!)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">4</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Click "Sign Up"</strong> and you're all set!</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">5</div>
+                            <div>
+                                <p class="text-gray-700">You'll be automatically logged in and redirected to your order history page</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-placeholder mt-6">
+                        [SCREENSHOT: Sign up form with all fields visible]<br>
+                        Description: The sign-up page showing name, room number, email, and password fields
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Logging In (If You Already Have an Account)</h3>
+
+                    <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                        <li>Click <strong>"Login / Sign Up"</strong> in the header</li>
+                        <li>Make sure you're on the <strong>"Login"</strong> tab</li>
+                        <li>Enter your <strong>email</strong> and <strong>password</strong></li>
+                        <li>Click <strong>"Login"</strong></li>
+                        <li>You'll be redirected to your order history</li>
+                    </ol>
+
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">🔒 Privacy & Security</p>
+                        <p class="text-gray-700">Your account information is secure and used only for managing your orders during your stay. We never share your information with third parties.</p>
+                    </div>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mt-4">
+                        <p class="text-gray-800 font-bold mb-2">💡 Forgot Your Password?</p>
+                        <p class="text-gray-700">If you forget your password, you can always order as a guest. For password reset assistance, please contact the front desk.</p>
+                    </div>
+                </section>
+
+                <!-- Order History -->
+                <section id="history" class="bg-white rounded-lg shadow-md p-8 mb-8 page-break">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-blue-600 pb-2">Viewing Your Order History</h2>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                        <p class="text-gray-800"><strong>📝 Note:</strong> Order history is only available for logged-in users. Guest orders are not saved to history.</p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Accessing Your Order History</h3>
+
+                    <div class="space-y-3">
+                        <p class="text-gray-700"><strong>Method 1:</strong> Click the <strong>"My Orders"</strong> button in the header (appears when you're logged in)</p>
+                        <p class="text-gray-700"><strong>Method 2:</strong> After logging in, you're automatically taken to your order history</p>
+                    </div>
+
+                    <div class="screenshot-placeholder mt-6 mb-6">
+                        [SCREENSHOT: Header showing "My Orders" button for logged-in users]<br>
+                        Description: Website header with user menu and "My Orders" button highlighted
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">What You'll See</h3>
+
+                    <p class="text-gray-700 mb-4">Your order history displays all orders you've placed during your stay, with the most recent orders shown first. Each order shows:</p>
+
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">📅 Date & Time</h4>
+                            <p class="text-gray-700">When you placed the order</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">🍽️ Items Ordered</h4>
+                            <p class="text-gray-700">Complete list of everything in that order, including quantities, modifiers, and custom notes</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">💰 Total Amount</h4>
+                            <p class="text-gray-700">The total price for that order</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">📍 Delivery Location</h4>
+                            <p class="text-gray-700">Where the order was delivered (room number or beach location)</p>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">📊 Order Status</h4>
+                            <p class="text-gray-700 mb-2">Current status of your order, shown with color-coded badges:</p>
+                            <div class="flex flex-wrap gap-2 mt-2">
+                                <span class="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold">New</span>
+                                <span class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">Preparing</span>
+                                <span class="inline-block bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold">Ready</span>
+                                <span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">Delivered</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">🔢 Order ID</h4>
+                            <p class="text-gray-700">A unique reference number for each order (useful if you need to contact staff about a specific order)</p>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-placeholder mt-6">
+                        [SCREENSHOT: Order history page showing multiple past orders with all details]<br>
+                        Description: A list view of several orders with dates, items, totals, and status badges
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Understanding Order Status</h3>
+
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <span class="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold mr-4 flex-shrink-0">New</span>
+                            <p class="text-gray-700">Your order has been received and is waiting to be confirmed by staff</p>
+                        </div>
+
+                        <div class="flex items-start">
+                            <span class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold mr-4 flex-shrink-0">Preparing</span>
+                            <p class="text-gray-700">Staff have confirmed your order and are actively preparing it</p>
+                        </div>
+
+                        <div class="flex items-start">
+                            <span class="inline-block bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold mr-4 flex-shrink-0">Ready</span>
+                            <p class="text-gray-700">Your order is ready and on its way to you</p>
+                        </div>
+
+                        <div class="flex items-start">
+                            <span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold mr-4 flex-shrink-0">Delivered</span>
+                            <p class="text-gray-700">Your order has been delivered successfully</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">💡 Tip: Reordering Made Easy</p>
+                        <p class="text-gray-700">See something you loved? Each order has a "Reorder This" button that lets you order the same items again with just one click! See the next section for details.</p>
+                    </div>
+                </section>
+
+                <!-- Reordering -->
+                <section id="reorder" class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-blue-600 pb-2">Reordering Your Favorites</h2>
+
+                    <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                        <p class="text-gray-800"><strong>🎉 One-Click Reordering:</strong> Love something you ordered? Reorder it instantly without having to browse the menu again!</p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">How to Reorder</h3>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">1</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Go to your order history</strong> by clicking "My Orders" in the header</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">2</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Find the order you want to repeat</strong> and click the <strong>"Reorder This"</strong> button</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">3</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Confirm your selection</strong> in the popup that appears, showing all items and the total</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">4</div>
+                            <div>
+                                <p class="text-gray-700"><strong>You'll be redirected</strong> to the ordering page with all items automatically added to your cart</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">5</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Review and modify</strong> if needed, or proceed directly to checkout</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">6</div>
+                            <div>
+                                <p class="text-gray-700"><strong>Submit your order</strong> just like a normal order</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-placeholder mt-6">
+                        [SCREENSHOT: Order history with "Reorder This" button highlighted]<br>
+                        Description: An order card with the green "Reorder This" button prominently displayed
+                    </div>
+
+                    <div class="screenshot-placeholder">
+                        [SCREENSHOT: Reorder confirmation modal]<br>
+                        Description: Popup showing items to be reordered with total and confirm button
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">What Gets Reordered?</h3>
+
+                    <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                        <p class="text-gray-700 mb-3">When you click "Reorder This", the system automatically adds to your cart:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li>✅ All items from that order</li>
+                            <li>✅ Same quantities</li>
+                            <li>✅ Same modifiers (e.g., "With Ice", "Extra Rum")</li>
+                            <li>✅ Same custom notes for each item</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-yellow-50 rounded-lg p-4">
+                        <p class="text-gray-700 mb-3">What does NOT get copied:</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                            <li>❌ Order-level notes (you can add new ones at checkout)</li>
+                            <li>❌ Previous delivery location (you'll choose location at checkout)</li>
+                        </ul>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 mt-8">Modifying a Reorder</h3>
+
+                    <p class="text-gray-700 mb-4">You have complete flexibility after reordering:</p>
+
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <span class="text-green-600 text-xl mr-3">✓</span>
+                            <p class="text-gray-700"><strong>Add more items:</strong> Browse the menu and add additional items to your cart</p>
+                        </div>
+
+                        <div class="flex items-start">
+                            <span class="text-green-600 text-xl mr-3">✓</span>
+                            <p class="text-gray-700"><strong>Remove items:</strong> Open your cart and remove any items you don't want</p>
+                        </div>
+
+                        <div class="flex items-start">
+                            <span class="text-green-600 text-xl mr-3">✓</span>
+                            <p class="text-gray-700"><strong>Change quantities:</strong> Unfortunately you can't edit quantities directly. Remove the item and add it again with the desired quantity</p>
+                        </div>
+
+                        <div class="flex items-start">
+                            <span class="text-green-600 text-xl mr-3">✓</span>
+                            <p class="text-gray-700"><strong>Proceed as-is:</strong> If everything looks good, go straight to checkout</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mt-6">
+                        <p class="text-gray-800 font-bold mb-2">💡 Perfect for Daily Favorites</p>
+                        <p class="text-gray-700">Found your perfect beach drink or go-to lunch order? Use the reorder feature to get it again tomorrow without any effort!</p>
+                    </div>
+                </section>
+
+                <!-- FAQs -->
+                <section id="faq" class="bg-white rounded-lg shadow-md p-8 mb-8 page-break">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-blue-600 pb-2">Frequently Asked Questions</h2>
+
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Q: Do I need to create an account to order?</h3>
+                            <p class="text-gray-700"><strong>A:</strong> No, you can order as a guest. However, creating an account gives you access to order history and one-click reordering, making future orders much faster.</p>
+                        </div>
+
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Q: How long does delivery usually take?</h3>
+                            <p class="text-gray-700"><strong>A:</strong> Typical delivery times are 15-30 minutes depending on current order volume and what you ordered. During busy times, it may take a bit longer.</p>
+                        </div>
+
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Q: Can I cancel or modify my order after submitting?</h3>
+                            <p class="text-gray-700"><strong>A:</strong> Please contact staff immediately after placing your order if you need to make changes. If preparation has already started, changes may not be possible. Call the front desk or find a staff member.</p>
+                        </div>
+
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Q: What if an item I want shows as "unavailable"?</h3>
+                            <p class="text-gray-700"><strong>A:</strong> Unfortunately, unavailable items cannot be ordered at the moment. They may be out of stock or temporarily unavailable. Check back later or choose an alternative item.</p>
+                        </div>
+
+                        <div class="border-l-4 border-yellow-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Q: Can I order both Beach Drinks and Room Service together?</h3>
+                            <p class="text-gray-700"><strong>A:</strong> Yes! You can add items from both menus to your cart. However, they will be processed as separate orders by our staff to ensure efficient delivery.</p>
+                        </div>
+
+                        <div class="border-l-4 border-orange-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Q: How do I pay for my order?</h3>
+                            <p class="text-gray-700"><strong>A:</strong> All orders are charged to your room. Payment will be handled during checkout from the resort. No payment is required through the ordering system.</p>
+                        </div>
+
+                        <div class="border-l-4 border-pink-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Q: Can I add special dietary instructions?</h3>
+                            <p class="text-gray-700"><strong>A:</strong> Yes! When customizing each item, use the "Special Instructions" field to note any dietary restrictions, allergies, or preferences (e.g., "Gluten-free", "No nuts", "Dairy allergy").</p>
+                        </div>
+
+                        <div class="border-l-4 border-indigo-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Q: What if I'm at the beach but ordering Room Service?</h3>
+                            <p class="text-gray-700"><strong>A:</strong> If you're logged in, you can choose beach delivery when ordering Room Service items. Just select "Beach Delivery" and specify your beach location instead of your room number.</p>
+                        </div>
+
+                        <div class="border-l-4 border-teal-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Q: The ordering system won't load on my phone. What should I do?</h3>
+                            <p class="text-gray-700"><strong>A:</strong> Try these troubleshooting steps:</p>
+                            <ul class="list-disc list-inside ml-4 mt-2 space-y-1 text-gray-700">
+                                <li>Check your Wi-Fi connection</li>
+                                <li>Refresh the page (pull down on mobile)</li>
+                                <li>Clear your browser cache</li>
+                                <li>Try a different browser</li>
+                                <li>If issues persist, contact the front desk for assistance</li>
+                            </ul>
+                        </div>
+
+                        <div class="border-l-4 border-cyan-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Q: Is there a minimum order amount?</h3>
+                            <p class="text-gray-700"><strong>A:</strong> No, there is no minimum order. Whether you want one drink or a full meal, we're happy to deliver!</p>
+                        </div>
+
+                        <div class="border-l-4 border-lime-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Q: Can I see the menu without ordering?</h3>
+                            <p class="text-gray-700"><strong>A:</strong> Absolutely! You can browse both the Beach Drinks and Room Service menus without creating an account or placing an order. Feel free to explore before deciding.</p>
+                        </div>
+
+                        <div class="border-l-4 border-rose-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Q: What if I forget my account password?</h3>
+                            <p class="text-gray-700"><strong>A:</strong> You can always order as a guest if you forget your password. For password reset assistance, please contact the front desk. Don't worry - forgetting your password won't affect your ability to order!</p>
+                        </div>
+
+                        <div class="border-l-4 border-violet-500 pl-4">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Q: Are prices shown in the ordering system final?</h3>
+                            <p class="text-gray-700"><strong>A:</strong> Yes, all prices shown are final. The total you see at checkout is what will be charged to your room. There are no hidden fees or service charges.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Need Help Section -->
+                <section class="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg shadow-lg p-8 mb-8">
+                    <h2 class="text-2xl font-bold mb-4">Need More Help?</h2>
+                    <p class="text-lg mb-6">Our staff is always here to assist you!</p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">📞 Contact the Front Desk</h3>
+                            <p>For questions about orders, menu items, or technical issues, call the front desk anytime.</p>
+                        </div>
+
+                        <div class="bg-white bg-opacity-20 rounded-lg p-6">
+                            <h3 class="text-xl font-bold mb-3">🏖️ Ask Any Staff Member</h3>
+                            <p>Our beach and restaurant staff can help you place an order or answer any questions.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-xl font-bold">Enjoy your stay at St. Peter's Bay!</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">© 2025 St. Peter's Bay Food Ordering System</p>
+            <p class="text-gray-400 text-sm">Version 5.0 - Guest User Manual</p>
+        </div>
+    </footer>
+</body>
+</html>
