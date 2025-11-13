@@ -22,8 +22,8 @@ const deploymentLog = document.getElementById('deployment-log');
 
 const signoutBtn = document.getElementById('signout-btn');
 
-// Google Sign-In Callback
-window.handleCredentialResponse = async function(response) {
+// Google Sign-In Callback (must be in global scope)
+async function handleCredentialResponse(response) {
     authToken = response.credential;
 
     // Show loading state
@@ -48,7 +48,10 @@ window.handleCredentialResponse = async function(response) {
     } catch (error) {
         showAccessDenied('Error verifying credentials: ' + error.message);
     }
-};
+}
+
+// Expose to global scope for Google Sign-In
+window.handleCredentialResponse = handleCredentialResponse;
 
 // Show Admin Dashboard
 function showAdminDashboard() {
