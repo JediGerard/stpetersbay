@@ -144,7 +144,7 @@ function createMenuItem(item) {
              onclick='openItemModal(${JSON.stringify(item)})'>
             <div class="flex justify-between items-start">
                 <div class="flex-1">
-                    <h4 class="font-bold text-gray-800 text-lg mb-1">${item.itemName}</h4>
+                    <h4 class="font-bold text-gray-800 text-lg mb-1">${item.name}</h4>
                     <p class="text-blue-600 font-semibold text-lg">$${item.price.toFixed(2)}</p>
                 </div>
                 <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all">
@@ -164,7 +164,7 @@ function openItemModal(item) {
     currentQuantity = 1;
 
     // Set item details
-    document.getElementById('modal-item-name').textContent = item.itemName;
+    document.getElementById('modal-item-name').textContent = item.name;
     document.getElementById('modal-item-price').textContent = `$${item.price.toFixed(2)}`;
     document.getElementById('modal-quantity').textContent = '1';
 
@@ -231,7 +231,7 @@ function addToCart() {
 
     // Create cart item
     const cartItem = {
-        itemName: currentItem.itemName,
+        itemName: currentItem.name,
         price: currentItem.price,
         quantity: currentQuantity,
         modifiers: selectedModifiers,
