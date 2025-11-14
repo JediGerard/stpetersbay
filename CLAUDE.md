@@ -197,6 +197,13 @@ Edit the status flow in `scripts/dashboard_logic.js`. Status buttons are generat
 
 ## IMPORTANT RESTRICTIONS
 
+**Git Commits and Pushes**:
+- DO NOT commit any changes to git
+- DO NOT push any changes to the remote repository
+- The user will handle all git commits and pushes locally
+- You MAY stage files with `git add` if requested, but NEVER commit or push
+- Only make code changes - the user will review and commit them manually
+
 **File Deletion**:
 - NEVER delete any files in this project
 - ESPECIALLY never delete files or data in Firebase (Firestore collections, Authentication users, etc.)
@@ -208,7 +215,7 @@ Edit the status flow in `scripts/dashboard_logic.js`. Status buttons are generat
 - ALWAYS ask the user to deploy rule changes via Firebase Console or CLI
 - The user must manually run: `firebase deploy --only firestore:rules`
 
-**Rationale**: Firebase changes affect production data and user access. All Firebase deployments require explicit user approval.
+**Rationale**: The user wants full control over git commits and deployments. Firebase changes affect production data and user access. All deployments require explicit user approval.
 
 ## Important Files
 
