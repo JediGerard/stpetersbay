@@ -352,9 +352,10 @@ function showMenuModal(title, data) {
 
         // Beach Drinks Section
         if (data.beachDrinks && Array.isArray(data.beachDrinks) && data.beachDrinks.length > 0) {
-            html += '<div class="mb-8"><h3 class="text-lg font-bold text-gray-900 mb-4 sticky top-0 bg-white py-2">Beach Drinks (' + data.beachDrinks.length + ' items)</h3>';
-            html += '<div class="overflow-x-auto mb-4">';
-            html += '<table class="min-w-full divide-y divide-gray-200 border border-gray-200 shadow-sm">';
+            html += '<div class="mb-8">';
+            html += '<h3 class="text-lg font-bold text-gray-900 mb-4 bg-blue-50 p-3 rounded">Beach Drinks (' + data.beachDrinks.length + ' items)</h3>';
+            html += '<div class="overflow-x-auto">';
+            html += '<table class="w-full border-collapse border border-gray-300">';
             html += '<thead class="bg-gray-50"><tr>';
             html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Item Name</th>';
             html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Category</th>';
@@ -375,14 +376,16 @@ function showMenuModal(title, data) {
                 html += '</tr>';
             });
 
-            html += '</tbody></table></div></div>';
+            html += '</tbody></table></div>';
+            html += '</div>'; // Close Beach Drinks container
         }
 
         // Room Service Section
         if (data.roomService && Array.isArray(data.roomService) && data.roomService.length > 0) {
-            html += '<div class="mb-8"><h3 class="text-lg font-bold text-gray-900 mb-4 sticky top-0 bg-white py-2">Room Service (' + data.roomService.length + ' items)</h3>';
-            html += '<div class="overflow-x-auto mb-4">';
-            html += '<table class="min-w-full divide-y divide-gray-200 border border-gray-200 shadow-sm">';
+            html += '<div class="mb-8">';
+            html += '<h3 class="text-lg font-bold text-gray-900 mb-4 bg-green-50 p-3 rounded">Room Service (' + data.roomService.length + ' items)</h3>';
+            html += '<div class="overflow-x-auto">';
+            html += '<table class="w-full border-collapse border border-gray-300">';
             html += '<thead class="bg-gray-50"><tr>';
             html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Item Name</th>';
             html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Category</th>';
@@ -403,7 +406,8 @@ function showMenuModal(title, data) {
                 html += '</tr>';
             });
 
-            html += '</tbody></table></div></div>';
+            html += '</tbody></table></div>';
+            html += '</div>'; // Close Room Service container
         }
 
         if (!html) {
@@ -426,9 +430,10 @@ function closeModal() {
 
 document.getElementById('close-modal-btn')?.addEventListener('click', closeModal);
 
-// Close modal on background click
+// Close modal on background click (clicking the dark overlay)
 document.getElementById('json-modal')?.addEventListener('click', (e) => {
-    if (e.target.id === 'json-modal') {
+    // Only close if clicking the backdrop itself, not the content
+    if (e.target === document.getElementById('json-modal')) {
         closeModal();
     }
 });
