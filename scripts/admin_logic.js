@@ -317,15 +317,7 @@ deployBtn?.addEventListener('click', async () => {
 });
 
 // View Menu Items Buttons
-document.getElementById('view-preview-btn')?.addEventListener('click', async () => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/menu/preview`);
-        const data = await response.json();
-        showMenuModal('Preview Menu (Staging)', data);
-    } catch (error) {
-        showError('Error loading preview menu');
-    }
-});
+// Preview button is now a link to preview.html - no event listener needed
 
 document.getElementById('view-production-btn')?.addEventListener('click', async () => {
     try {
