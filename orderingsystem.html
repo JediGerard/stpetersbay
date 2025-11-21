@@ -41,7 +41,7 @@
                 <!-- Beach Drinks -->
                 <button onclick="selectMenuType('beachDrinks')"
                         class="group bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all p-6 sm:p-8 text-center border-4 border-transparent hover:border-cyan-400 transform hover:-translate-y-1">
-                    <div class="mb-4 mx-auto rounded-lg overflow-hidden bg-gray-50 shadow-inner" style="height: 200px; width: 200px;">
+                    <div class="mb-4 mx-auto rounded-lg bg-gray-50 shadow-inner" style="height: 200px; width: 200px; overflow: hidden;">
                         <img src="./menus/beach_service_opt.png" alt="Beach Drinks" class="w-full h-full object-cover object-center">
                     </div>
                     <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Beach Drinks</h3>
@@ -51,7 +51,7 @@
                 <!-- Room Service -->
                 <button onclick="selectMenuType('roomService')"
                         class="group bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all p-6 sm:p-8 text-center border-4 border-transparent hover:border-blue-400 transform hover:-translate-y-1">
-                    <div class="mb-4 mx-auto rounded-lg overflow-hidden bg-gray-50 shadow-inner" style="height: 200px; width: 200px;">
+                    <div class="mb-4 mx-auto rounded-lg bg-gray-50 shadow-inner" style="height: 200px; width: 200px; overflow: hidden;">
                         <img src="./menus/room_service_opt.png" alt="Room Service" class="w-full h-full object-cover object-center">
                     </div>
                     <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Room Service</h3>
@@ -66,6 +66,11 @@
             <button onclick="backToLanding()" class="mb-6 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-semibold transition-all">
                 � Back
             </button>
+
+            <!-- Charges Notice -->
+            <div class="text-center mb-6 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3">
+                <p class="text-sm text-gray-700">A 2.5% government levy and 12.5% service charge will be added to your bill</p>
+            </div>
 
             <!-- Menu Items -->
             <div id="menu-container"></div>
