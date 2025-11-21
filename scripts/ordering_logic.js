@@ -22,24 +22,40 @@ let currentQuantity = 1;
 // Load menu data when page loads
 window.addEventListener('DOMContentLoaded', async () => {
     try {
-        // Try to fetch from API first (works when deployed or with server running)
-        // Falls back to JSON file if API not available
-        let response;
-        try {
-            response = await fetch('/api/menu/production');
-            if (!response.ok) throw new Error('API not available');
-            menuData = await response.json();
-            console.log('Menu loaded from Firestore:', menuData);
-        } catch (apiError) {
-            // Fallback to JSON file for local development without server
-            console.log('API not available, falling back to JSON file');
-            response = await fetch('./data/sample_menu.json');
-            menuData = await response.json();
-            console.log('Menu loaded from JSON file:', menuData);
+        // Fetch menu from Firestore API (production source of truth)
+        const response = await fetch('/api/menu/production');
+
+        if (!response.ok) {
+            throw new Error(`Menu API returned ${response.status}: ${response.statusText}`);
+        }
+
+        menuData = await response.json();
+        console.log('Menu loaded from Firestore:', menuData);
+
+        // Validate menu data
+        if (!menuData.beachDrinks && !menuData.roomService) {
+            throw new Error('Menu data is empty');
         }
     } catch (error) {
         console.error('Error loading menu:', error);
-        alert('Unable to load menu. Please refresh the page.');
+
+        // Show user-friendly error message
+        document.body.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; text-align: center; background: linear-gradient(to bottom right, #eff6ff, #dbeafe);">
+                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); max-width: 500px;">
+                    <svg style="width: 80px; height: 80px; margin: 0 auto 20px; color: #ef4444;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    <h2 style="font-size: 24px; font-weight: bold; color: #1f2937; margin-bottom: 12px;">Menu Temporarily Unavailable</h2>
+                    <p style="color: #6b7280; margin-bottom: 24px;">We're having trouble loading the menu right now. This usually resolves quickly.</p>
+                    <button onclick="location.reload()" style="background: linear-gradient(to right, #2563eb, #0ea5e9); color: white; font-weight: 600; padding: 12px 32px; border-radius: 8px; border: none; cursor: pointer; font-size: 16px; box-shadow: 0 4px 12px rgba(37,99,235,0.3);">
+                        Try Again
+                    </button>
+                    <p style="color: #9ca3af; font-size: 14px; margin-top: 20px;">If this persists, please contact staff for assistance.</p>
+                </div>
+            </div>
+        `;
+        return; // Stop execution
     }
 
     // Update character count in modal

@@ -22,20 +22,19 @@ let currentQuantity = 1;
 // Load menu data when page loads
 window.addEventListener('DOMContentLoaded', async () => {
     try {
-        // PREVIEW MODE: Fetch from preview endpoint with cache-busting timestamp
-        let response;
-        try {
-            response = await fetch('/api/menu/preview');
-            if (!response.ok) throw new Error('API not available');
-            menuData = await response.json();
-            console.log('Preview menu loaded from API:', menuData);
-        } catch (apiError) {
-            // Fallback to preview JSON file with cache-busting for local development
-            console.log('API not available, falling back to preview JSON file');
-            const timestamp = Date.now();
-            response = await fetch(`./data/sample_menu.preview.json?t=${timestamp}`);
-            menuData = await response.json();
-            console.log('Preview menu loaded from JSON file:', menuData);
+        // PREVIEW MODE: Fetch from preview endpoint (Firestore source of truth)
+        const response = await fetch('/api/menu/preview');
+
+        if (!response.ok) {
+            throw new Error(`Preview API returned ${response.status}: ${response.statusText}`);
+        }
+
+        menuData = await response.json();
+        console.log('Preview menu loaded from Firestore:', menuData);
+
+        // Validate menu data
+        if (!menuData.beachDrinks && !menuData.roomService) {
+            throw new Error('Preview menu data is empty');
         }
 
         // Update item count in banner
@@ -43,7 +42,24 @@ window.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
         console.error('Error loading preview menu:', error);
         document.getElementById('item-count-display').textContent = 'Error loading menu';
-        alert('Unable to load preview menu. Please refresh the page.');
+
+        // Show user-friendly error message
+        document.body.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; text-align: center; background: linear-gradient(to bottom right, #fef3c7, #fde68a);">
+                <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); max-width: 500px;">
+                    <svg style="width: 80px; height: 80px; margin: 0 auto 20px; color: #f59e0b;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    <h2 style="font-size: 24px; font-weight: bold; color: #1f2937; margin-bottom: 12px;">Preview Menu Unavailable</h2>
+                    <p style="color: #6b7280; margin-bottom: 24px;">Unable to load the preview menu from Firestore. This may mean the staging menu hasn't been synced yet.</p>
+                    <button onclick="location.reload()" style="background: linear-gradient(to right, #f59e0b, #d97706); color: white; font-weight: 600; padding: 12px 32px; border-radius: 8px; border: none; cursor: pointer; font-size: 16px; box-shadow: 0 4px 12px rgba(245,158,11,0.3);">
+                        Try Again
+                    </button>
+                    <a href="admin.html" style="display: inline-block; margin-top: 16px; color: #6b7280; text-decoration: none; font-size: 14px;">← Back to Admin Panel</a>
+                </div>
+            </div>
+        `;
+        return; // Stop execution
     }
 
     // Update character count in modal

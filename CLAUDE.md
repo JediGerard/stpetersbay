@@ -31,12 +31,14 @@ npm run dev-server         # Start server with nodemon for development
 
 ### Data Flow Architecture
 
-**Guest Ordering Flow**:
+**Guest Ordering Flow** (Firestore-Only Architecture):
 1. User visits `orderingsystem.html` → chooses Beach Drinks or Room Service
-2. `scripts/ordering_logic.js` loads menu from `/api/menu/production` (Firestore)
+2. `scripts/ordering_logic.js` loads menu from `/api/menu/production` (Firestore - **NO FALLBACK**)
 3. User adds items to cart (stored in memory)
 4. On checkout, order submitted to Firestore `/orders` collection
 5. If logged in, order linked to user via `userId` field
+
+**Important**: The ordering system is now **API-only** with no JSON file fallback. This ensures customers always see current menu data or a clear error message. JSON files in `data/` are maintained as backups only and are NOT used by the live site.
 
 **Staff Dashboard Flow**:
 1. Staff opens `dashboard.html`
@@ -116,7 +118,9 @@ All JavaScript files use ES6 modules:
 ## Key Implementation Details
 
 ### Menu Data Structure
-Menu stored as JSON with two types (`beachDrinks`, `roomService`), each containing categories with items. Each item has: name, price, available (boolean), modifiers (array), imagePath, category.
+Menu stored in Firestore `/menus/production` document with two types (`beachDrinks`, `roomService`), each containing categories with items. Each item has: name, price, available (boolean), modifiers (array), imagePath, category.
+
+**Data Integrity**: The ordering system fetches exclusively from `/api/menu/production` (Firestore). If the API is unavailable, customers see a user-friendly error page with a "Try Again" button rather than stale/incorrect menu data. This prevents wrong pricing or ordering unavailable items.
 
 ### Authentication Pattern
 - Optional authentication: Users can order as guest or logged in
@@ -234,11 +238,12 @@ Edit the status flow in `scripts/dashboard_logic.js`. Status buttons are generat
 
 ## Important Files
 
-- Firestore `/menus/production`: **Live menu** (source of truth)
+- Firestore `/menus/production`: **Live menu** (source of truth - used by website)
 - Firestore `/menus/staging`: **Preview menu** (synced from Google Sheets)
-- `data/sample_menu.json`: Production menu backup (fallback for local development)
-- `data/sample_menu.preview.json`: Staging menu backup (fallback for local development)
+- `data/sample_menu.json`: Production menu backup (NOT used by live site, backup only)
+- `data/sample_menu.preview.json`: Staging menu backup (NOT used by live site, backup only)
 - `data/backups/`: Timestamped menu backups created on each publish
+- **CRITICAL**: The live ordering system uses ONLY Firestore via API endpoints. JSON files are for backup/disaster recovery only.
 - `firestore.rules`: Database security rules
 - `scripts/firebase-config.js`: Firebase initialization
 - `api/menu/production.js`: Vercel serverless endpoint for production menu
