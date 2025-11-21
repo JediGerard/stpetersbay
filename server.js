@@ -96,20 +96,16 @@ app.get('/api/stats', (req, res) => {
       productionStats = fs.statSync(productionPath);
       const productionData = JSON.parse(fs.readFileSync(productionPath, 'utf8'));
 
-      // Count items in each category
+      // Count items (menu data is stored as flat arrays)
       let beachCount = 0;
       let roomCount = 0;
 
-      if (productionData.beachDrinks) {
-        productionData.beachDrinks.forEach(category => {
-          beachCount += category.items ? category.items.length : 0;
-        });
+      if (productionData.beachDrinks && Array.isArray(productionData.beachDrinks)) {
+        beachCount = productionData.beachDrinks.length;
       }
 
-      if (productionData.roomService) {
-        productionData.roomService.forEach(category => {
-          roomCount += category.items ? category.items.length : 0;
-        });
+      if (productionData.roomService && Array.isArray(productionData.roomService)) {
+        roomCount = productionData.roomService.length;
       }
 
       totalItems = beachCount + roomCount;
@@ -123,16 +119,12 @@ app.get('/api/stats', (req, res) => {
       let beachCount = 0;
       let roomCount = 0;
 
-      if (previewData.beachDrinks) {
-        previewData.beachDrinks.forEach(category => {
-          beachCount += category.items ? category.items.length : 0;
-        });
+      if (previewData.beachDrinks && Array.isArray(previewData.beachDrinks)) {
+        beachCount = previewData.beachDrinks.length;
       }
 
-      if (previewData.roomService) {
-        previewData.roomService.forEach(category => {
-          roomCount += category.items ? category.items.length : 0;
-        });
+      if (previewData.roomService && Array.isArray(previewData.roomService)) {
+        roomCount = previewData.roomService.length;
       }
 
       previewItems = beachCount + roomCount;

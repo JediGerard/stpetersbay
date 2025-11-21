@@ -154,16 +154,13 @@ function displayMenuSummary(elementId, menuData) {
     let beachDrinksCount = 0;
     let roomServiceCount = 0;
 
-    if (menuData.beachDrinks) {
-        menuData.beachDrinks.forEach(category => {
-            beachDrinksCount += category.items ? category.items.length : 0;
-        });
+    // Menu data is stored as flat arrays of items
+    if (menuData.beachDrinks && Array.isArray(menuData.beachDrinks)) {
+        beachDrinksCount = menuData.beachDrinks.length;
     }
 
-    if (menuData.roomService) {
-        menuData.roomService.forEach(category => {
-            roomServiceCount += category.items ? category.items.length : 0;
-        });
+    if (menuData.roomService && Array.isArray(menuData.roomService)) {
+        roomServiceCount = menuData.roomService.length;
     }
 
     element.innerHTML = `
@@ -319,12 +316,12 @@ deployBtn?.addEventListener('click', async () => {
     }
 });
 
-// View Full JSON Buttons
+// View Menu Items Buttons
 document.getElementById('view-preview-btn')?.addEventListener('click', async () => {
     try {
         const response = await fetch(`${API_BASE_URL}/api/menu/preview`);
         const data = await response.json();
-        showJsonModal('Preview Menu (Staging)', data);
+        showMenuModal('Preview Menu (Staging)', data);
     } catch (error) {
         showError('Error loading preview menu');
     }
@@ -334,18 +331,88 @@ document.getElementById('view-production-btn')?.addEventListener('click', async 
     try {
         const response = await fetch(`${API_BASE_URL}/api/menu/production`);
         const data = await response.json();
-        showJsonModal('Production Menu (Live)', data);
+        showMenuModal('Production Menu (Live)', data);
     } catch (error) {
         showError('Error loading production menu');
     }
 });
 
-// JSON Modal
-function showJsonModal(title, data) {
-    const modal = document.getElementById('json-modal');
-    document.getElementById('json-modal-title').textContent = title;
-    document.getElementById('json-modal-content').textContent = JSON.stringify(data, null, 2);
-    modal.classList.remove('hidden');
+// Menu Modal - Display menu in user-friendly table format
+function showMenuModal(title, data) {
+    try {
+        const modal = document.getElementById('json-modal');
+        document.getElementById('json-modal-title').textContent = title;
+
+        const contentDiv = document.getElementById('menu-modal-content');
+
+        let html = '';
+
+        // Beach Drinks Section
+        if (data.beachDrinks && Array.isArray(data.beachDrinks) && data.beachDrinks.length > 0) {
+            html += '<div class="mb-8"><h3 class="text-lg font-bold text-gray-900 mb-4">Beach Drinks (' + data.beachDrinks.length + ' items)</h3>';
+            html += '<div class="overflow-x-auto">';
+            html += '<table class="min-w-full divide-y divide-gray-200 border border-gray-200">';
+            html += '<thead class="bg-gray-50"><tr>';
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Item Name</th>';
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Category</th>';
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Price</th>';
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Available</th>';
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Modifiers</th>';
+            html += '</tr></thead><tbody class="bg-white divide-y divide-gray-200">';
+
+            data.beachDrinks.forEach((item, index) => {
+                const rowClass = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                const price = typeof item.price === 'number' ? item.price.toFixed(2) : (item.price || 'N/A');
+                html += `<tr class="${rowClass}">`;
+                html += `<td class="px-4 py-3 text-sm text-gray-900 font-medium">${item.name || 'Unnamed'}</td>`;
+                html += `<td class="px-4 py-3 text-sm text-gray-600">${item.category || 'N/A'}</td>`;
+                html += `<td class="px-4 py-3 text-sm text-gray-900">$${price}</td>`;
+                html += `<td class="px-4 py-3 text-sm">${item.available ? '<span class="text-green-600 font-medium">✓ Yes</span>' : '<span class="text-red-600">✗ No</span>'}</td>`;
+                html += `<td class="px-4 py-3 text-sm text-gray-600">${item.modifiers && item.modifiers.length > 0 ? item.modifiers.join(', ') : 'None'}</td>`;
+                html += '</tr>';
+            });
+
+            html += '</tbody></table></div></div>';
+        }
+
+        // Room Service Section
+        if (data.roomService && Array.isArray(data.roomService) && data.roomService.length > 0) {
+            html += '<div class="mb-8"><h3 class="text-lg font-bold text-gray-900 mb-4">Room Service (' + data.roomService.length + ' items)</h3>';
+            html += '<div class="overflow-x-auto">';
+            html += '<table class="min-w-full divide-y divide-gray-200 border border-gray-200">';
+            html += '<thead class="bg-gray-50"><tr>';
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Item Name</th>';
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Category</th>';
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Price</th>';
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Available</th>';
+            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Modifiers</th>';
+            html += '</tr></thead><tbody class="bg-white divide-y divide-gray-200">';
+
+            data.roomService.forEach((item, index) => {
+                const rowClass = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                const price = typeof item.price === 'number' ? item.price.toFixed(2) : (item.price || 'N/A');
+                html += `<tr class="${rowClass}">`;
+                html += `<td class="px-4 py-3 text-sm text-gray-900 font-medium">${item.name || 'Unnamed'}</td>`;
+                html += `<td class="px-4 py-3 text-sm text-gray-600">${item.category || 'N/A'}</td>`;
+                html += `<td class="px-4 py-3 text-sm text-gray-900">$${price}</td>`;
+                html += `<td class="px-4 py-3 text-sm">${item.available ? '<span class="text-green-600 font-medium">✓ Yes</span>' : '<span class="text-red-600">✗ No</span>'}</td>`;
+                html += `<td class="px-4 py-3 text-sm text-gray-600">${item.modifiers && item.modifiers.length > 0 ? item.modifiers.join(', ') : 'None'}</td>`;
+                html += '</tr>';
+            });
+
+            html += '</tbody></table></div></div>';
+        }
+
+        if (!html) {
+            html = '<p class="text-gray-600">No menu items found.</p>';
+        }
+
+        contentDiv.innerHTML = html;
+        modal.classList.remove('hidden');
+    } catch (error) {
+        console.error('Error displaying menu modal:', error);
+        showError('Error displaying menu: ' + error.message);
+    }
 }
 
 document.getElementById('close-modal-btn')?.addEventListener('click', () => {

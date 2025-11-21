@@ -1131,6 +1131,16 @@
         "No Cheese"
       ],
       "category": "Make Your Own Pasta"
+    },
+    {
+      "name": "Tim's Non alcoholic beer",
+      "price": 10,
+      "image": "images/placeholder.png",
+      "available": true,
+      "modifiers": [
+        "testing text here"
+      ],
+      "category": "Beer"
     }
   ]
 }
