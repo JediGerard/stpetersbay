@@ -106,6 +106,19 @@ function selectMenuType(type) {
     const subtitle = document.getElementById('header-subtitle');
     subtitle.textContent = type === 'beachDrinks' ? 'Beach Drinks' : 'Room Service';
 
+    // Update charges notice based on menu type
+    const chargesNotice = document.getElementById('charges-notice');
+    if (type === 'roomService') {
+        chargesNotice.innerHTML = `
+            <p class="text-sm text-gray-700 font-semibold mb-2">Room Service Delivery Fee: $20.00 BDS</p>
+            <p class="text-sm text-gray-700">A 2.5% government levy and 12.5% service charge will be added to your bill</p>
+        `;
+    } else {
+        chargesNotice.innerHTML = `
+            <p class="text-sm text-gray-700">A 2.5% government levy and 12.5% service charge will be added to your bill</p>
+        `;
+    }
+
     // Show/hide screens
     document.getElementById('landing-screen').classList.add('hidden');
     document.getElementById('menu-screen').classList.remove('hidden');
