@@ -343,15 +343,18 @@ function showMenuModal(title, data) {
         const modal = document.getElementById('json-modal');
         document.getElementById('json-modal-title').textContent = title;
 
+        // Prevent body scroll when modal is open
+        document.body.style.overflow = 'hidden';
+
         const contentDiv = document.getElementById('menu-modal-content');
 
         let html = '';
 
         // Beach Drinks Section
         if (data.beachDrinks && Array.isArray(data.beachDrinks) && data.beachDrinks.length > 0) {
-            html += '<div class="mb-8"><h3 class="text-lg font-bold text-gray-900 mb-4">Beach Drinks (' + data.beachDrinks.length + ' items)</h3>';
-            html += '<div class="overflow-x-auto">';
-            html += '<table class="min-w-full divide-y divide-gray-200 border border-gray-200">';
+            html += '<div class="mb-8"><h3 class="text-lg font-bold text-gray-900 mb-4 sticky top-0 bg-white py-2">Beach Drinks (' + data.beachDrinks.length + ' items)</h3>';
+            html += '<div class="overflow-x-auto mb-4">';
+            html += '<table class="min-w-full divide-y divide-gray-200 border border-gray-200 shadow-sm">';
             html += '<thead class="bg-gray-50"><tr>';
             html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Item Name</th>';
             html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Category</th>';
@@ -377,9 +380,9 @@ function showMenuModal(title, data) {
 
         // Room Service Section
         if (data.roomService && Array.isArray(data.roomService) && data.roomService.length > 0) {
-            html += '<div class="mb-8"><h3 class="text-lg font-bold text-gray-900 mb-4">Room Service (' + data.roomService.length + ' items)</h3>';
-            html += '<div class="overflow-x-auto">';
-            html += '<table class="min-w-full divide-y divide-gray-200 border border-gray-200">';
+            html += '<div class="mb-8"><h3 class="text-lg font-bold text-gray-900 mb-4 sticky top-0 bg-white py-2">Room Service (' + data.roomService.length + ' items)</h3>';
+            html += '<div class="overflow-x-auto mb-4">';
+            html += '<table class="min-w-full divide-y divide-gray-200 border border-gray-200 shadow-sm">';
             html += '<thead class="bg-gray-50"><tr>';
             html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Item Name</th>';
             html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Category</th>';
@@ -415,14 +418,25 @@ function showMenuModal(title, data) {
     }
 }
 
-document.getElementById('close-modal-btn')?.addEventListener('click', () => {
+// Close modal and restore body scroll
+function closeModal() {
     document.getElementById('json-modal').classList.add('hidden');
-});
+    document.body.style.overflow = '';
+}
+
+document.getElementById('close-modal-btn')?.addEventListener('click', closeModal);
 
 // Close modal on background click
 document.getElementById('json-modal')?.addEventListener('click', (e) => {
     if (e.target.id === 'json-modal') {
-        document.getElementById('json-modal').classList.add('hidden');
+        closeModal();
+    }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !document.getElementById('json-modal').classList.contains('hidden')) {
+        closeModal();
     }
 });
 
