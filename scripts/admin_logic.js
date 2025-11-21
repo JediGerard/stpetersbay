@@ -38,6 +38,11 @@ async function handleCredentialResponse(response) {
 
         if (data.authorized) {
             currentUser = data.user;
+
+            // Store auth data in sessionStorage for persistence
+            sessionStorage.setItem('adminAuthToken', authToken);
+            sessionStorage.setItem('adminUser', JSON.stringify(currentUser));
+
             showAdminDashboard();
         } else {
             showAccessDenied(data.error || 'Access denied');
@@ -81,6 +86,11 @@ function showAccessDenied(message) {
 signoutBtn?.addEventListener('click', () => {
     currentUser = null;
     authToken = null;
+
+    // Clear sessionStorage
+    sessionStorage.removeItem('adminAuthToken');
+    sessionStorage.removeItem('adminUser');
+
     window.location.reload();
 });
 
@@ -253,127 +263,6 @@ publishBtn?.addEventListener('click', async () => {
     }
 });
 
-// View Menu Items Buttons
-// Preview button is now a link to preview.html - no event listener needed
-
-document.getElementById('view-production-btn')?.addEventListener('click', async () => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/menu/production`);
-        const data = await response.json();
-        showMenuModal('Production Menu (Live)', data);
-    } catch (error) {
-        showError('Error loading production menu');
-    }
-});
-
-// Menu Modal - Display menu in user-friendly table format
-function showMenuModal(title, data) {
-    try {
-        const modal = document.getElementById('json-modal');
-        document.getElementById('json-modal-title').textContent = title;
-
-        // Prevent body scroll when modal is open
-        document.body.style.overflow = 'hidden';
-
-        const contentDiv = document.getElementById('menu-modal-content');
-
-        let html = '';
-
-        // Beach Drinks Section
-        if (data.beachDrinks && Array.isArray(data.beachDrinks) && data.beachDrinks.length > 0) {
-            html += '<div class="mb-8">';
-            html += '<h3 class="text-lg font-bold text-gray-900 mb-4 bg-blue-50 p-3 rounded">Beach Drinks (' + data.beachDrinks.length + ' items)</h3>';
-            html += '<div class="overflow-x-auto">';
-            html += '<table class="w-full border-collapse border border-gray-300">';
-            html += '<thead class="bg-gray-50"><tr>';
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Item Name</th>';
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Category</th>';
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Price</th>';
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Available</th>';
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Modifiers</th>';
-            html += '</tr></thead><tbody class="bg-white divide-y divide-gray-200">';
-
-            data.beachDrinks.forEach((item, index) => {
-                const rowClass = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
-                const price = typeof item.price === 'number' ? item.price.toFixed(2) : (item.price || 'N/A');
-                html += `<tr class="${rowClass}">`;
-                html += `<td class="px-4 py-3 text-sm text-gray-900 font-medium">${item.name || 'Unnamed'}</td>`;
-                html += `<td class="px-4 py-3 text-sm text-gray-600">${item.category || 'N/A'}</td>`;
-                html += `<td class="px-4 py-3 text-sm text-gray-900">$${price}</td>`;
-                html += `<td class="px-4 py-3 text-sm">${item.available ? '<span class="text-green-600 font-medium">✓ Yes</span>' : '<span class="text-red-600">✗ No</span>'}</td>`;
-                html += `<td class="px-4 py-3 text-sm text-gray-600">${item.modifiers && item.modifiers.length > 0 ? item.modifiers.join(', ') : 'None'}</td>`;
-                html += '</tr>';
-            });
-
-            html += '</tbody></table></div>';
-            html += '</div>'; // Close Beach Drinks container
-        }
-
-        // Room Service Section
-        if (data.roomService && Array.isArray(data.roomService) && data.roomService.length > 0) {
-            html += '<div class="mb-8">';
-            html += '<h3 class="text-lg font-bold text-gray-900 mb-4 bg-green-50 p-3 rounded">Room Service (' + data.roomService.length + ' items)</h3>';
-            html += '<div class="overflow-x-auto">';
-            html += '<table class="w-full border-collapse border border-gray-300">';
-            html += '<thead class="bg-gray-50"><tr>';
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Item Name</th>';
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Category</th>';
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Price</th>';
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Available</th>';
-            html += '<th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Modifiers</th>';
-            html += '</tr></thead><tbody class="bg-white divide-y divide-gray-200">';
-
-            data.roomService.forEach((item, index) => {
-                const rowClass = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
-                const price = typeof item.price === 'number' ? item.price.toFixed(2) : (item.price || 'N/A');
-                html += `<tr class="${rowClass}">`;
-                html += `<td class="px-4 py-3 text-sm text-gray-900 font-medium">${item.name || 'Unnamed'}</td>`;
-                html += `<td class="px-4 py-3 text-sm text-gray-600">${item.category || 'N/A'}</td>`;
-                html += `<td class="px-4 py-3 text-sm text-gray-900">$${price}</td>`;
-                html += `<td class="px-4 py-3 text-sm">${item.available ? '<span class="text-green-600 font-medium">✓ Yes</span>' : '<span class="text-red-600">✗ No</span>'}</td>`;
-                html += `<td class="px-4 py-3 text-sm text-gray-600">${item.modifiers && item.modifiers.length > 0 ? item.modifiers.join(', ') : 'None'}</td>`;
-                html += '</tr>';
-            });
-
-            html += '</tbody></table></div>';
-            html += '</div>'; // Close Room Service container
-        }
-
-        if (!html) {
-            html = '<p class="text-gray-600">No menu items found.</p>';
-        }
-
-        contentDiv.innerHTML = html;
-        modal.classList.remove('hidden');
-    } catch (error) {
-        console.error('Error displaying menu modal:', error);
-        showError('Error displaying menu: ' + error.message);
-    }
-}
-
-// Close modal and restore body scroll
-function closeModal() {
-    document.getElementById('json-modal').classList.add('hidden');
-    document.body.style.overflow = '';
-}
-
-document.getElementById('close-modal-btn')?.addEventListener('click', closeModal);
-
-// Close modal on background click (clicking the dark overlay)
-document.getElementById('json-modal')?.addEventListener('click', (e) => {
-    // Only close if clicking the backdrop itself, not the content
-    if (e.target === document.getElementById('json-modal')) {
-        closeModal();
-    }
-});
-
-// Close modal on Escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !document.getElementById('json-modal').classList.contains('hidden')) {
-        closeModal();
-    }
-});
-
 // Utility Functions
 function showSuccess(message) {
     statusMessage.textContent = message;
@@ -416,7 +305,47 @@ function formatFileSize(bytes) {
 }
 
 // Initialize on page load
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
     console.log('Admin dashboard loaded');
+
+    // Check for existing session
+    const savedToken = sessionStorage.getItem('adminAuthToken');
+    const savedUser = sessionStorage.getItem('adminUser');
+
+    if (savedToken && savedUser) {
+        console.log('Found existing session, verifying...');
+
+        try {
+            // Verify token is still valid
+            const res = await fetch(`${API_BASE_URL}/api/verify-auth`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: savedToken })
+            });
+
+            const data = await res.json();
+
+            if (data.authorized) {
+                // Restore session
+                authToken = savedToken;
+                currentUser = JSON.parse(savedUser);
+                showAdminDashboard();
+                console.log('Session restored successfully');
+            } else {
+                // Token expired or invalid, clear storage
+                console.log('Session expired, clearing...');
+                sessionStorage.removeItem('adminAuthToken');
+                sessionStorage.removeItem('adminUser');
+            }
+        } catch (error) {
+            console.error('Error verifying session:', error);
+            // Clear invalid session
+            sessionStorage.removeItem('adminAuthToken');
+            sessionStorage.removeItem('adminUser');
+        }
+    } else {
+        console.log('No existing session found');
+    }
+
     // Google Sign-In will auto-initialize from HTML
 });
