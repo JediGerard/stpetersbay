@@ -19,6 +19,23 @@ const statusMessage = document.getElementById('status-message');
 
 const signoutBtn = document.getElementById('signout-btn');
 
+// ==========================================
+// AUTHENTICATION LOGIC (with Session Persistence)
+// ==========================================
+
+// Check for existing session on page load
+function checkSession() {
+    const storedToken = sessionStorage.getItem('authToken');
+    const storedUser = sessionStorage.getItem('currentUser');
+
+    if (storedToken && storedUser) {
+        console.log('Restoring session...');
+        authToken = storedToken;
+        currentUser = JSON.parse(storedUser);
+        showAdminDashboard();
+    }
+}
+
 // Google Sign-In Callback (must be in global scope)
 async function handleCredentialResponse(response) {
     authToken = response.credential;
@@ -39,9 +56,9 @@ async function handleCredentialResponse(response) {
         if (data.authorized) {
             currentUser = data.user;
 
-            // Store auth data in sessionStorage for persistence
-            sessionStorage.setItem('adminAuthToken', authToken);
-            sessionStorage.setItem('adminUser', JSON.stringify(currentUser));
+            // SAVE SESSION (Store in sessionStorage for persistence)
+            sessionStorage.setItem('authToken', authToken);
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
 
             showAdminDashboard();
         } else {
@@ -84,13 +101,12 @@ function showAccessDenied(message) {
 
 // Sign Out
 signoutBtn?.addEventListener('click', () => {
+    // CLEAR SESSION
+    sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('currentUser');
+
     currentUser = null;
     authToken = null;
-
-    // Clear sessionStorage
-    sessionStorage.removeItem('adminAuthToken');
-    sessionStorage.removeItem('adminUser');
-
     window.location.reload();
 });
 
@@ -305,47 +321,7 @@ function formatFileSize(bytes) {
 }
 
 // Initialize on page load
-window.addEventListener('load', async () => {
+window.addEventListener('load', () => {
     console.log('Admin dashboard loaded');
-
-    // Check for existing session
-    const savedToken = sessionStorage.getItem('adminAuthToken');
-    const savedUser = sessionStorage.getItem('adminUser');
-
-    if (savedToken && savedUser) {
-        console.log('Found existing session, verifying...');
-
-        try {
-            // Verify token is still valid
-            const res = await fetch(`${API_BASE_URL}/api/verify-auth`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token: savedToken })
-            });
-
-            const data = await res.json();
-
-            if (data.authorized) {
-                // Restore session
-                authToken = savedToken;
-                currentUser = JSON.parse(savedUser);
-                showAdminDashboard();
-                console.log('Session restored successfully');
-            } else {
-                // Token expired or invalid, clear storage
-                console.log('Session expired, clearing...');
-                sessionStorage.removeItem('adminAuthToken');
-                sessionStorage.removeItem('adminUser');
-            }
-        } catch (error) {
-            console.error('Error verifying session:', error);
-            // Clear invalid session
-            sessionStorage.removeItem('adminAuthToken');
-            sessionStorage.removeItem('adminUser');
-        }
-    } else {
-        console.log('No existing session found');
-    }
-
-    // Google Sign-In will auto-initialize from HTML
+    checkSession();
 });
