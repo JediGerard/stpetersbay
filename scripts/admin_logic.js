@@ -15,10 +15,7 @@ const loginError = document.getElementById('login-error');
 const loginErrorMessage = document.getElementById('login-error-message');
 
 const publishBtn = document.getElementById('publish-btn');
-const deployBtn = document.getElementById('deploy-btn');
 const statusMessage = document.getElementById('status-message');
-const deploymentLogContainer = document.getElementById('deployment-log-container');
-const deploymentLog = document.getElementById('deployment-log');
 
 const signoutBtn = document.getElementById('signout-btn');
 
@@ -212,14 +209,14 @@ async function loadActivityHistory() {
     }
 }
 
-// Publish Menu
+// Publish Menu to Live Site
 publishBtn?.addEventListener('click', async () => {
     const confirmed = confirm(
-        'Publish staging menu to production?\n\n' +
+        'Publish staging menu to live site?\n\n' +
         'This will:\n' +
         '- Create a timestamped backup of current production menu\n' +
-        '- Update sample_menu.json with preview changes\n' +
-        '- Require deployment to go live on website\n\n' +
+        '- Update production menu in Firestore database\n' +
+        '- Changes will be LIVE IMMEDIATELY on the website\n\n' +
         'Continue?'
     );
 
@@ -243,8 +240,7 @@ publishBtn?.addEventListener('click', async () => {
         const result = await response.json();
 
         if (result.success) {
-            showSuccess('✅ Menu published successfully! Ready to deploy to live site.');
-            deployBtn.disabled = false;
+            showSuccess('✅ Menu published successfully! Changes are now LIVE on the website.');
             await loadDashboard(); // Refresh data
         } else {
             showError('❌ Error: ' + result.error);
@@ -253,66 +249,7 @@ publishBtn?.addEventListener('click', async () => {
         showError('❌ Error publishing menu: ' + error.message);
     } finally {
         publishBtn.disabled = false;
-        publishBtn.textContent = 'Publish Menu';
-    }
-});
-
-// Deploy to Live Site
-deployBtn?.addEventListener('click', async () => {
-    const confirmed = confirm(
-        'Deploy to live site?\n\n' +
-        'This will:\n' +
-        '- Commit menu changes to git\n' +
-        '- Push to remote repository\n' +
-        '- Trigger Vercel auto-deployment\n' +
-        '- Take ~30-60 seconds\n' +
-        '- Update live ordering system\n\n' +
-        'Continue?'
-    );
-
-    if (!confirmed) return;
-
-    // Disable buttons and show loading
-    deployBtn.disabled = true;
-    deployBtn.textContent = 'Deploying...';
-    hideStatus();
-    deploymentLogContainer.classList.remove('hidden');
-    deploymentLog.textContent = '';
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/deploy`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${authToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ deployedBy: currentUser.email })
-        });
-
-        // Stream deployment output
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
-
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            const chunk = decoder.decode(value);
-            deploymentLog.textContent += chunk;
-
-            // Auto-scroll to bottom
-            deploymentLog.scrollTop = deploymentLog.scrollHeight;
-        }
-
-        showSuccess('✅ Deployment complete! Changes are now live.');
-        deployBtn.disabled = true; // Disable until next publish
-        await loadDashboard(); // Refresh data
-
-    } catch (error) {
-        showError('❌ Error deploying: ' + error.message);
-        deploymentLog.textContent += '\n\n❌ Deployment error: ' + error.message;
-    } finally {
-        deployBtn.textContent = 'Deploy to Live';
+        publishBtn.textContent = 'Publish to Live Site';
     }
 });
 

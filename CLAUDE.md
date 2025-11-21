@@ -33,7 +33,7 @@ npm run dev-server         # Start server with nodemon for development
 
 **Guest Ordering Flow**:
 1. User visits `orderingsystem.html` → chooses Beach Drinks or Room Service
-2. `scripts/ordering_logic.js` loads menu from `data/sample_menu.json`
+2. `scripts/ordering_logic.js` loads menu from `/api/menu/production` (Firestore)
 3. User adds items to cart (stored in memory)
 4. On checkout, order submitted to Firestore `/orders` collection
 5. If logged in, order linked to user via `userId` field
@@ -44,17 +44,31 @@ npm run dev-server         # Start server with nodemon for development
 3. Real-time display of orders filtered by menu type and status
 4. Status updates written directly to Firestore
 
-**Menu Management Flow** (Google Sheets - Phase 3 Complete):
+**Menu Management Flow** (Firestore-First Architecture - Phase 4 Complete):
 1. Staff edits menu in Google Sheets (master copy)
 2. `autoSync.js` polls Sheet every 5 minutes for changes via Drive API
-3. `googleSheetsSync.js` syncs changes to `data/sample_menu.preview.json` (staging)
-4. Admin reviews changes and runs `publishMenu.js`
-5. Automatic timestamped backup created in `data/backups/`
-6. Menu published to `data/sample_menu.json` (production)
+3. `googleSheetsSync.js` syncs changes to Firestore `/menus/staging` document
+4. Admin reviews changes in web-based admin panel
+5. Admin clicks "Publish to Live Site" button
+6. Automatic timestamped backup created in `data/backups/`
+7. Menu published to Firestore `/menus/production` document
+8. Changes are LIVE IMMEDIATELY on ordering system (no deployment needed)
 
 ### Firebase Architecture
 
 **Collections**:
+- `/menus`: Menu data (source of truth)
+  - `/staging`: Preview menu synced from Google Sheets
+  - `/production`: Live menu used by ordering system
+  ```javascript
+  {
+    beachDrinks: [{name, price, category, available, modifiers, imagePath}],
+    roomService: [{name, price, category, available, modifiers, imagePath}],
+    lastUpdated: Firestore.Timestamp,
+    updatedBy: 'email or service',
+    itemCount: number
+  }
+  ```
 - `/orders`: All orders with structure:
   ```javascript
   {
@@ -170,16 +184,15 @@ Edit the status flow in `scripts/dashboard_logic.js`. Status buttons are generat
 
 **Current Workflow** (Phase 4 - Admin Web Interface):
 1. Staff edit menu in Google Sheets (master copy)
-2. Auto-sync worker automatically syncs changes to `data/sample_menu.preview.json` (staging) every 5 minutes
-3. Admin opens admin panel at http://localhost:3000/admin.html
+2. Auto-sync worker automatically syncs changes to Firestore `/menus/staging` every 5 minutes
+3. Admin opens admin panel at https://spbgazebo.com/admin.html
 4. Admin signs in with Google (whitelisted email required)
-5. Admin reviews preview vs production comparison
-6. Admin clicks "Publish Menu" button
+5. Admin reviews preview vs production comparison (or opens preview.html for visual check)
+6. Admin clicks "Publish to Live Site" button
 7. Automatic timestamped backup created in `data/backups/`
-8. Menu published to `data/sample_menu.json` (production)
-9. Admin clicks "Deploy to Live Site" button
-10. Changes committed to git and pushed to remote
-11. Vercel auto-deploys from git push
+8. Menu published to Firestore `/menus/production`
+9. Changes are LIVE IMMEDIATELY - ordering system reads from Firestore
+10. No git operations or deployment needed!
 
 **Auto-Sync Worker** (Optional - runs in background):
 - Start: `npm run auto-sync`
@@ -189,11 +202,12 @@ Edit the status flow in `scripts/dashboard_logic.js`. Status buttons are generat
 
 **CLI Workflow** (Alternative - for manual operations):
 1. Staff edit menu in Google Sheets (master copy)
-2. Run `node scripts/googleSheetsSync.js` to manually sync changes to staging
-3. Changes synced to `data/sample_menu.preview.json` (staging)
+2. Run `node scripts/googleSheetsSync.js` to manually sync changes to Firestore staging
+3. Changes synced to Firestore `/menus/staging` document
 4. Run `npm run publish-menu` to publish to production
 5. Automatic timestamped backup created in `data/backups/`
-6. Menu published to `data/sample_menu.json` (production)
+6. Menu published to Firestore `/menus/production`
+7. Changes are live immediately on website
 
 ## IMPORTANT RESTRICTIONS
 
@@ -203,6 +217,7 @@ Edit the status flow in `scripts/dashboard_logic.js`. Status buttons are generat
 - The user will handle all git commits and pushes locally
 - You MAY stage files with `git add` if requested, but NEVER commit or push
 - Only make code changes - the user will review and commit them manually
+- **IMPORTANT**: Menu publishing does NOT require git operations - it updates Firestore directly
 
 **File Deletion**:
 - NEVER delete any files in this project
@@ -219,9 +234,16 @@ Edit the status flow in `scripts/dashboard_logic.js`. Status buttons are generat
 
 ## Important Files
 
-- `data/sample_menu.json`: Active menu (80 items total)
+- Firestore `/menus/production`: **Live menu** (source of truth)
+- Firestore `/menus/staging`: **Preview menu** (synced from Google Sheets)
+- `data/sample_menu.json`: Production menu backup (fallback for local development)
+- `data/sample_menu.preview.json`: Staging menu backup (fallback for local development)
+- `data/backups/`: Timestamped menu backups created on each publish
 - `firestore.rules`: Database security rules
 - `scripts/firebase-config.js`: Firebase initialization
+- `api/menu/production.js`: Vercel serverless endpoint for production menu
+- `api/menu/preview.js`: Vercel serverless endpoint for staging menu
+- `api/publish.js`: Vercel serverless endpoint for publishing menu
 - `MENU_EDITING_GUIDE.md`: Staff guide for Excel-based menu editing
 - `AUTH_SYSTEM_GUIDE.md`: Authentication system documentation
 - `PROJECT_PROGRESS.md`: Complete project documentation and feature list

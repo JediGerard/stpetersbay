@@ -107,35 +107,18 @@
         <section class="mb-8">
             <h2 class="text-xl font-bold text-gray-900 mb-4">Actions</h2>
             <div class="bg-white rounded-lg shadow p-6">
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="font-medium text-gray-900">Step 1: Publish Menu</h3>
-                            <p class="text-sm text-gray-600">Copy preview menu to production JSON file (creates backup)</p>
-                        </div>
-                        <button id="publish-btn" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">
-                            Publish Menu
-                        </button>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="font-medium text-gray-900">Publish Changes to Live Site</h3>
+                        <p class="text-sm text-gray-600">Publishes staging menu to production Firestore database (changes are live immediately)</p>
                     </div>
-                    <div class="border-t pt-4 flex items-center justify-between">
-                        <div>
-                            <h3 class="font-medium text-gray-900">Step 2: Deploy to Live Site</h3>
-                            <p class="text-sm text-gray-600">Push changes to git and trigger Vercel deployment</p>
-                        </div>
-                        <button id="deploy-btn" class="px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition" disabled>
-                            Deploy to Live
-                        </button>
-                    </div>
+                    <button id="publish-btn" class="px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">
+                        Publish to Live Site
+                    </button>
                 </div>
 
                 <!-- Status Messages -->
                 <div id="status-message" class="hidden mt-4 p-3 rounded-lg text-sm"></div>
-
-                <!-- Deployment Log -->
-                <div id="deployment-log-container" class="hidden mt-4">
-                    <h4 class="font-medium text-gray-900 mb-2">Deployment Log:</h4>
-                    <pre id="deployment-log" class="bg-gray-900 text-green-400 p-4 rounded-lg text-xs overflow-x-auto max-h-96 overflow-y-auto font-mono"></pre>
-                </div>
             </div>
         </section>
 
